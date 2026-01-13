@@ -9,6 +9,7 @@ class AppColors {
 
   ///Background
   static const Color splashBackground = Color(0xFFFFFFFF);
+  static const Color onboardingBackground = Color(0xFF1A1A1A);
   static const Color backgroundLight = Color(0xFFFFFFFF);
   static const Color backgroundDark = Color(0xFF000E08);
   static const Color backgroundRed = Color(0xFFFF2D1B);
@@ -37,5 +38,11 @@ class AppColors {
   static const Color textFieldPrimaryUnderline = greyCD;
   static const Color textFieldCursor = Color(0xFF919191);
   static const Color textFieldErrorUnderline = backgroundRed;
+
+  ///Gradient
+  static const Color gradientStart = Color(0xFF43116A);
+  static const Color gradientEnd = Color(0xFF0A1832);
+
+
 
 }

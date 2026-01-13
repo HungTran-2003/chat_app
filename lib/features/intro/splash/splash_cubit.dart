@@ -1,4 +1,4 @@
-import 'package:chat_app/features/intro/spash_navigation.dart';
+import 'package:chat_app/features/intro/splash/spash_navigation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

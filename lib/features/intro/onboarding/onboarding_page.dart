@@ -42,6 +42,14 @@ class OnboardingChildPage extends StatefulWidget {
 }
 
 class _OnboardingChildPageState extends State<OnboardingChildPage> {
+  late OnboardingCubit _cubit;
+
+  @override
+  void initState() {
+    _cubit = BlocProvider.of(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,30 +92,28 @@ class _OnboardingChildPageState extends State<OnboardingChildPage> {
                   38.height,
                   _buildButtonAuthIcon(),
                   30.height,
-                  _buildDividerWithText(),  
+                  _buildDividerWithText(),
                   30.height,
                   AppFilledButton(
                     label: S.of(context).common_sign_up_with_email,
-                    onPress: (){},
+                    onPress: () {
+                      _cubit.navigator.goToRegisterPage();
+                    },
                     backgroundColor: AppColors.backgroundLight,
                     labelStyle: AppTextStyle.black.s14.w500,
                   ),
                   46.height,
                   AppTextRich(
                     rawText: S.of(context).common_have_account_login,
-                    styles: [
-                      AppTextStyle.white.s14.w700,
-                    ],
+                    styles: [AppTextStyle.white.s14.w700],
                     defaultStyle: AppTextStyle.grey.s14.w500,
-                    onPress: [
-                      _handlerLogin
-                    ],
-                  )
+                    onPress: [_handlerLogin],
+                  ),
                 ],
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -118,26 +124,20 @@ class _OnboardingChildPageState extends State<OnboardingChildPage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AppSvgImage(
-          AssetConstants.appIcon,
-          width: 16,
-          height: 19,
-        ),
+        AppSvgImage(AssetConstants.appIcon, width: 16, height: 19),
         6.width,
         Text(
           S.of(context).common_app_title,
           style: AppTextStyle.white.s14.w500,
-        )
+        ),
       ],
     );
   }
 
-  Widget _buildTitlePage(){
+  Widget _buildTitlePage() {
     return AppTextRich(
       rawText: S.of(context).onboard_app_title,
-      styles: [
-        AppTextStyle.white.s68.w700
-      ],
+      styles: [AppTextStyle.white.s68.w700],
       defaultStyle: AppTextStyle.white.s68.w500,
     );
   }
@@ -166,27 +166,20 @@ class _OnboardingChildPageState extends State<OnboardingChildPage> {
     );
   }
 
-  Widget _buildDividerWithText(){
+  Widget _buildDividerWithText() {
     return Row(
       children: [
-        const Expanded(
-          child: AppDivider(),
-        ),
+        const Expanded(child: AppDivider()),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            "OR",
-            style: AppTextStyle.white.s14.w600,
-          ),
+          child: Text("OR", style: AppTextStyle.white.s14.w600),
         ),
-        const Expanded(
-          child: AppDivider(),
-        ),
+        const Expanded(child: AppDivider()),
       ],
     );
   }
 
-  void _handlerLogin(){
-    print("login");
+  void _handlerLogin() {
+    _cubit.navigator.goToLoginPage();
   }
 }

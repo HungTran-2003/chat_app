@@ -16,6 +16,13 @@ class SecureStorageHelper {
 
   static SecureStorageHelper get instance => _instance;
 
+  static Future<bool> get isFirstRun async {
+    final prefs = await SharedPreferences.getInstance();
+    final isFirstRun = prefs.getBool(KeyConstants.prefsKeyIsFirstRun) ?? true;
+    await prefs.setBool(KeyConstants.prefsKeyIsFirstRun, false);
+    return isFirstRun;
+  }
+
   static Future<void> ensureFirstRunClearsSecureStorage() async {
     try {
       final prefs = await SharedPreferences.getInstance();

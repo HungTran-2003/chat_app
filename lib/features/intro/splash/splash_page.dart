@@ -2,8 +2,8 @@ import 'package:chat_app/core/constants/asset_constants.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/widgets/image/app_assest_image.dart';
 import 'package:chat_app/core/widgets/image/app_svg_image.dart';
-import 'package:chat_app/features/intro/spash_navigation.dart';
-import 'package:chat_app/features/intro/splash_cubit.dart';
+import 'package:chat_app/features/intro/splash/spash_navigation.dart';
+import 'package:chat_app/features/intro/splash/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,7 +37,7 @@ class _SplashChildPageState extends State<SplashChildPage> {
     _cubit = BlocProvider.of(context);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(milliseconds: 500));
-      print("object");
+      _cubit.checkOnboard();
     });
   }
   @override

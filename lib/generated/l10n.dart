@@ -53,13 +53,66 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Chatbox`
+  String get common_app_title {
+    return Intl.message(
+      'Chatbox',
+      name: 'common_app_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect friends <easily & quickly>`
+  String get onboard_app_title {
+    return Intl.message(
+      'Connect friends <easily & quickly>',
+      name: 'onboard_app_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Our chat app is the perfect way to stay connected with friends and family.`
+  String get onboard_description {
+    return Intl.message(
+      'Our chat app is the perfect way to stay connected with friends and family.',
+      name: 'onboard_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up with email`
+  String get common_sign_up_with_email {
+    return Intl.message(
+      'Sign up with email',
+      name: 'common_sign_up_with_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Existing account? <Log in>`
+  String get common_have_account_login {
+    return Intl.message(
+      'Existing account? <Log in>',
+      name: 'common_have_account_login',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();
 
   List<Locale> get supportedLocales {
-    return const <Locale>[Locale.fromSubtags(languageCode: 'en')];
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'vi'),
+    ];
   }
 
   @override

@@ -28,6 +28,11 @@ class AppTextStyle {
     fontSize: 16,
     fontFamily: fontFamily,
   );
+  static const grey = TextStyle(
+    color: AppColors.textGrey,
+    fontSize: 16,
+    fontFamily: fontFamily,
+  );
 }
 
 extension AppTextStyleExt on TextStyle {
@@ -51,6 +56,8 @@ extension AppTextStyleExt on TextStyle {
   TextStyle get s30 => copyWith(fontSize: 30);
 
   TextStyle get s32 => copyWith(fontSize: 32);
+
+  TextStyle get s68 => copyWith(fontSize: 68);
 
   // Material size
   TextStyle get bodyTiny => copyWith(fontSize: 10);

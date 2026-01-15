@@ -1,1 +1,7 @@
-{}
+{
+  "common_app_title": "Chatbox",
+  "onboard_app_title" : "Connect friends <easily & quickly>",
+  "onboard_description": "Our chat app is the perfect way to stay connected with friends and family.",
+  "common_sign_up_with_email": "Sign up with email",
+  "common_have_account_login": "Existing account? <Log in>"
+}

@@ -21,5 +21,19 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
+    "common_have_account_login": MessageLookupByLibrary.simpleMessage(
+      "Existing account? <Log in>",
+    ),
+    "common_sign_up_with_email": MessageLookupByLibrary.simpleMessage(
+      "Sign up with email",
+    ),
+    "onboard_app_title": MessageLookupByLibrary.simpleMessage(
+      "Connect friends <easily & quickly>",
+    ),
+    "onboard_description": MessageLookupByLibrary.simpleMessage(
+      "Our chat app is the perfect way to stay connected with friends and family.",
+    ),
+  };
 }

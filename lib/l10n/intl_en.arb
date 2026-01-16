@@ -3,5 +3,12 @@
   "onboard_app_title" : "Connect friends <easily & quickly>",
   "onboard_description": "Our chat app is the perfect way to stay connected with friends and family.",
   "common_sign_up_with_email": "Sign up with email",
-  "common_have_account_login": "Existing account? <Log in>"
+  "common_have_account_login": "Existing account? <Log in>",
+  "auth_login_title": "<Log in> to Chatbox",
+  "auth_login_description": "Welcome back! Sign in using your social account or email to continue us",
+  "common_your_email": "Your email",
+  "common_password": "Password",
+  "common_forgot_password": "Forgot password?",
+  "common_sign_in": "Login",
+  "common_sign_up": "Sign up"
 }

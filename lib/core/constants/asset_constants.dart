@@ -12,6 +12,11 @@ class AssetConstants {
 
   ///Icon
   static const String appIcon = "$_iconsBasePath/app_icon.svg";
+  static const String backIcon = "$_iconsBasePath/icon_back.svg";
+  static const String passwordVisibleIcon =
+      '$_iconsBasePath/ic_password_visible.svg';
+  static const String passwordInvisibleIcon =
+      '$_iconsBasePath/ic_password_invisible.svg';
 
   ///Image
   static const String logoAppText = "$_imagesBasePath/app_logo_text.png";

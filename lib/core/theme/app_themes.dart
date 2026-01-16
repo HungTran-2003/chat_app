@@ -8,6 +8,7 @@ class AppThemes {
     return ThemeData(
       primaryColor: AppColors.primary,
       fontFamily: _font,
+      scaffoldBackgroundColor: AppColors.backgroundLight,
     );
   }
 }

@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en locale. All the
+// This is a library that provides messages for a vi locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,35 +18,35 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en';
+  String get localeName => 'vi';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "auth_login_description": MessageLookupByLibrary.simpleMessage(
-      "Welcome back! Sign in using your social account or email to continue us",
+      "Chào mừng quay lại! Đăng nhập bằng tài khoản mạng xã hội hoặc email để tiếp tục.",
     ),
     "auth_login_title": MessageLookupByLibrary.simpleMessage(
-      "<Log in> to Chatbox",
+      "<Đăng nhập> vào Chatbox",
     ),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
     "common_forgot_password": MessageLookupByLibrary.simpleMessage(
-      "Forgot password?",
+      "Quên mật khẩu?",
     ),
     "common_have_account_login": MessageLookupByLibrary.simpleMessage(
-      "Existing account? <Log in>",
+      "Có tài khoản? <Đăng nhập>",
     ),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
-    "common_sign_in": MessageLookupByLibrary.simpleMessage("Login"),
-    "common_sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
+    "common_sign_in": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+    "common_sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),
     "common_sign_up_with_email": MessageLookupByLibrary.simpleMessage(
-      "Sign up with email",
+      "Đăng ký với email",
     ),
-    "common_your_email": MessageLookupByLibrary.simpleMessage("Your email"),
+    "common_your_email": MessageLookupByLibrary.simpleMessage("Email"),
     "onboard_app_title": MessageLookupByLibrary.simpleMessage(
-      "Connect friends <easily & quickly>",
+      "Kết nối bạn bè <dễ dàng & nhanh chóng>",
     ),
     "onboard_description": MessageLookupByLibrary.simpleMessage(
-      "Our chat app is the perfect way to stay connected with friends and family.",
+      "Ứng dụng chat của chúng tôi là cách hoàn hảo để giữ liên lạc với bạn bè và gia đình..",
     ),
   };
 }

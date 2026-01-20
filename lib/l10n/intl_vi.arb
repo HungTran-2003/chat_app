@@ -3,5 +3,12 @@
   "onboard_app_title" : "Kết nối bạn bè <dễ dàng & nhanh chóng>",
   "onboard_description": "Ứng dụng chat của chúng tôi là cách hoàn hảo để giữ liên lạc với bạn bè và gia đình..",
   "common_sign_up_with_email": "Đăng ký với email",
-  "common_have_account_login": "Có tài khoản? <Đăng nhập>"
+  "common_have_account_login": "Có tài khoản? <Đăng nhập>",
+  "auth_login_title": "<Đăng nhập> vào Chatbox",
+  "auth_login_description": "Chào mừng quay lại! Đăng nhập bằng tài khoản mạng xã hội hoặc email để tiếp tục.",
+  "common_your_email": "Email",
+  "common_password": "Password",
+  "common_forgot_password": "Quên mật khẩu?",
+  "common_sign_in": "Đăng nhập",
+  "common_sign_up": "Đăng ký"
 }

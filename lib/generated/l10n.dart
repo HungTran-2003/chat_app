@@ -103,6 +103,66 @@ class S {
       args: [],
     );
   }
+
+  /// `<Log in> to Chatbox`
+  String get auth_login_title {
+    return Intl.message(
+      '<Log in> to Chatbox',
+      name: 'auth_login_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome back! Sign in using your social account or email to continue us`
+  String get auth_login_description {
+    return Intl.message(
+      'Welcome back! Sign in using your social account or email to continue us',
+      name: 'auth_login_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your email`
+  String get common_your_email {
+    return Intl.message(
+      'Your email',
+      name: 'common_your_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get common_password {
+    return Intl.message(
+      'Password',
+      name: 'common_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password?`
+  String get common_forgot_password {
+    return Intl.message(
+      'Forgot password?',
+      name: 'common_forgot_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get common_sign_in {
+    return Intl.message('Login', name: 'common_sign_in', desc: '', args: []);
+  }
+
+  /// `Sign up`
+  String get common_sign_up {
+    return Intl.message('Sign up', name: 'common_sign_up', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

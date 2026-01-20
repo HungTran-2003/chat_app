@@ -9,6 +9,7 @@ class AppIconButton extends StatelessWidget {
   final double? sizeButton;
   final Color? borderColor;
   final Color? backgroundColor;
+  final Color? iconColor;
   final double? borderWidth;
   final VoidCallback? onPress;
 
@@ -19,6 +20,7 @@ class AppIconButton extends StatelessWidget {
     this.sizeButton = 48.0,
     this.borderColor = Colors.transparent,
     this.backgroundColor = Colors.transparent,
+    this.iconColor,
     this.borderWidth = 1.0,
     this.onPress,
   });
@@ -26,7 +28,7 @@ class AppIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => safeAction((){
+      onTap: () => safeAction(() {
         onPress?.call();
       }),
       customBorder: const CircleBorder(),
@@ -34,10 +36,7 @@ class AppIconButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           shape: BoxShape.circle,
-          border: Border.all(
-            color: borderColor!,
-            width: borderWidth!,
-          ),
+          border: Border.all(color: borderColor!, width: borderWidth!),
         ),
         child: SizedBox(
           width: sizeButton,
@@ -47,6 +46,10 @@ class AppIconButton extends StatelessWidget {
               path,
               width: sizeIcon!.width,
               height: sizeIcon!.height,
+              colorFilter: iconColor != null
+                  ? ColorFilter.mode(iconColor!, BlendMode.srcIn)
+                  : null,
+              fit: BoxFit.fitWidth,
             ),
           ),
         ),

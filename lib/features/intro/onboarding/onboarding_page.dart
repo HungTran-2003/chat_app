@@ -12,6 +12,7 @@ import 'package:chat_app/core/widgets/divider/app_divider.dart';
 import 'package:chat_app/core/widgets/image/app_assest_image.dart';
 import 'package:chat_app/core/widgets/image/app_svg_image.dart';
 import 'package:chat_app/core/widgets/text/app_text_rich.dart';
+import 'package:chat_app/features/auth/widgets/divider/auth_divider_with_text.dart';
 import 'package:chat_app/features/intro/onboarding/onboarding_cubit.dart';
 import 'package:chat_app/features/intro/onboarding/onboarding_navigator.dart';
 import 'package:chat_app/generated/l10n.dart';
@@ -92,7 +93,7 @@ class _OnboardingChildPageState extends State<OnboardingChildPage> {
                   38.height,
                   _buildButtonAuthIcon(),
                   30.height,
-                  _buildDividerWithText(),
+                  AuthDividerWithText(),
                   30.height,
                   AppFilledButton(
                     label: S.of(context).common_sign_up_with_email,
@@ -162,19 +163,6 @@ class _OnboardingChildPageState extends State<OnboardingChildPage> {
           path: AssetConstants.iconApple,
           borderColor: AppColors.borderGrayA8B,
         ),
-      ],
-    );
-  }
-
-  Widget _buildDividerWithText() {
-    return Row(
-      children: [
-        const Expanded(child: AppDivider()),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text("OR", style: AppTextStyle.white.s14.w600),
-        ),
-        const Expanded(child: AppDivider()),
       ],
     );
   }

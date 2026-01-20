@@ -1,13 +1,19 @@
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class TextFieldNotifier extends ChangeNotifier {
-  TextFieldNotifier();
-
+class PasswordNotifier extends ChangeNotifier {
+  bool _isObscure = true;
   String? _textError;
 
+  bool get isObscure => _isObscure;
   String? get textError => _textError;
+
+  void toggleVisibility() {
+    _isObscure = !_isObscure;
+    notifyListeners();
+  }
 
   void setTextError(String? textError) {
     _textError = textError;
@@ -15,32 +21,28 @@ class TextFieldNotifier extends ChangeNotifier {
   }
 }
 
-class AppTextField extends StatelessWidget {
+class PasswordTextField extends StatelessWidget {
   final String? label;
   final TextEditingController? controller;
-  final bool? obscureText;
   final String? Function(String?)? validator;
-  final Widget? suffixIcon;
   final int? maxLines;
   final TextStyle? labelStyle;
   final FocusNode? focusNode;
   final EdgeInsets? padding;
   final TextStyle? style;
-  final TextFieldNotifier? textFieldNotifier;
+  final PasswordNotifier passwordNotifier;
 
-  const AppTextField({
+  const PasswordTextField({
     super.key,
     this.label = "TextField",
     this.controller,
-    this.obscureText,
     this.validator,
-    this.suffixIcon,
     this.maxLines,
     this.labelStyle,
     this.focusNode,
     this.padding,
     this.style,
-    this.textFieldNotifier,
+    required this.passwordNotifier,
   });
 
   @override
@@ -51,7 +53,7 @@ class AppTextField extends StatelessWidget {
         child: Text(label!),
       ),
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      contentPadding: EdgeInsets.only(bottom: 8),
+      contentPadding: const EdgeInsets.only(bottom: 8),
       floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
         if (states.contains(WidgetState.error)) {
           return labelStyle ?? AppTextStyle.red.s18.w600;
@@ -61,7 +63,6 @@ class AppTextField extends StatelessWidget {
         }
         return AppTextStyle.primary.s18.w600;
       }),
-
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: AppColors.divider, width: 1),
       ),
@@ -74,19 +75,27 @@ class AppTextField extends StatelessWidget {
       focusedErrorBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: AppColors.backgroundRed, width: 1),
       ),
-      suffixIcon: suffixIcon,
-      errorStyle: AppTextStyle.red.s14.w500,
+      suffixIcon: IconButton(
+        icon: Icon(
+          passwordNotifier.isObscure
+              ? Icons.visibility_off
+              : Icons.visibility,
+        ),
+        onPressed: () {
+          passwordNotifier.toggleVisibility();
+        },
+      ),
       helperText: " "
     );
-
     return ListenableBuilder(
-      listenable: textFieldNotifier ?? TextFieldNotifier(),
+      listenable: passwordNotifier,
       builder: (context, child) {
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
               controller: controller,
-              obscureText: obscureText ?? false,
+              obscureText: passwordNotifier.isObscure,
               validator: validator,
               maxLines: maxLines ?? 1,
               focusNode: focusNode,
@@ -98,11 +107,11 @@ class AppTextField extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  textFieldNotifier?.textError ?? "",
+                  passwordNotifier.textError ?? "",
                   style: AppTextStyle.red.s14.w500,
                 ),
               ),
-            ),
+            )
           ],
         );
       },

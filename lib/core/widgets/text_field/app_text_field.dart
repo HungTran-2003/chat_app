@@ -13,6 +13,11 @@ class TextFieldNotifier extends ChangeNotifier {
     _textError = textError;
     notifyListeners();
   }
+
+  void clear() {
+    _textError = null;
+    notifyListeners();
+  }
 }
 
 class AppTextField extends StatelessWidget {

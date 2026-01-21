@@ -10,5 +10,10 @@
   "common_password": "Password",
   "common_forgot_password": "Quên mật khẩu?",
   "common_sign_in": "Đăng nhập",
-  "common_sign_up": "Đăng ký"
+  "common_sign_up": "Đăng ký",
+  "auth_register_title": "Đăng ký với <Email>",
+  "auth_register_description": "Hãy bắt đầu trò chuyện với bạn bè và gia đình ngay hôm nay bằng cách đăng ký ứng dụng trò chuyện của chúng tôi!",
+  "common_label_name": "Tên của bạn",
+  "common_confirm_password": "Xác nhận mật khẩu",
+  "common_create_account": "Tạo tài khoản"
 }

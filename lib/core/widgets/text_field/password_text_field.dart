@@ -19,6 +19,12 @@ class PasswordNotifier extends ChangeNotifier {
     _textError = textError;
     notifyListeners();
   }
+
+  void clear() {
+    _textError = null;
+    _isObscure = true;
+    notifyListeners();
+  }
 }
 
 class PasswordTextField extends StatelessWidget {
@@ -75,16 +81,6 @@ class PasswordTextField extends StatelessWidget {
       focusedErrorBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: AppColors.backgroundRed, width: 1),
       ),
-      suffixIcon: IconButton(
-        icon: Icon(
-          passwordNotifier.isObscure
-              ? Icons.visibility_off
-              : Icons.visibility,
-        ),
-        onPressed: () {
-          passwordNotifier.toggleVisibility();
-        },
-      ),
       helperText: " "
     );
     return ListenableBuilder(
@@ -99,7 +95,18 @@ class PasswordTextField extends StatelessWidget {
               validator: validator,
               maxLines: maxLines ?? 1,
               focusNode: focusNode,
-              decoration: defaultDecoration,
+              decoration: defaultDecoration.copyWith(
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    passwordNotifier.isObscure
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    passwordNotifier.toggleVisibility();
+                  },
+                ),
+              ),
               style: style ?? AppTextStyle.black.s18.w500,
             ),
             Transform.translate(

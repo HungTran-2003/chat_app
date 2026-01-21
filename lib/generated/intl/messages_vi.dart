@@ -28,13 +28,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_login_title": MessageLookupByLibrary.simpleMessage(
       "<Đăng nhập> vào Chatbox",
     ),
+    "auth_register_description": MessageLookupByLibrary.simpleMessage(
+      "Hãy bắt đầu trò chuyện với bạn bè và gia đình ngay hôm nay bằng cách đăng ký ứng dụng trò chuyện của chúng tôi!",
+    ),
+    "auth_register_title": MessageLookupByLibrary.simpleMessage(
+      "Đăng ký với <Email>",
+    ),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
+    "common_confirm_password": MessageLookupByLibrary.simpleMessage(
+      "Xác nhận mật khẩu",
+    ),
+    "common_create_account": MessageLookupByLibrary.simpleMessage(
+      "Tạo tài khoản",
+    ),
     "common_forgot_password": MessageLookupByLibrary.simpleMessage(
       "Quên mật khẩu?",
     ),
     "common_have_account_login": MessageLookupByLibrary.simpleMessage(
       "Có tài khoản? <Đăng nhập>",
     ),
+    "common_label_name": MessageLookupByLibrary.simpleMessage("Tên của bạn"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_sign_in": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),

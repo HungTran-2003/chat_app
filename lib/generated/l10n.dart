@@ -163,6 +163,56 @@ class S {
   String get common_sign_up {
     return Intl.message('Sign up', name: 'common_sign_up', desc: '', args: []);
   }
+
+  /// `Sign up with <Email>`
+  String get auth_register_title {
+    return Intl.message(
+      'Sign up with <Email>',
+      name: 'auth_register_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get chatting with friends and family today by signing up for our chat app!`
+  String get auth_register_description {
+    return Intl.message(
+      'Get chatting with friends and family today by signing up for our chat app!',
+      name: 'auth_register_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your name`
+  String get common_label_name {
+    return Intl.message(
+      'Your name',
+      name: 'common_label_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm password`
+  String get common_confirm_password {
+    return Intl.message(
+      'Confirm password',
+      name: 'common_confirm_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create an account`
+  String get common_create_account {
+    return Intl.message(
+      'Create an account',
+      name: 'common_create_account',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -28,13 +28,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_login_title": MessageLookupByLibrary.simpleMessage(
       "<Log in> to Chatbox",
     ),
+    "auth_register_description": MessageLookupByLibrary.simpleMessage(
+      "Get chatting with friends and family today by signing up for our chat app!",
+    ),
+    "auth_register_title": MessageLookupByLibrary.simpleMessage(
+      "Sign up with <Email>",
+    ),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
+    "common_confirm_password": MessageLookupByLibrary.simpleMessage(
+      "Confirm password",
+    ),
+    "common_create_account": MessageLookupByLibrary.simpleMessage(
+      "Create an account",
+    ),
     "common_forgot_password": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
     ),
     "common_have_account_login": MessageLookupByLibrary.simpleMessage(
       "Existing account? <Log in>",
     ),
+    "common_label_name": MessageLookupByLibrary.simpleMessage("Your name"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_sign_in": MessageLookupByLibrary.simpleMessage("Login"),
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),

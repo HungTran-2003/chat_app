@@ -10,5 +10,10 @@
   "common_password": "Password",
   "common_forgot_password": "Forgot password?",
   "common_sign_in": "Login",
-  "common_sign_up": "Sign up"
+  "common_sign_up": "Sign up",
+  "auth_register_title": "Sign up with <Email>",
+  "auth_register_description": "Get chatting with friends and family today by signing up for our chat app!",
+  "common_label_name": "Your name",
+  "common_confirm_password": "Confirm password",
+  "common_create_account": "Create an account",
 }

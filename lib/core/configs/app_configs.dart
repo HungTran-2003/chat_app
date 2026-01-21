@@ -1,4 +1,4 @@
-import 'package:chat_app/data/models/enum/language_type.dart';
+import 'package:chat_app/data/enum/language_type.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppConfigs {

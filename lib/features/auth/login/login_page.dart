@@ -89,7 +89,7 @@ class _LoginChildPageState extends State<LoginChildPage> {
                 builder: (context, state) {
                   return AppFilledButton(
                     label: S.of(context).common_sign_in,
-                    onPress: (){
+                    onPress: () {
                       if (_formKey.currentState!.validate()) {
                         _cubit.cleanController();
                         _cubit.cleanFocusNode();
@@ -103,7 +103,17 @@ class _LoginChildPageState extends State<LoginChildPage> {
               16.height,
               _buildForgotPasswordText(),
               20.height,
-              AppFilledButton(label: S.of(context).common_sign_up, onPress: (){})
+              AppFilledButton(
+                label: S.of(context).common_sign_up,
+                onPress: () {
+                  _formKey.currentState?.reset();
+                  _cubit.cleanController();
+                  _cubit.cleanFocusNode();
+                  _cubit.cleanNotifier();
+                  _cubit.navigator.openSignUpPage();
+                },
+              ),
+              10.height,
             ],
           ),
         ),

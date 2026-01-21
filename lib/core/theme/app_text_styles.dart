@@ -33,6 +33,12 @@ class AppTextStyle {
     fontSize: 16,
     fontFamily: fontFamily,
   );
+
+  static const tertiary = TextStyle(
+    color: AppColors.tertiary,
+    fontSize: 16,
+    fontFamily: fontFamily,
+  );
 }
 
 extension AppTextStyleExt on TextStyle {

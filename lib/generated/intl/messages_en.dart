@@ -94,6 +94,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sign up with email",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Your email"),
+    "nav_call": MessageLookupByLibrary.simpleMessage("Call"),
+    "nav_contact": MessageLookupByLibrary.simpleMessage("Contact"),
+    "nav_message": MessageLookupByLibrary.simpleMessage("Message"),
+    "nav_setting": MessageLookupByLibrary.simpleMessage("Setting"),
     "onboard_app_title": MessageLookupByLibrary.simpleMessage(
       "Connect friends <easily & quickly>",
     ),

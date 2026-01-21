@@ -94,6 +94,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Đăng ký với email",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Email"),
+    "nav_call": MessageLookupByLibrary.simpleMessage("Cuộc gọi"),
+    "nav_contact": MessageLookupByLibrary.simpleMessage("Danh bạ"),
+    "nav_message": MessageLookupByLibrary.simpleMessage("Đoạn chat"),
+    "nav_setting": MessageLookupByLibrary.simpleMessage("Cài đặt"),
     "onboard_app_title": MessageLookupByLibrary.simpleMessage(
       "Kết nối bạn bè <dễ dàng & nhanh chóng>",
     ),

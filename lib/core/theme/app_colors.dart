@@ -22,6 +22,8 @@ class AppColors {
   static const Color borderBlack = Color(0xFF000E08);
   static const Color borderDarkGreen = Color(0xFF363F3B);
   static const Color borderGrayA8B = Color(0xFFA8B0AF);
+  static const Color borderBottomNav = Color(0xFFEEFAF8);
+
 
 
   ///Divider

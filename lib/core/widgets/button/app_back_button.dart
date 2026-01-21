@@ -52,9 +52,9 @@ class AppBackButton extends StatelessWidget {
       try {
         final appCubit = context.read<AppCubit>();
         // appCubit.changeMainPage(page: MainNavItem.home);
-        context.goNamed(AppRouter.homeRouterName);
+        context.goNamed(AppRouter.messageRouterName);
       } catch (e) {
-        context.goNamed(AppRouter.homeRouterName);
+        context.goNamed(AppRouter.messageRouterName);
       }
     }
   }

@@ -29,5 +29,9 @@
   "common_message_user_not_found": "User not found.",
   "common_message_wrong_password": "Incorrect password.",
   "common_message_invalid_email": "The email address is invalid.",
-  "common_message_user_disabled": "This account has been disabled."
+  "common_message_user_disabled": "This account has been disabled.",
+  "nav_message": "Message",
+  "nav_call": "Call",
+  "nav_contact": "Contact",
+  "nav_setting": "Setting"
 }

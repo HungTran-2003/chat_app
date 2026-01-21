@@ -7,4 +7,8 @@ class LoginNavigator extends BaseNavigator{
   void openSignUpPage(){
     pushNamed(AppRouter.registerRouteName);
   }
+
+  void goToHomePage(){
+    goNamed(AppRouter.homeRouterName);
+  }
 }

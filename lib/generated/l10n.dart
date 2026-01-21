@@ -163,6 +163,186 @@ class S {
   String get common_sign_up {
     return Intl.message('Sign up', name: 'common_sign_up', desc: '', args: []);
   }
+
+  /// `Sign up with <Email>`
+  String get auth_register_title {
+    return Intl.message(
+      'Sign up with <Email>',
+      name: 'auth_register_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get chatting with friends and family today by signing up for our chat app!`
+  String get auth_register_description {
+    return Intl.message(
+      'Get chatting with friends and family today by signing up for our chat app!',
+      name: 'auth_register_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your name`
+  String get common_label_name {
+    return Intl.message(
+      'Your name',
+      name: 'common_label_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm password`
+  String get common_confirm_password {
+    return Intl.message(
+      'Confirm password',
+      name: 'common_confirm_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create an account`
+  String get common_create_account {
+    return Intl.message(
+      'Create an account',
+      name: 'common_create_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network connection error. Please check your internet connection.`
+  String get common_message_network_error {
+    return Intl.message(
+      'Network connection error. Please check your internet connection.',
+      name: 'common_message_network_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You do not have permission to perform this action.`
+  String get common_message_permission_denied {
+    return Intl.message(
+      'You do not have permission to perform this action.',
+      name: 'common_message_permission_denied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need to sign in to continue.`
+  String get common_message_unauthenticated {
+    return Intl.message(
+      'You need to sign in to continue.',
+      name: 'common_message_unauthenticated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The submitted data is invalid.`
+  String get common_message_invalid_data {
+    return Intl.message(
+      'The submitted data is invalid.',
+      name: 'common_message_invalid_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The requested data could not be found.`
+  String get common_message_data_not_found {
+    return Intl.message(
+      'The requested data could not be found.',
+      name: 'common_message_data_not_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The data already exists.`
+  String get common_message_data_already_exists {
+    return Intl.message(
+      'The data already exists.',
+      name: 'common_message_data_already_exists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The system is temporarily overloaded. Please try again later.`
+  String get common_message_quota_exceeded {
+    return Intl.message(
+      'The system is temporarily overloaded. Please try again later.',
+      name: 'common_message_quota_exceeded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The request took too long to process. Please try again.`
+  String get common_message_timeout {
+    return Intl.message(
+      'The request took too long to process. Please try again.',
+      name: 'common_message_timeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred. Please try again later.`
+  String get common_message_unexpected_error {
+    return Intl.message(
+      'An unexpected error occurred. Please try again later.',
+      name: 'common_message_unexpected_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User not found.`
+  String get common_message_user_not_found {
+    return Intl.message(
+      'User not found.',
+      name: 'common_message_user_not_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Incorrect password.`
+  String get common_message_wrong_password {
+    return Intl.message(
+      'Incorrect password.',
+      name: 'common_message_wrong_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The email address is invalid.`
+  String get common_message_invalid_email {
+    return Intl.message(
+      'The email address is invalid.',
+      name: 'common_message_invalid_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This account has been disabled.`
+  String get common_message_user_disabled {
+    return Intl.message(
+      'This account has been disabled.',
+      name: 'common_message_user_disabled',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

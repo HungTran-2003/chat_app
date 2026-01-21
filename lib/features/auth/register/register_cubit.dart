@@ -3,67 +3,77 @@ import 'package:chat_app/core/widgets/text_field/app_text_field.dart';
 import 'package:chat_app/core/widgets/text_field/password_text_field.dart';
 import 'package:chat_app/data/enum/status_type.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
-import 'package:chat_app/features/auth/login/login_navigator.dart';
+import 'package:chat_app/features/auth/register/register_navigator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'login_state.dart';
+part 'register_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
-  final LoginNavigator navigator;
+class RegisterCubit extends Cubit<RegisterState> {
+  final RegisterNavigator navigator;
   final AuthRepository authRepository;
 
-  LoginCubit({required this.navigator, required this.authRepository})
-    : super(const LoginState());
+  RegisterCubit({required this.navigator, required this.authRepository})
+    : super(const RegisterState());
 
   ///Text Controller
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   ///Focus Node
+  final nameFocusNode = FocusNode();
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
+  final confirmPasswordFocusNode = FocusNode();
 
   ///Notifier
+  final nameNotifier = TextFieldNotifier();
   final passwordNotifier = PasswordNotifier();
   final emailNotifier = TextFieldNotifier();
+  final confirmPasswordNotifier = PasswordNotifier();
 
-  void setStatusButtonLogin() {
+  void setStatusButtonSignUp() {
     final hasTextEmail = AppValidator.validateEmpty(emailController.text);
     final hasTextPassword = AppValidator.validateEmpty(passwordController.text);
-    final enable = hasTextEmail && hasTextPassword;
+    final hasTextConfirmPassword = AppValidator.validateEmpty(
+      confirmPasswordController.text,
+    );
+    final enable = hasTextEmail && hasTextPassword && hasTextConfirmPassword;
     emit(
       state.copyWith(
-        buttonLoginStatus: state.buttonLoginStatus?.statusButton(enable),
+        buttonSignUpStatus: state.buttonSignUpStatus?.statusButton(enable),
       ),
     );
   }
 
   void cleanController() {
+    nameController.clear();
     emailController.clear();
     passwordController.clear();
+    confirmPasswordController.clear();
   }
 
   void cleanFocusNode() {
+    nameFocusNode.unfocus();
     emailFocusNode.unfocus();
     passwordFocusNode.unfocus();
+    confirmPasswordFocusNode.unfocus();
   }
 
-  void cleanNotifier() {
-    passwordNotifier.clear();
-    emailNotifier.clear();
-  }
-
-  void loginByEmail() async {
+  Future<void> registerAccount() async {
     emit(state.copyWith(loadDataStatus: LoadStatus.loading));
+    final userName = nameController.text;
     final email = emailController.text;
     final password = passwordController.text;
-    final result = await authRepository.loginByEmail(
+
+    final result = await authRepository.registerAccount(
+      userName: userName,
       email: email,
       password: password,
     );
-
     result.fold(
       (failure) {
         emit(state.copyWith(loadDataStatus: LoadStatus.success));
@@ -71,10 +81,15 @@ class LoginCubit extends Cubit<LoginState> {
       },
       (success) {
         emit(state.copyWith(loadDataStatus: LoadStatus.success));
-        cleanController();
-        cleanFocusNode();
-        navigator.goToHomePage();
-      }
+        navigator.appDialog.show(
+          message: "Success",
+          textConfirm: "Ok CC",
+          onConfirm: () async {
+            navigator.appDialog.hide();
+            navigator.openLoginPage();
+          },
+        );
+      },
     );
   }
 }

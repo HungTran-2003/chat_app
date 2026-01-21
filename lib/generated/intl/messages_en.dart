@@ -28,12 +28,64 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_login_title": MessageLookupByLibrary.simpleMessage(
       "<Log in> to Chatbox",
     ),
+    "auth_register_description": MessageLookupByLibrary.simpleMessage(
+      "Get chatting with friends and family today by signing up for our chat app!",
+    ),
+    "auth_register_title": MessageLookupByLibrary.simpleMessage(
+      "Sign up with <Email>",
+    ),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
+    "common_confirm_password": MessageLookupByLibrary.simpleMessage(
+      "Confirm password",
+    ),
+    "common_create_account": MessageLookupByLibrary.simpleMessage(
+      "Create an account",
+    ),
     "common_forgot_password": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
     ),
     "common_have_account_login": MessageLookupByLibrary.simpleMessage(
       "Existing account? <Log in>",
+    ),
+    "common_label_name": MessageLookupByLibrary.simpleMessage("Your name"),
+    "common_message_data_already_exists": MessageLookupByLibrary.simpleMessage(
+      "The data already exists.",
+    ),
+    "common_message_data_not_found": MessageLookupByLibrary.simpleMessage(
+      "The requested data could not be found.",
+    ),
+    "common_message_invalid_data": MessageLookupByLibrary.simpleMessage(
+      "The submitted data is invalid.",
+    ),
+    "common_message_invalid_email": MessageLookupByLibrary.simpleMessage(
+      "The email address is invalid.",
+    ),
+    "common_message_network_error": MessageLookupByLibrary.simpleMessage(
+      "Network connection error. Please check your internet connection.",
+    ),
+    "common_message_permission_denied": MessageLookupByLibrary.simpleMessage(
+      "You do not have permission to perform this action.",
+    ),
+    "common_message_quota_exceeded": MessageLookupByLibrary.simpleMessage(
+      "The system is temporarily overloaded. Please try again later.",
+    ),
+    "common_message_timeout": MessageLookupByLibrary.simpleMessage(
+      "The request took too long to process. Please try again.",
+    ),
+    "common_message_unauthenticated": MessageLookupByLibrary.simpleMessage(
+      "You need to sign in to continue.",
+    ),
+    "common_message_unexpected_error": MessageLookupByLibrary.simpleMessage(
+      "An unexpected error occurred. Please try again later.",
+    ),
+    "common_message_user_disabled": MessageLookupByLibrary.simpleMessage(
+      "This account has been disabled.",
+    ),
+    "common_message_user_not_found": MessageLookupByLibrary.simpleMessage(
+      "User not found.",
+    ),
+    "common_message_wrong_password": MessageLookupByLibrary.simpleMessage(
+      "Incorrect password.",
     ),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_sign_in": MessageLookupByLibrary.simpleMessage("Login"),

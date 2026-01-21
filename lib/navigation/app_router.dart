@@ -1,5 +1,6 @@
 import 'package:chat_app/features/auth/login/login_page.dart';
 import 'package:chat_app/features/auth/register/register_page.dart';
+import 'package:chat_app/features/home/home_page.dart';
 import 'package:chat_app/features/intro/onboarding/onboarding_page.dart';
 import 'package:chat_app/features/intro/splash/splash_page.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class AppRouter {
   static const String loginRouteName = 'login';
   static const String registerRouteName = 'register';
   static const String forgotPasswordRouteName = 'forgotPassword';
-  static const String homeName = 'home';
+  static const String homeRouterName = 'home';
 
   static final GoRouter router = GoRouter(
     initialLocation: _splashPath,
@@ -54,5 +55,10 @@ class AppRouter {
       path: _registerPath,
       builder: (context, state) => const RegisterPage(),
     ),
+    GoRoute(
+      name: homeRouterName,
+      path: _homePath,
+      builder: (context, state) => const HomePage(),
+    )
   ];
 }

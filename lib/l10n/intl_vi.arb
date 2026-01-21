@@ -10,5 +10,24 @@
   "common_password": "Password",
   "common_forgot_password": "Quên mật khẩu?",
   "common_sign_in": "Đăng nhập",
-  "common_sign_up": "Đăng ký"
+  "common_sign_up": "Đăng ký",
+  "auth_register_title": "Đăng ký với <Email>",
+  "auth_register_description": "Hãy bắt đầu trò chuyện với bạn bè và gia đình ngay hôm nay bằng cách đăng ký ứng dụng trò chuyện của chúng tôi!",
+  "common_label_name": "Tên của bạn",
+  "common_confirm_password": "Xác nhận mật khẩu",
+  "common_create_account": "Tạo tài khoản",
+  "common_message_network_error": "Lỗi kết nối mạng. Vui lòng kiểm tra lại kết nối Internet.",
+  "common_message_permission_denied": "Bạn không có quyền thực hiện thao tác này.",
+  "common_message_unauthenticated": "Vui lòng đăng nhập để tiếp tục.",
+  "common_message_invalid_data": "Dữ liệu gửi lên không hợp lệ.",
+  "common_message_data_not_found": "Không tìm thấy dữ liệu.",
+  "common_message_data_already_exists": "Dữ liệu đã tồn tại.",
+  "common_message_quota_exceeded": "Hệ thống đang quá tải. Vui lòng thử lại sau.",
+  "common_message_timeout": "Yêu cầu xử lý quá lâu. Vui lòng thử lại.",
+  "common_message_unexpected_error": "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau.",
+
+  "common_message_user_not_found": "Không tìm thấy người dùng.",
+  "common_message_wrong_password": "Mật khẩu không chính xác.",
+  "common_message_invalid_email": "Email không hợp lệ.",
+  "common_message_user_disabled": "Tài khoản này đã bị vô hiệu hóa."
 }

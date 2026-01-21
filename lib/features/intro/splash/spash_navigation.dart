@@ -7,4 +7,8 @@ class SplashNavigator extends BaseNavigator {
   void goToOnboarding(){
     goNamed(AppRouter.onboardingRouteName);
   }
+
+  void goToHomePage(){
+    goNamed(AppRouter.homeRouterName);
+  }
 }

@@ -78,6 +78,8 @@ dependencies:
   flutter_native_splash: ^2.4.7
   extended_text_field: ^16.0.2
   super_sliver_list: ^0.4.1
+  logger: ^2.5.0
+  dartz: ^0.10.1
 
 flutter_launcher_icons:
   android: true
@@ -152,4 +154,4 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 flutter_intl:
-  enabled: true
+  enabled: false

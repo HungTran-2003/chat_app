@@ -1,9 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat_app/data/models/user_entity.dart';
 
-class ApiClient {
-  final FirebaseAuth _auth;
-  final FirebaseFirestore _firestore;
+abstract class ApiClient {
+  Future<dynamic> registerAccount ({
+    required String userName,
+    required String email,
+    required String password,
+  });
 
-  ApiClient(this._auth, this._firestore);
+  Future<dynamic> loginByEmail({
+    required String email,
+    required String password,
+  });
+
+  Future<UserEntity> getUserInfo({required String uid});
 }

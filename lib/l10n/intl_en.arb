@@ -16,4 +16,18 @@
   "common_label_name": "Your name",
   "common_confirm_password": "Confirm password",
   "common_create_account": "Create an account",
+  "common_message_network_error": "Network connection error. Please check your internet connection.",
+  "common_message_permission_denied": "You do not have permission to perform this action.",
+  "common_message_unauthenticated": "You need to sign in to continue.",
+  "common_message_invalid_data": "The submitted data is invalid.",
+  "common_message_data_not_found": "The requested data could not be found.",
+  "common_message_data_already_exists": "The data already exists.",
+  "common_message_quota_exceeded": "The system is temporarily overloaded. Please try again later.",
+  "common_message_timeout": "The request took too long to process. Please try again.",
+  "common_message_unexpected_error": "An unexpected error occurred. Please try again later.",
+
+  "common_message_user_not_found": "User not found.",
+  "common_message_wrong_password": "Incorrect password.",
+  "common_message_invalid_email": "The email address is invalid.",
+  "common_message_user_disabled": "This account has been disabled."
 }

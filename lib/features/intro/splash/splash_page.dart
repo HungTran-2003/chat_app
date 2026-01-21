@@ -14,7 +14,10 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<SplashCubit>(
       create: (context) {
-        return SplashCubit(navigator: SplashNavigator(context: context));
+        return SplashCubit(
+          navigator: SplashNavigator(context: context),
+          authRepository: context.read(),
+        );
       },
       child: const SplashChildPage(),
     );
@@ -40,18 +43,14 @@ class _SplashChildPageState extends State<SplashChildPage> {
       _cubit.checkOnboard();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.splashBackground,
       child: Center(
-        child: Center(
-          child: AppAssetImage(
-            path: AssetConstants.logoAppText,
-          ),
-        ),
+        child: Center(child: AppAssetImage(path: AssetConstants.logoAppText)),
       ),
     );
   }
 }
-

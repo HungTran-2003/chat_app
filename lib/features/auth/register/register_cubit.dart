@@ -2,6 +2,7 @@ import 'package:chat_app/core/utlis/validator.dart';
 import 'package:chat_app/core/widgets/text_field/app_text_field.dart';
 import 'package:chat_app/core/widgets/text_field/password_text_field.dart';
 import 'package:chat_app/data/enum/status_type.dart';
+import 'package:chat_app/data/repositories/auth_repository.dart';
 import 'package:chat_app/features/auth/register/register_navigator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,10 @@ part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   final RegisterNavigator navigator;
+  final AuthRepository authRepository;
+
+  RegisterCubit({required this.navigator, required this.authRepository})
+    : super(const RegisterState());
 
   ///Text Controller
   final nameController = TextEditingController();
@@ -29,8 +34,6 @@ class RegisterCubit extends Cubit<RegisterState> {
   final passwordNotifier = PasswordNotifier();
   final emailNotifier = TextFieldNotifier();
   final confirmPasswordNotifier = PasswordNotifier();
-
-  RegisterCubit({required this.navigator}) : super(const RegisterState());
 
   void setStatusButtonSignUp() {
     final hasTextEmail = AppValidator.validateEmpty(emailController.text);
@@ -58,5 +61,35 @@ class RegisterCubit extends Cubit<RegisterState> {
     emailFocusNode.unfocus();
     passwordFocusNode.unfocus();
     confirmPasswordFocusNode.unfocus();
+  }
+
+  Future<void> registerAccount() async {
+    emit(state.copyWith(loadDataStatus: LoadStatus.loading));
+    final userName = nameController.text;
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    final result = await authRepository.registerAccount(
+      userName: userName,
+      email: email,
+      password: password,
+    );
+    result.fold(
+      (failure) {
+        emit(state.copyWith(loadDataStatus: LoadStatus.success));
+        navigator.flushbarNavigator.showError(message: failure.message);
+      },
+      (success) {
+        emit(state.copyWith(loadDataStatus: LoadStatus.success));
+        navigator.appDialog.show(
+          message: "Success",
+          textConfirm: "Ok CC",
+          onConfirm: () async {
+            navigator.appDialog.hide();
+            navigator.openLoginPage();
+          },
+        );
+      },
+    );
   }
 }

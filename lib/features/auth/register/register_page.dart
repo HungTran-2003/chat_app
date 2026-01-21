@@ -15,16 +15,20 @@ import 'package:chat_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RegisterCubit>(create: (context) {
-      return RegisterCubit(navigator: RegisterNavigator(context: context));
-    },
-    child: RegisterChildPage(),);
+    return BlocProvider<RegisterCubit>(
+      create: (context) {
+        return RegisterCubit(
+          navigator: RegisterNavigator(context: context),
+          authRepository: context.read(),
+        );
+      },
+      child: RegisterChildPage(),
+    );
   }
 }
 
@@ -72,9 +76,7 @@ class _RegisterChildPageState extends State<RegisterChildPage> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              AppBackButton(),
-            ],
+            children: [AppBackButton()],
           ),
           60.height,
           AuthTextHighLight(rawText: S.of(context).auth_register_title),
@@ -89,15 +91,13 @@ class _RegisterChildPageState extends State<RegisterChildPage> {
           60.height,
           BlocBuilder<RegisterCubit, RegisterState>(
             buildWhen: (previous, current) =>
-            previous.buttonSignUpStatus != current.buttonSignUpStatus,
+                previous.buttonSignUpStatus != current.buttonSignUpStatus,
             builder: (context, state) {
               return AppFilledButton(
                 label: S.of(context).common_sign_up,
-                onPress: (){
+                onPress: () {
                   if (_formKey.currentState!.validate()) {
-                    _cubit.cleanController();
-                    _cubit.cleanFocusNode();
-                    print("Register Success");
+                    _cubit.registerAccount();
                   }
                 },
                 enable: state.buttonSignUpStatus?.isLoading,
@@ -111,7 +111,7 @@ class _RegisterChildPageState extends State<RegisterChildPage> {
             defaultStyle: AppTextStyle.grey.s14.w500,
             onPress: [_handlerLogin],
           ),
-          10.height
+          10.height,
         ],
       ),
     );
@@ -182,4 +182,3 @@ class _RegisterChildPageState extends State<RegisterChildPage> {
     _cubit.navigator.openLoginPage();
   }
 }
-

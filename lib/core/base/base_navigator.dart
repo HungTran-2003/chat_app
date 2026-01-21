@@ -1,4 +1,8 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
+import 'package:chat_app/core/global/global_data.dart';
+import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/widgets/dialog/app_dialog.dart';
 import 'package:chat_app/navigation/app_router.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +15,13 @@ import 'package:go_router/go_router.dart';
 /// extend this class and add methods specific to their feature's navigation needs.
 class BaseNavigator {
   final BuildContext context;
-  // late FlushbarNavigator flushbarNavigator;
+  late FlushbarNavigator flushbarNavigator;
   late AppDialog appDialog;
 
   /// Creates a BaseNavigator. Requires the [context] from which navigation
   /// will be initiated.
   BaseNavigator({required this.context}) {
-    // flushbarNavigator = FlushbarNavigator(context);
+    flushbarNavigator = FlushbarNavigator(context);
     appDialog = AppDialog(context);
   }
 
@@ -132,7 +136,7 @@ class BaseNavigator {
   }
 
   void openHome() {
-    goNamed(AppRouter.homeName);
+    goNamed(AppRouter.homeRouterName);
   }
 
   void navigateBack() {
@@ -143,58 +147,58 @@ class BaseNavigator {
     if (context.canPop()) {
       context.pop();
     } else {
-      context.goNamed(AppRouter.homeName);
+      context.goNamed(AppRouter.homeRouterName);
     }
   }
 }
 
-// class FlushbarNavigator {
-//   final BuildContext _context;
-//   FlushbarNavigator(context) : _context = context;
-//
-//   /// Show error flushbar
-//   Future<void> showError({
-//     String? message,
-//   }) async {
-//     if (!GlobalData.instance.isShowFlushBar) return;
-//     await Flushbar(
-//       message: (message?.isNotEmpty ?? false)
-//           ? message
-//           : S.current.error_unknown_error,
-//       messageSize: 15,
-//       margin: UiConstants.horizontalPaddingMedium
-//           .copyWith(bottom: UiConstants.paddingMedium),
-//       flushbarStyle: FlushbarStyle.FLOATING,
-//       flushbarPosition: FlushbarPosition.BOTTOM,
-//       borderRadius: BorderRadius.circular(8),
-//       icon: const Icon(
-//         Icons.error,
-//         color: AppColors.textRed,
-//         size: 24,
-//       ),
-//       titleColor: AppColors.textBlack,
-//       duration: const Duration(seconds: 3),
-//       backgroundColor: AppColors.neutral800,
-//     ).show(_context);
-//   }
-//
-//   Future showSuccess({required String message}) async {
-//     return await Flushbar(
-//       message: message,
-//       messageSize: 15,
-//       margin: UiConstants.horizontalPaddingMedium
-//           .copyWith(bottom: UiConstants.paddingMedium),
-//       borderRadius: BorderRadius.circular(8),
-//       flushbarStyle: FlushbarStyle.FLOATING,
-//       flushbarPosition: FlushbarPosition.TOP,
-//       icon: const Icon(
-//         Icons.done,
-//         color: AppColors.buttonBGGreen,
-//         size: 24,
-//       ),
-//       titleColor: AppColors.textBlack,
-//       duration: const Duration(seconds: 3),
-//       backgroundColor: AppColors.neutral800,
-//     ).show(_context);
-//   }
-// }
+class FlushbarNavigator {
+  final BuildContext _context;
+  FlushbarNavigator(context) : _context = context;
+
+  /// Show error flushbar
+  Future<void> showError({
+    String? message,
+  }) async {
+    if (!GlobalData.instance.isShowFlushBar) return;
+    await Flushbar(
+      message: (message?.isNotEmpty ?? false)
+          ? message
+          : "Something went wrong.",
+      messageSize: 15,
+      margin: UiConstants.horizontalPaddingMedium
+          .copyWith(bottom: UiConstants.paddingMedium),
+      flushbarStyle: FlushbarStyle.FLOATING,
+      flushbarPosition: FlushbarPosition.BOTTOM,
+      borderRadius: BorderRadius.circular(8),
+      icon: const Icon(
+        Icons.error,
+        color: AppColors.textRed,
+        size: 24,
+      ),
+      titleColor: AppColors.textBlack,
+      duration: const Duration(seconds: 3),
+      backgroundColor: AppColors.tertiary,
+    ).show(_context);
+  }
+
+  Future showSuccess({required String message}) async {
+    return await Flushbar(
+      message: message,
+      messageSize: 15,
+      margin: UiConstants.horizontalPaddingMedium
+          .copyWith(bottom: UiConstants.paddingMedium),
+      borderRadius: BorderRadius.circular(8),
+      flushbarStyle: FlushbarStyle.FLOATING,
+      flushbarPosition: FlushbarPosition.TOP,
+      icon: const Icon(
+        Icons.done,
+        color: Colors.greenAccent,
+        size: 24,
+      ),
+      titleColor: AppColors.textBlack,
+      duration: const Duration(seconds: 3),
+      backgroundColor: AppColors.tertiary,
+    ).show(_context);
+  }
+}

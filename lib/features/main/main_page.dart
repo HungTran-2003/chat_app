@@ -84,38 +84,28 @@ class _MainChildPageState extends State<_MainChildPage> {
           previous.currentMainPage != current.currentMainPage,
       builder: (context, state) {
         return Container(
-          height: 108.0,
+          height: bottomNavHeight,
           decoration: BoxDecoration(
             border: Border(
-              top: BorderSide(color: AppColors.borderBottomNav, width: 1.0),
+              top: BorderSide(color: AppColors.borderBottomNav, width: 3.0),
             ),
           ),
-          child: Container(
-            height: 108.0,
-            decoration: BoxDecoration(
-              color: AppColors.secondary,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(70.0),
-                topRight: Radius.circular(70.0),
-              ),
-            ),
-            child: Row(
-              spacing: 8,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(MainNavItem.values.length, (index) {
-                return InkWell(
-                  onTap: () => safeAction(() {
-                    _appCubit.changeMainPage(page: MainNavItem.values[index]);
-                  }),
-                  borderRadius: BorderRadius.circular(22),
-                  child: TabIcons(
-                    navItem: MainNavItem.values[index],
-                    isSelected:
-                        state.currentMainPage == MainNavItem.values[index],
-                  ),
-                );
-              }),
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: List.generate(MainNavItem.values.length, (index) {
+              return InkWell(
+                onTap: () => safeAction(() {
+                  _appCubit.changeMainPage(page: MainNavItem.values[index]);
+                }),
+                splashColor: Colors.transparent,
+                child: TabIcons(
+                  navItem: MainNavItem.values[index],
+                  isSelected:
+                      state.currentMainPage == MainNavItem.values[index],
+                ),
+              );
+            }),
           ),
         );
       },

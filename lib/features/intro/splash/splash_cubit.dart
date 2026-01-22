@@ -1,4 +1,6 @@
+import 'package:chat_app/core/global/app_cubit/app_cubit.dart';
 import 'package:chat_app/data/database/secure_storage_helper.dart';
+import 'package:chat_app/data/models/user_entity.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
 import 'package:chat_app/features/intro/splash/spash_navigation.dart';
 import 'package:equatable/equatable.dart';
@@ -10,9 +12,13 @@ part 'splash_state.dart';
 class SplashCubit extends Cubit<SplashState> {
   final SplashNavigator navigator;
   final AuthRepository authRepository;
+  final AppCubit appCubit;
 
-  SplashCubit({required this.navigator, required this.authRepository})
-    : super(const SplashState());
+  SplashCubit({
+    required this.navigator,
+    required this.authRepository,
+    required this.appCubit,
+  }) : super(const SplashState());
 
   void checkOnboard() async {
     final isFirstRun = await SecureStorageHelper.isFirstRun;
@@ -47,6 +53,10 @@ class SplashCubit extends Cubit<SplashState> {
         );
       },
       (success) {
+        appCubit.setCurrentUser(user: UserEntity(
+          uid: "1",
+          userName: "User 1",
+        ));
         navigator.goToHomePage();
       },
     );

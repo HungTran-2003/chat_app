@@ -17,6 +17,7 @@ class SplashPage extends StatelessWidget {
         return SplashCubit(
           navigator: SplashNavigator(context: context),
           authRepository: context.read(),
+          appCubit: context.read(),
         );
       },
       child: const SplashChildPage(),

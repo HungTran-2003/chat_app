@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_have_account_login": MessageLookupByLibrary.simpleMessage(
       "Có tài khoản? <Đăng nhập>",
     ),
+    "common_home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
     "common_label_name": MessageLookupByLibrary.simpleMessage("Tên của bạn"),
     "common_message_data_already_exists": MessageLookupByLibrary.simpleMessage(
       "Dữ liệu đã tồn tại.",
@@ -87,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_message_wrong_password": MessageLookupByLibrary.simpleMessage(
       "Mật khẩu không chính xác.",
     ),
+    "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_sign_in": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),
@@ -94,6 +96,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Đăng ký với email",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Email"),
+    "nav_call": MessageLookupByLibrary.simpleMessage("Cuộc gọi"),
+    "nav_contact": MessageLookupByLibrary.simpleMessage("Danh bạ"),
+    "nav_message": MessageLookupByLibrary.simpleMessage("Đoạn chat"),
+    "nav_setting": MessageLookupByLibrary.simpleMessage("Cài đặt"),
     "onboard_app_title": MessageLookupByLibrary.simpleMessage(
       "Kết nối bạn bè <dễ dàng & nhanh chóng>",
     ),

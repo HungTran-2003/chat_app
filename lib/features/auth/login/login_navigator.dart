@@ -9,6 +9,6 @@ class LoginNavigator extends BaseNavigator{
   }
 
   void goToHomePage(){
-    goNamed(AppRouter.homeRouterName);
+    goNamed(AppRouter.messageRouterName);
   }
 }

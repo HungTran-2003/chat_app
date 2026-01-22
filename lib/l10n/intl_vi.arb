@@ -29,5 +29,11 @@
   "common_message_user_not_found": "Không tìm thấy người dùng.",
   "common_message_wrong_password": "Mật khẩu không chính xác.",
   "common_message_invalid_email": "Email không hợp lệ.",
-  "common_message_user_disabled": "Tài khoản này đã bị vô hiệu hóa."
+  "common_message_user_disabled": "Tài khoản này đã bị vô hiệu hóa.",
+  "nav_message": "Đoạn chat",
+  "nav_call": "Cuộc gọi",
+  "nav_contact": "Danh bạ",
+  "nav_setting": "Cài đặt",
+  "common_home": "Trang chủ",
+  "common_my_status": "My status"
 }

@@ -343,6 +343,41 @@ class S {
       args: [],
     );
   }
+
+  /// `Message`
+  String get nav_message {
+    return Intl.message('Message', name: 'nav_message', desc: '', args: []);
+  }
+
+  /// `Call`
+  String get nav_call {
+    return Intl.message('Call', name: 'nav_call', desc: '', args: []);
+  }
+
+  /// `Contact`
+  String get nav_contact {
+    return Intl.message('Contact', name: 'nav_contact', desc: '', args: []);
+  }
+
+  /// `Setting`
+  String get nav_setting {
+    return Intl.message('Setting', name: 'nav_setting', desc: '', args: []);
+  }
+
+  /// `Home`
+  String get common_home {
+    return Intl.message('Home', name: 'common_home', desc: '', args: []);
+  }
+
+  /// `My status`
+  String get common_my_status {
+    return Intl.message(
+      'My status',
+      name: 'common_my_status',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

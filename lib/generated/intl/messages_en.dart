@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_have_account_login": MessageLookupByLibrary.simpleMessage(
       "Existing account? <Log in>",
     ),
+    "common_home": MessageLookupByLibrary.simpleMessage("Home"),
     "common_label_name": MessageLookupByLibrary.simpleMessage("Your name"),
     "common_message_data_already_exists": MessageLookupByLibrary.simpleMessage(
       "The data already exists.",
@@ -87,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_message_wrong_password": MessageLookupByLibrary.simpleMessage(
       "Incorrect password.",
     ),
+    "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_sign_in": MessageLookupByLibrary.simpleMessage("Login"),
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
@@ -94,6 +96,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sign up with email",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Your email"),
+    "nav_call": MessageLookupByLibrary.simpleMessage("Call"),
+    "nav_contact": MessageLookupByLibrary.simpleMessage("Contact"),
+    "nav_message": MessageLookupByLibrary.simpleMessage("Message"),
+    "nav_setting": MessageLookupByLibrary.simpleMessage("Setting"),
     "onboard_app_title": MessageLookupByLibrary.simpleMessage(
       "Connect friends <easily & quickly>",
     ),

@@ -136,7 +136,7 @@ class BaseNavigator {
   }
 
   void openHome() {
-    goNamed(AppRouter.homeRouterName);
+    goNamed(AppRouter.messageRouterName);
   }
 
   void navigateBack() {
@@ -147,7 +147,7 @@ class BaseNavigator {
     if (context.canPop()) {
       context.pop();
     } else {
-      context.goNamed(AppRouter.homeRouterName);
+      context.goNamed(AppRouter.messageRouterName);
     }
   }
 }

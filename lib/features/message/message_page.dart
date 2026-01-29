@@ -35,12 +35,20 @@ class MessageChildPage extends StatefulWidget {
 
 class _MessageChildPageState extends State<MessageChildPage> {
   late MessageCubit _cubit;
+  final GlobalKey _cardKey = GlobalKey();
+
+  late double _screenHeight;
+  double _initialSheetSize = 0.0;
 
   @override
   void initState() {
     super.initState();
     _cubit = BlocProvider.of(context);
     _cubit.fetchData();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _calculateInitialSheetSize(_screenHeight);
+    });
   }
 
   @override
@@ -70,18 +78,27 @@ class _MessageChildPageState extends State<MessageChildPage> {
     );
   }
 
-  Widget _buildBodyPage(){
-    return Column(
-      children: [
-        40.height,
-        _buildContactList(),
-        40.height,
-        Expanded(child: _buildListChat())
-      ],
+  Widget _buildBodyPage() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        _screenHeight = constraints.maxHeight;
+        return Stack(
+          children: [
+            Positioned(
+              key: _cardKey,
+              top: 0,
+              right: 0,
+              left: 0,
+              child: _buildContactList(),
+            ),
+            _buildListChat(),
+          ],
+        );
+      },
     );
   }
 
-  Widget _buildContactList(){
+  Widget _buildContactList() {
     return Padding(
       padding: UiConstants.horizontalPaddingLarge,
       child: BlocBuilder<MessageCubit, MessageState>(
@@ -92,35 +109,60 @@ class _MessageChildPageState extends State<MessageChildPage> {
               spacing: 13.0,
               children: [
                 HomeButtonStatus(),
-                ...List.generate(
-                  state.contacts!.length,
-                  (index) {
-                    final user = state.contacts![index].users?.last;
-                    return ContactIconWidget(
-                      user: user,
-                    );
-                  }
-                ),
+                ...List.generate(state.contacts!.length, (index) {
+                  final user = state.contacts![index].users?.last;
+                  return ContactIconWidget(user: user);
+                }),
               ],
             ),
           );
-        }
+        },
       ),
     );
   }
 
-  Widget _buildListChat(){
-    return SingleChildScrollView(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40),
-            topRight: Radius.circular(40),
+  Widget _buildListChat() {
+    return DraggableScrollableSheet(
+      controller: _cubit.controller,
+      initialChildSize: _initialSheetSize,
+      minChildSize: _initialSheetSize,
+      maxChildSize: 1,
+      builder: (context, scrollController) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
+            ),
+            color: AppColors.backgroundLight,
           ),
-          color: AppColors.backgroundLight,
-        ),
-      ),
+          child: ListView.separated(
+            controller: scrollController,
+            physics: const ClampingScrollPhysics(),
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return const SizedBox(height: 8.0);
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 8.0);
+            },
+          ),
+        );
+      },
     );
   }
 
+  void _calculateInitialSheetSize(double screenHeight) {
+    final RenderBox? cardBox =
+    _cardKey.currentContext?.findRenderObject() as RenderBox?;
+    if (cardBox != null) {
+      final cardHeight = cardBox.size.height;
+      final sheetHeight = screenHeight - cardHeight - 30;
+      final calculatedSize = sheetHeight / screenHeight;
+      print("calculatedSize: $calculatedSize");
+      setState(() {
+        _initialSheetSize = calculatedSize.clamp(0, 0.9);
+      });
+    }
+  }
 }

@@ -31,6 +31,27 @@ class HomeButtonStatus extends StatelessWidget {
                 radius: 24,
                 backgroundImage: AssetImage(AssetConstants.userDefault),
               ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.backgroundDark,
+                      width: 1
+                    ),
+                    color: Colors.white
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    color: AppColors.backgroundDark,
+                    size: 12,
+                  ),
+                ),
+              )
             ],
           ),
         ),

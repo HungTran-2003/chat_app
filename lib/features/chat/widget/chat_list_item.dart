@@ -4,11 +4,13 @@ import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
+import 'package:chat_app/core/utlis/tap_guard.dart';
 import 'package:chat_app/core/utlis/time_utlis.dart';
 import 'package:chat_app/core/widgets/badge/app_badge.dart';
 import 'package:chat_app/core/widgets/badge/app_status_dot.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
+import 'package:chat_app/core/widgets/image/app_network_image.dart';
 import 'package:chat_app/data/enum/chat_type.dart';
 import 'package:chat_app/data/models/chat_entity.dart';
 import 'package:flutter/material.dart';
@@ -68,8 +70,9 @@ class ChatListItem extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final controller = Slidable.of(context);
+          if (controller == null) return const SizedBox.shrink();
           return AnimatedBuilder(
-            animation: controller!.animation,
+            animation: controller.animation,
             builder: (context, child) {
               final double ratio = controller.animation.value.abs();
               final Color bgColor = Color.lerp(
@@ -77,27 +80,32 @@ class ChatListItem extends StatelessWidget {
                   AppColors.whiteF1F6FA,
                   ratio > 0 ? 1.0 : 0.0
               )!;
-              return InkWell(
-                onTap: onTap,
-                splashColor: AppColors.whiteF1F6FA,
-                child: Container(
-                  color: bgColor,
-                  height: 72,
-                  child: Padding(
-                    padding: UiConstants.horizontalPaddingLarge,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        _buildAvatarChat(),
-                        12.width,
-                        Expanded(child: _buildLastMessage()),
-                        _buildUnreadMessage(),
-                      ],
-                    ),
-                  ),
-                ),
+              return Material(
+                color: bgColor,
+                child: child,
               );
             },
+            child: InkWell(
+              onTap: () => safeAction((){
+                onTap?.call();
+              }),
+              splashColor: AppColors.whiteF1F6FA,
+              child: SizedBox(
+                height: 72,
+                child: Padding(
+                  padding: UiConstants.horizontalPaddingLarge,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _buildAvatarChat(),
+                      12.width,
+                      Expanded(child: _buildLastMessage()),
+                      _buildUnreadMessage(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           );
         },
       ),
@@ -175,11 +183,11 @@ class ChatListItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white, width: 1),
-        image: DecorationImage(
-          image: NetworkImage(url),
-          fit: BoxFit.cover,
-        ),
       ),
+      child: AppNetworkImage(
+        imageUrl: url,
+        fit: BoxFit.cover,
+      )
     );
   }
 

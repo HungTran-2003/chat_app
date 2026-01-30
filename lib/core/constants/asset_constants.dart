@@ -27,12 +27,6 @@ class AssetConstants {
   static const String iconSetting = "$_iconsBasePath/icon_setting.svg";
   static const String iconContacts = "$_iconsBasePath/icon_contacts.svg";
 
-  ///Icon Bottom Navigation
-  static const String iconMessage = "$_iconsBasePath/icon_message.svg";
-  static const String iconCall = "$_iconsBasePath/icon_call.svg";
-  static const String iconSetting = "$_iconsBasePath/icon_setting.svg";
-  static const String iconContacts = "$_iconsBasePath/icon_contacts.svg";
-
   ///Image
   static const String logoAppText = "$_imagesBasePath/app_logo_text.png";
   static const String logoApp = "$_imagesBasePath/app_logo.png";

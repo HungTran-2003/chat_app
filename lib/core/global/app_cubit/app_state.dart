@@ -5,10 +5,14 @@ class AppState extends Equatable {
   final MainNavItem? currentMainPage;
   final MainNavItem previousMainPage;
 
+  ///Data
+  final UserEntity? currentUser;
+
   const AppState({
     this.currentLanguage = AppConfigs.defaultLanguage,
     this.currentMainPage = MainNavItem.message,
     this.previousMainPage = MainNavItem.message,
+    this.currentUser,
   });
 
   @override
@@ -16,17 +20,20 @@ class AppState extends Equatable {
     currentLanguage,
     currentMainPage,
     previousMainPage,
+    currentUser,
   ];
 
   AppState copyWith({
     Language? currentLanguage,
     MainNavItem? currentMainPage,
     MainNavItem? previousMainPage,
+    UserEntity? currentUser,
   }) {
     return AppState(
       currentLanguage: currentLanguage ?? this.currentLanguage,
       currentMainPage: currentMainPage ?? this.currentMainPage,
       previousMainPage: previousMainPage ?? this.previousMainPage,
+      currentUser: currentUser ?? this.currentUser,
     );
   }
 }

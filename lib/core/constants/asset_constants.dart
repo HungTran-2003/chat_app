@@ -17,6 +17,15 @@ class AssetConstants {
       '$_iconsBasePath/ic_password_visible.svg';
   static const String passwordInvisibleIcon =
       '$_iconsBasePath/ic_password_invisible.svg';
+  static const String iconSearch = "$_iconsBasePath/icon_search.svg";
+  static const String iconNotification = "assets/icons/icon_notification.svg";
+  static const String iconDelete = "$_iconsBasePath/icon_delete.svg";
+
+  ///Icon Bottom Navigation
+  static const String iconMessage = "$_iconsBasePath/icon_message.svg";
+  static const String iconCall = "$_iconsBasePath/icon_call.svg";
+  static const String iconSetting = "$_iconsBasePath/icon_setting.svg";
+  static const String iconContacts = "$_iconsBasePath/icon_contacts.svg";
 
   ///Icon Bottom Navigation
   static const String iconMessage = "$_iconsBasePath/icon_message.svg";
@@ -28,4 +37,6 @@ class AssetConstants {
   static const String logoAppText = "$_imagesBasePath/app_logo_text.png";
   static const String logoApp = "$_imagesBasePath/app_logo.png";
   static const String backgroundBlur = "$_imagesBasePath/background_blur.png";
+  static const String userDefault = "$_imagesBasePath/user_default.png";
+
 }

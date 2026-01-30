@@ -7,7 +7,7 @@ import 'package:chat_app/features/contact/contact_page.dart';
 import 'package:chat_app/features/main/main_cubit.dart';
 import 'package:chat_app/features/main/main_navigator.dart';
 import 'package:chat_app/features/main/widget/tab_icon.dart';
-import 'package:chat_app/features/message/message_page.dart';
+import 'package:chat_app/features/chat/chat_page.dart';
 import 'package:chat_app/features/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,22 +87,25 @@ class _MainChildPageState extends State<_MainChildPage> {
           height: bottomNavHeight,
           decoration: BoxDecoration(
             border: Border(
-              top: BorderSide(color: AppColors.borderBottomNav, width: 3.0),
+              top: BorderSide(color: AppColors.borderBottomNav, width: 1.0),
             ),
           ),
           child: Row(
+            spacing: 8,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            mainAxisSize: MainAxisSize.max,
             children: List.generate(MainNavItem.values.length, (index) {
               return InkWell(
                 onTap: () => safeAction(() {
                   _appCubit.changeMainPage(page: MainNavItem.values[index]);
                 }),
-                splashColor: Colors.transparent,
-                child: TabIcons(
-                  navItem: MainNavItem.values[index],
-                  isSelected:
-                      state.currentMainPage == MainNavItem.values[index],
+                borderRadius: BorderRadius.circular(22),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TabIcons(
+                    navItem: MainNavItem.values[index],
+                    isSelected:
+                        state.currentMainPage == MainNavItem.values[index],
+                  ),
                 ),
               );
             }),

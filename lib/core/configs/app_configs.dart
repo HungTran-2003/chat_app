@@ -36,4 +36,7 @@ class AppConfigs {
   // static const appLanguage = 'en';
   static const defaultLocal = Locale.fromSubtags(languageCode: appLanguage);
   static const defaultLanguage = Language.english;
+
+  ///App bar
+  static const appBarHeight = 44.0;
 }

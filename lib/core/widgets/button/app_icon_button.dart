@@ -28,9 +28,11 @@ class AppIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => safeAction(() {
-        onPress?.call();
-      }),
+      onTap: onPress == null
+          ? null
+          : () => safeAction(() {
+              onPress?.call();
+            }),
       customBorder: const CircleBorder(),
       child: Ink(
         decoration: BoxDecoration(

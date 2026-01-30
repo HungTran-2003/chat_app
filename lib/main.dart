@@ -11,10 +11,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.white, // màu nền status bar
-      statusBarIconBrightness: Brightness.light, // icon trắng (Android)
-      statusBarBrightness: Brightness.dark, // icon tối (iOS)
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
     ),
   );
   runApp(const MyApp());

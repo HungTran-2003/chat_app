@@ -76,7 +76,9 @@ class _RegisterChildPageState extends State<RegisterChildPage> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [AppBackButton()],
+            children: [AppBackButton(
+
+            )],
           ),
           60.height,
           AuthTextHighLight(rawText: S.of(context).auth_register_title),

@@ -363,6 +363,121 @@ class S {
   String get nav_setting {
     return Intl.message('Setting', name: 'nav_setting', desc: '', args: []);
   }
+
+  /// `Home`
+  String get common_home {
+    return Intl.message('Home', name: 'common_home', desc: '', args: []);
+  }
+
+  /// `My status`
+  String get common_my_status {
+    return Intl.message(
+      'My status',
+      name: 'common_my_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Just now`
+  String get common_time_just_now {
+    return Intl.message(
+      'Just now',
+      name: 'common_time_just_now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count}m ago`
+  String common_time_minutes_ago(Object count) {
+    return Intl.message(
+      '${count}m ago',
+      name: 'common_time_minutes_ago',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Monday`
+  String get common_time_weekday_monday {
+    return Intl.message(
+      'Monday',
+      name: 'common_time_weekday_monday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tuesday`
+  String get common_time_weekday_tuesday {
+    return Intl.message(
+      'Tuesday',
+      name: 'common_time_weekday_tuesday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wednesday`
+  String get common_time_weekday_wednesday {
+    return Intl.message(
+      'Wednesday',
+      name: 'common_time_weekday_wednesday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thursday`
+  String get common_time_weekday_thursday {
+    return Intl.message(
+      'Thursday',
+      name: 'common_time_weekday_thursday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Friday`
+  String get common_time_weekday_friday {
+    return Intl.message(
+      'Friday',
+      name: 'common_time_weekday_friday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saturday`
+  String get common_time_weekday_saturday {
+    return Intl.message(
+      'Saturday',
+      name: 'common_time_weekday_saturday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sunday`
+  String get common_time_weekday_sunday {
+    return Intl.message(
+      'Sunday',
+      name: 'common_time_weekday_sunday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time parsing error`
+  String get common_message_time_parsing_error {
+    return Intl.message(
+      'Time parsing error',
+      name: 'common_message_time_parsing_error',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

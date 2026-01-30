@@ -33,5 +33,19 @@
   "nav_message": "Đoạn chat",
   "nav_call": "Cuộc gọi",
   "nav_contact": "Danh bạ",
-  "nav_setting": "Cài đặt"
+  "nav_setting": "Cài đặt",
+  "common_home": "Trang chủ",
+  "common_my_status": "My status",
+  "common_time_just_now": "Vừa xong",
+  "common_time_minutes_ago": "{count} phút",
+
+  "common_time_weekday_monday": "Thứ Hai",
+  "common_time_weekday_tuesday": "Thứ Ba",
+  "common_time_weekday_wednesday": "Thứ Tư",
+  "common_time_weekday_thursday": "Thứ Năm",
+  "common_time_weekday_friday": "Thứ Sáu",
+  "common_time_weekday_saturday": "Thứ Bảy",
+  "common_time_weekday_sunday": "Chủ Nhật",
+  "common_message_time_parsing_error": "Lỗi phân tích thời gian"
+
 }

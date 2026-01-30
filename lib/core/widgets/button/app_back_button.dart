@@ -12,12 +12,14 @@ class AppBackButton extends StatelessWidget {
   final String? fallbackRoute;
   final bool Function()? isShowValidateDialog;
   final Future<void> Function()? beforeBackAction;
+  final bool? isRegister;
 
   const AppBackButton({
     super.key,
     this.fallbackRoute,
     this.isShowValidateDialog,
     this.beforeBackAction,
+    this.isRegister = false,
   });
 
   @override
@@ -49,12 +51,14 @@ class AppBackButton extends StatelessWidget {
     if (context.canPop()) {
       context.pop();
     } else {
+      if(isRegister == true) {
+        context.goNamed(AppRouter.loginRouteName);
+        return;
+      }
       try {
-        final appCubit = context.read<AppCubit>();
-        // appCubit.changeMainPage(page: MainNavItem.home);
-        context.goNamed(AppRouter.messageRouterName);
+        context.goNamed(AppRouter.chatRouterName);
       } catch (e) {
-        context.goNamed(AppRouter.messageRouterName);
+        context.goNamed(AppRouter.chatRouterName);
       }
     }
   }

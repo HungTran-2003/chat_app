@@ -33,5 +33,18 @@
   "nav_message": "Message",
   "nav_call": "Call",
   "nav_contact": "Contact",
-  "nav_setting": "Setting"
+  "nav_setting": "Setting",
+
+  "common_home": "Home",
+  "common_my_status": "My status",
+  "common_time_just_now": "Just now",
+  "common_time_minutes_ago": "{count}m ago",
+  "common_time_weekday_monday": "Monday",
+  "common_time_weekday_tuesday": "Tuesday",
+  "common_time_weekday_wednesday": "Wednesday",
+  "common_time_weekday_thursday": "Thursday",
+  "common_time_weekday_friday": "Friday",
+  "common_time_weekday_saturday": "Saturday",
+  "common_time_weekday_sunday": "Sunday",
+  "common_message_time_parsing_error": "Time parsing error"
 }

@@ -7,7 +7,7 @@ import 'package:chat_app/features/contact/contact_page.dart';
 import 'package:chat_app/features/main/main_cubit.dart';
 import 'package:chat_app/features/main/main_navigator.dart';
 import 'package:chat_app/features/main/widget/tab_icon.dart';
-import 'package:chat_app/features/message/message_page.dart';
+import 'package:chat_app/features/chat/chat_page.dart';
 import 'package:chat_app/features/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

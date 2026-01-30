@@ -6,6 +6,7 @@ class MessageEntity {
   final List<String>? attachPath;
   final bool? isDelete;
   final String? createdAt;
+  final String? updateAt;
 
   const MessageEntity({
     this.messageId,
@@ -15,5 +16,6 @@ class MessageEntity {
     this.attachPath,
     this.isDelete,
     this.createdAt,
+    this.updateAt,
   });
 }

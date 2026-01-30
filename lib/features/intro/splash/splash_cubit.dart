@@ -26,7 +26,15 @@ class SplashCubit extends Cubit<SplashState> {
       navigator.goToOnboarding();
       return;
     }
-    _checkLogin();
+    // _checkLogin();
+    appCubit.setCurrentUser(
+      user: UserEntity(
+        uid: "1",
+        userName: "User 1",
+        avatarPath: "https://i.pravatar.cc/150?u=alice",
+      ),
+    );
+    navigator.goToHomePage();
   }
 
   void _checkLogin() {
@@ -53,10 +61,9 @@ class SplashCubit extends Cubit<SplashState> {
         );
       },
       (success) {
-        appCubit.setCurrentUser(user: UserEntity(
-          uid: "1",
-          userName: "User 1",
-        ));
+        appCubit.setCurrentUser(
+          user: UserEntity(uid: "1", userName: "User 1"),
+        );
         navigator.goToHomePage();
       },
     );

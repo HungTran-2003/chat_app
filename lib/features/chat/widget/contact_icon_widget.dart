@@ -6,24 +6,24 @@ import 'package:chat_app/data/models/user_entity.dart';
 import 'package:flutter/material.dart';
 
 class ContactIconWidget extends StatelessWidget {
-  final UserEntity? user;
+  final UserEntity user;
 
-  const ContactIconWidget({super.key, this.user});
+  const ContactIconWidget({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     final backgroundColor = BackgroundColor.getBackgroundColors(
-      user?.backgroundColor,
+      user.backgroundColor,
     );
     return Column(
       children: [
         AppAvatarImage(
-          path: user?.avatarPath,
-          borderColor: BackgroundColor.white.color,
+          path: user.avatarPath,
+          borderColor: backgroundColor.color,
           borderWidth: 2,
         ),
         10.height,
-        Text(user?.userName ?? "", style: AppTextStyle.white.titleMedium.w500),
+        Text(user.userName ?? "", style: AppTextStyle.white.titleMedium.w500),
       ],
     );
   }

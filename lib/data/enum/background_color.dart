@@ -11,7 +11,7 @@ enum BackgroundColor {
   gray,
   pink;
 
-  static getBackgroundColors(String? value) {
+  static BackgroundColor getBackgroundColors(String? value) {
     switch (value) {
       case "Red":
         return BackgroundColor.red;

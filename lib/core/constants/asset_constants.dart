@@ -18,7 +18,8 @@ class AssetConstants {
   static const String passwordInvisibleIcon =
       '$_iconsBasePath/ic_password_invisible.svg';
   static const String iconSearch = "$_iconsBasePath/icon_search.svg";
-
+  static const String iconNotification = "assets/icons/icon_notification.svg";
+  static const String iconDelete = "$_iconsBasePath/icon_delete.svg";
 
   ///Icon Bottom Navigation
   static const String iconMessage = "$_iconsBasePath/icon_message.svg";

@@ -5,15 +5,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'message_state.dart';
+part 'chat_state.dart';
 
-class MessageCubit extends Cubit<MessageState> {
+class ChatCubit extends Cubit<ChatState> {
 
-  ///Controller
-  final DraggableScrollableController controller =
-  DraggableScrollableController();
-
-  MessageCubit() : super(const MessageState());
+  ChatCubit() : super(const ChatState());
 
   void fetchData() async {
     emit(state.copyWith(loadContactStatus: LoadStatus.loading));
@@ -22,6 +18,7 @@ class MessageCubit extends Cubit<MessageState> {
       state.copyWith(
         loadContactStatus: LoadStatus.success,
         contacts: ContactEntity.mockData(),
+        chats: ChatEntity.mockData(),
       ),
     );
   }

@@ -56,9 +56,9 @@ class AppBackButton extends StatelessWidget {
         return;
       }
       try {
-        context.goNamed(AppRouter.messageRouterName);
+        context.goNamed(AppRouter.chatRouterName);
       } catch (e) {
-        context.goNamed(AppRouter.messageRouterName);
+        context.goNamed(AppRouter.chatRouterName);
       }
     }
   }

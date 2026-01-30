@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
+  static String m0(count) => "${count} phút";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "auth_login_description": MessageLookupByLibrary.simpleMessage(
@@ -70,6 +72,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_message_quota_exceeded": MessageLookupByLibrary.simpleMessage(
       "Hệ thống đang quá tải. Vui lòng thử lại sau.",
     ),
+    "common_message_time_parsing_error": MessageLookupByLibrary.simpleMessage(
+      "Lỗi phân tích thời gian",
+    ),
     "common_message_timeout": MessageLookupByLibrary.simpleMessage(
       "Yêu cầu xử lý quá lâu. Vui lòng thử lại.",
     ),
@@ -94,6 +99,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),
     "common_sign_up_with_email": MessageLookupByLibrary.simpleMessage(
       "Đăng ký với email",
+    ),
+    "common_time_just_now": MessageLookupByLibrary.simpleMessage("Vừa xong"),
+    "common_time_minutes_ago": m0,
+    "common_time_weekday_friday": MessageLookupByLibrary.simpleMessage(
+      "Thứ Sáu",
+    ),
+    "common_time_weekday_monday": MessageLookupByLibrary.simpleMessage(
+      "Thứ Hai",
+    ),
+    "common_time_weekday_saturday": MessageLookupByLibrary.simpleMessage(
+      "Thứ Bảy",
+    ),
+    "common_time_weekday_sunday": MessageLookupByLibrary.simpleMessage(
+      "Chủ Nhật",
+    ),
+    "common_time_weekday_thursday": MessageLookupByLibrary.simpleMessage(
+      "Thứ Năm",
+    ),
+    "common_time_weekday_tuesday": MessageLookupByLibrary.simpleMessage(
+      "Thứ Ba",
+    ),
+    "common_time_weekday_wednesday": MessageLookupByLibrary.simpleMessage(
+      "Thứ Tư",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Email"),
     "nav_call": MessageLookupByLibrary.simpleMessage("Cuộc gọi"),

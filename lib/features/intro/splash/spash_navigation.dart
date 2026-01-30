@@ -9,6 +9,6 @@ class SplashNavigator extends BaseNavigator {
   }
 
   void goToHomePage(){
-    goNamed(AppRouter.messageRouterName);
+    goNamed(AppRouter.chatRouterName);
   }
 }

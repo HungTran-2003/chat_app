@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(count) => "${count}m ago";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "auth_login_description": MessageLookupByLibrary.simpleMessage(
@@ -70,6 +72,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_message_quota_exceeded": MessageLookupByLibrary.simpleMessage(
       "The system is temporarily overloaded. Please try again later.",
     ),
+    "common_message_time_parsing_error": MessageLookupByLibrary.simpleMessage(
+      "Time parsing error",
+    ),
     "common_message_timeout": MessageLookupByLibrary.simpleMessage(
       "The request took too long to process. Please try again.",
     ),
@@ -94,6 +99,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
     "common_sign_up_with_email": MessageLookupByLibrary.simpleMessage(
       "Sign up with email",
+    ),
+    "common_time_just_now": MessageLookupByLibrary.simpleMessage("Just now"),
+    "common_time_minutes_ago": m0,
+    "common_time_weekday_friday": MessageLookupByLibrary.simpleMessage(
+      "Friday",
+    ),
+    "common_time_weekday_monday": MessageLookupByLibrary.simpleMessage(
+      "Monday",
+    ),
+    "common_time_weekday_saturday": MessageLookupByLibrary.simpleMessage(
+      "Saturday",
+    ),
+    "common_time_weekday_sunday": MessageLookupByLibrary.simpleMessage(
+      "Sunday",
+    ),
+    "common_time_weekday_thursday": MessageLookupByLibrary.simpleMessage(
+      "Thursday",
+    ),
+    "common_time_weekday_tuesday": MessageLookupByLibrary.simpleMessage(
+      "Tuesday",
+    ),
+    "common_time_weekday_wednesday": MessageLookupByLibrary.simpleMessage(
+      "Wednesday",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Your email"),
     "nav_call": MessageLookupByLibrary.simpleMessage("Call"),

@@ -5,12 +5,14 @@ import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/button/app_image_button.dart';
-import 'package:chat_app/features/message/message_cubit.dart';
-import 'package:chat_app/features/message/widget/contact_icon_widget.dart';
-import 'package:chat_app/features/message/widget/home_button_status.dart';
+import 'package:chat_app/features/chat/chat_cubit.dart';
+import 'package:chat_app/features/chat/widget/chat_list_item.dart';
+import 'package:chat_app/features/chat/widget/contact_icon_widget.dart';
+import 'package:chat_app/features/chat/widget/home_button_status.dart';
 import 'package:chat_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class MessagePage extends StatelessWidget {
   const MessagePage({super.key});
@@ -19,7 +21,7 @@ class MessagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return MessageCubit();
+        return ChatCubit();
       },
       child: MessageChildPage(),
     );
@@ -34,21 +36,13 @@ class MessageChildPage extends StatefulWidget {
 }
 
 class _MessageChildPageState extends State<MessageChildPage> {
-  late MessageCubit _cubit;
-  final GlobalKey _cardKey = GlobalKey();
-
-  late double _screenHeight;
-  double _initialSheetSize = 0.0;
+  late ChatCubit _cubit;
 
   @override
   void initState() {
     super.initState();
     _cubit = BlocProvider.of(context);
     _cubit.fetchData();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _calculateInitialSheetSize(_screenHeight);
-    });
   }
 
   @override
@@ -79,29 +73,20 @@ class _MessageChildPageState extends State<MessageChildPage> {
   }
 
   Widget _buildBodyPage() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        _screenHeight = constraints.maxHeight;
-        return Stack(
-          children: [
-            Positioned(
-              key: _cardKey,
-              top: 0,
-              right: 0,
-              left: 0,
-              child: _buildContactList(),
-            ),
-            _buildListChat(),
-          ],
-        );
-      },
+    return Column(
+      children: [
+        40.height,
+        _buildContactList(),
+        30.height,
+        Expanded(child: _buildListChat()),
+      ],
     );
   }
 
   Widget _buildContactList() {
     return Padding(
       padding: UiConstants.horizontalPaddingLarge,
-      child: BlocBuilder<MessageCubit, MessageState>(
+      child: BlocBuilder<ChatCubit, ChatState>(
         builder: (context, state) {
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -110,7 +95,8 @@ class _MessageChildPageState extends State<MessageChildPage> {
               children: [
                 HomeButtonStatus(),
                 ...List.generate(state.contacts!.length, (index) {
-                  final user = state.contacts![index].users?.last;
+                  final user = state.contacts![index].user;
+                  if (user == null) return Container();
                   return ContactIconWidget(user: user);
                 }),
               ],
@@ -122,47 +108,61 @@ class _MessageChildPageState extends State<MessageChildPage> {
   }
 
   Widget _buildListChat() {
-    return DraggableScrollableSheet(
-      controller: _cubit.controller,
-      initialChildSize: _initialSheetSize,
-      minChildSize: _initialSheetSize,
-      maxChildSize: 1,
-      builder: (context, scrollController) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40),
-              topRight: Radius.circular(40),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        ),
+        color: AppColors.backgroundLight,
+      ),
+      child: Column(
+        children: [
+          13.height,
+          Container(
+            height: 3,
+            width: 30,
+            decoration: BoxDecoration(
+              color: AppColors.greyCD,
+              borderRadius: BorderRadius.circular(100),
             ),
-            color: AppColors.backgroundLight,
           ),
-          child: ListView.separated(
-            controller: scrollController,
-            physics: const ClampingScrollPhysics(),
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return const SizedBox(height: 8.0);
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(height: 8.0);
-            },
+          24.height,
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                print("refresh");
+              },
+              child: BlocBuilder<ChatCubit, ChatState>(
+                builder: (context, state) {
+                  return SlidableAutoCloseBehavior(
+                    child: ListView.separated(
+                      itemCount: state.chats?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return ChatListItem(
+                          chatRoom: state.chats![index],
+                          onTap: () {
+                            print("onTap");
+                          },
+                          onTapDelete: () {
+                            print("onTapDelete");
+                          },
+                          onTapNotification: () {
+                            print("onTapNotification");
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, int index) {
+                        return 10.height;
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
-  }
-
-  void _calculateInitialSheetSize(double screenHeight) {
-    final RenderBox? cardBox =
-    _cardKey.currentContext?.findRenderObject() as RenderBox?;
-    if (cardBox != null) {
-      final cardHeight = cardBox.size.height;
-      final sheetHeight = screenHeight - cardHeight - 30;
-      final calculatedSize = sheetHeight / screenHeight;
-      print("calculatedSize: $calculatedSize");
-      setState(() {
-        _initialSheetSize = calculatedSize.clamp(0, 0.9);
-      });
-    }
   }
 }

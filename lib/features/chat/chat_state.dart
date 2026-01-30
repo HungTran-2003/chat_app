@@ -1,6 +1,6 @@
-part of 'message_cubit.dart';
+part of 'chat_cubit.dart';
 
-class MessageState extends Equatable {
+class ChatState extends Equatable {
 
   ///LoadStatus
   final LoadStatus? loadDataStatus;
@@ -10,7 +10,7 @@ class MessageState extends Equatable {
   final List<ChatEntity>? chats;
   final List<ContactEntity>? contacts;
 
-  const MessageState({
+  const ChatState({
     this.loadDataStatus = LoadStatus.initial,
     this.loadContactStatus = LoadStatus.initial,
     this.chats = const [],
@@ -20,13 +20,13 @@ class MessageState extends Equatable {
   @override
   List<Object?> get props => [loadDataStatus, loadContactStatus, chats, contacts];
 
-  MessageState copyWith({
+  ChatState copyWith({
     LoadStatus? loadDataStatus,
     LoadStatus? loadContactStatus,
     List<ChatEntity>? chats,
     List<ContactEntity>? contacts,
   }) {
-    return MessageState(
+    return ChatState(
       loadDataStatus: loadDataStatus ?? this.loadDataStatus,
       loadContactStatus: loadContactStatus ?? this.loadContactStatus,
       chats: chats ?? this.chats,

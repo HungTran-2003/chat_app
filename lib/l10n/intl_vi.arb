@@ -46,6 +46,6 @@
   "common_time_weekday_friday": "Thứ Sáu",
   "common_time_weekday_saturday": "Thứ Bảy",
   "common_time_weekday_sunday": "Chủ Nhật",
-  "common_message_time_parsing_error": "Lỗi phân tích thời gian"
-
+  "common_message_time_parsing_error": "Lỗi phân tích thời gian",
+  "common_contact": "Liên hệ"
 }

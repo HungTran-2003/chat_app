@@ -29,6 +29,7 @@ class ContactEntity {
         user: UserEntity(
             uid: "2",
             userName: "User 2",
+            slogan: "Ngu dung code",
             avatarPath: "https://i.pravatar.cc/150?u=bob",
             backgroundColor: "Red"
         ),

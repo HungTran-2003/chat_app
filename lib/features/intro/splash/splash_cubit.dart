@@ -1,6 +1,6 @@
 import 'package:chat_app/core/global/app_cubit/app_cubit.dart';
 import 'package:chat_app/data/database/secure_storage_helper.dart';
-import 'package:chat_app/data/models/user_entity.dart';
+import 'package:chat_app/data/entities/user_entity.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
 import 'package:chat_app/features/intro/splash/spash_navigation.dart';
 import 'package:equatable/equatable.dart';
@@ -26,15 +26,15 @@ class SplashCubit extends Cubit<SplashState> {
       navigator.goToOnboarding();
       return;
     }
-    // _checkLogin();
-    appCubit.setCurrentUser(
-      user: UserEntity(
-        uid: "1",
-        userName: "User 1",
-        avatarPath: "https://i.pravatar.cc/150?u=alice",
-      ),
-    );
-    navigator.goToHomePage();
+    _checkLogin();
+    // appCubit.setCurrentUser(
+    //   user: UserEntity(
+    //     uid: "1",
+    //     userName: "User 1",
+    //     avatarPath: "https://i.pravatar.cc/150?u=alice",
+    //   ),
+    // );
+    // navigator.goToHomePage();
   }
 
   void _checkLogin() {

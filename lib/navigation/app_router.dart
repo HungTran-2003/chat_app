@@ -6,6 +6,7 @@ import 'package:chat_app/features/intro/onboarding/onboarding_page.dart';
 import 'package:chat_app/features/intro/splash/splash_page.dart';
 import 'package:chat_app/features/main/main_page.dart';
 import 'package:chat_app/features/chat/chat_page.dart';
+import 'package:chat_app/features/search/add_contact/add_contact_page.dart';
 import 'package:chat_app/features/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +26,8 @@ class AppRouter {
   static const String _callPath = '/call';
   static const String _contactPath = '/contact';
   static const String _settingPath = '/setting';
+  static const String _searchAddContactPath = '/search-add-contact';
+
 
 
   // --- Route Names ---
@@ -37,6 +40,9 @@ class AppRouter {
   static const String callRouterName = 'call';
   static const String contactRouterName = 'contact';
   static const String settingRouterName = 'setting';
+  static const String searchAddContactRouterName = 'searchAddContact';
+
+  // --- Router ---
 
   static final GoRouter router = GoRouter(
     initialLocation: _splashPath,
@@ -93,5 +99,10 @@ class AppRouter {
         ),
       ],
     ),
+    GoRoute(
+      path: _searchAddContactPath,
+      name: searchAddContactRouterName,
+      builder: (context, state) => const AddContactPage(),
+    )
   ];
 }

@@ -10,11 +10,11 @@ import 'package:chat_app/data/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class ContactListItem extends StatelessWidget {
+class UserSearchItem extends StatelessWidget {
   final UserEntity user;
   final VoidCallback? onTap;
   final VoidCallback? onTapDelete;
-  const ContactListItem({
+  const UserSearchItem({
     super.key,
     required this.user,
     this.onTap,
@@ -75,6 +75,13 @@ class ContactListItem extends StatelessWidget {
                       AppAvatarImage(path: user.avatarPath ?? "", size: 52),
                       12.width,
                       Expanded(child: _buildTitleUser()),
+                      8.width,
+                      AppIconButton(
+                        path: AssetConstants.iconUserPlus,
+                        sizeButton: 48,
+                        sizeIcon: Size(24, 24),
+                        iconColor: AppColors.backgroundDark,
+                      )
                     ],
                   ),
                 ),
@@ -88,23 +95,23 @@ class ContactListItem extends StatelessWidget {
 
   Widget _buildTitleUser() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          user.userName ?? "",
-          style: AppTextStyle.black.s20.w600,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            user.userName ?? "",
+            style: AppTextStyle.black.s20.w600,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
 
-        Text(
-          user.slogan ?? "Lười",
-          style: AppTextStyle.grey.s12.w400,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ]
+          Text(
+            user.slogan ?? "Lười",
+            style: AppTextStyle.grey.s12.w400,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ]
     );
   }
 }

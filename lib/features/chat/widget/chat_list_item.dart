@@ -1,4 +1,3 @@
-
 import 'package:chat_app/core/constants/asset_constants.dart';
 import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
@@ -12,7 +11,7 @@ import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
 import 'package:chat_app/core/widgets/image/app_network_image.dart';
 import 'package:chat_app/data/enum/chat_type.dart';
-import 'package:chat_app/data/models/chat_entity.dart';
+import 'package:chat_app/data/entities/chat_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 

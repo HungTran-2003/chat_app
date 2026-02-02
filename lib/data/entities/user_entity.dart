@@ -30,9 +30,11 @@ class UserEntity {
   Map<String, dynamic> toJson() => {
     "uid": uid,
     "user_name": userName,
+    "user_name_lower": userName?.toLowerCase(),
     "slogan": slogan,
     "avatar_path": avatarPath,
     "email": email,
+    "email_lower": email?.toLowerCase(),
     "background_color": backgroundColor,
   };
 }

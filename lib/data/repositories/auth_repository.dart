@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:chat_app/core/error/failures.dart';
 import 'package:chat_app/core/network/api_client.dart';
-import 'package:chat_app/data/models/user_entity.dart';
+import 'package:chat_app/data/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AuthRepository {
@@ -18,6 +18,11 @@ abstract class AuthRepository {
   });
 
   Future<Either<Failure, UserEntity>> getUserInfo({required String uid});
+
+  Future<Either<Failure, List<UserEntity>>> searchUser({
+    required String keyword,
+    int? limit = 20,
+  });
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -67,6 +72,20 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(user);
     } catch (e) {
       log('Error get user info: $e');
+      return Left(FirebaseFailureMapper.map(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UserEntity>>> searchUser({
+    required String keyword,
+    int? limit = 20,
+  }) async {
+    try{
+      final result = await apiClient.searchUser(keyword: keyword, limit: limit);
+      return Right(result);
+    } catch (e) {
+      log('Error search user: $e');
       return Left(FirebaseFailureMapper.map(e));
     }
   }

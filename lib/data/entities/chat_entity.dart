@@ -1,6 +1,6 @@
 import 'package:chat_app/data/enum/chat_type.dart';
-import 'package:chat_app/data/models/message_entity.dart';
-import 'package:chat_app/data/models/user_entity.dart';
+import 'package:chat_app/data/entities/message_entity.dart';
+import 'package:chat_app/data/entities/user_entity.dart';
 
 class ChatEntity {
   final String? id;

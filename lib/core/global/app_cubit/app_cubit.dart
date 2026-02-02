@@ -1,9 +1,8 @@
-
 import 'package:chat_app/core/configs/app_configs.dart';
 import 'package:chat_app/core/global/app_cubit/app_navigator.dart';
 import 'package:chat_app/data/enum/language_type.dart';
 import 'package:chat_app/data/enum/main_nav_item.dart';
-import 'package:chat_app/data/models/user_entity.dart';
+import 'package:chat_app/data/entities/user_entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

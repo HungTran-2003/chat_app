@@ -17,6 +17,8 @@ class AppColors {
   static const Color highlightGreen = Color(0xFF58C3B6);
   static const Color whiteF3F6F6 = Color(0xFFF3F6F6);
   static const Color whiteF1F6FA = Color(0xFFF1F6FA);
+  static const Color green = Color(0xFF0FE16D);
+
 
   ///Border
   static const Color borderSilverGray = Color(0xFF606060);

@@ -21,6 +21,8 @@ class AssetConstants {
   static const String iconNotification = "assets/icons/icon_notification.svg";
   static const String iconDelete = "$_iconsBasePath/icon_delete.svg";
   static const String iconUserPlus = "$_iconsBasePath/icon_user_plus.svg";
+  static const String iconUserAccept = "$_iconsBasePath/icon_user_accept.svg";
+  static const String iconUserDecline = "$_iconsBasePath/icon_user_decline.svg";
 
   ///Icon Bottom Navigation
   static const String iconMessage = "$_iconsBasePath/icon_message.svg";

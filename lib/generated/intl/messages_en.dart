@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_register_title": MessageLookupByLibrary.simpleMessage(
       "Sign up with <Email>",
     ),
+    "common_add_contact": MessageLookupByLibrary.simpleMessage("Add contact"),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
     "common_confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm password",
@@ -96,6 +97,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
+    "common_search": MessageLookupByLibrary.simpleMessage("Search"),
     "common_sign_in": MessageLookupByLibrary.simpleMessage("Login"),
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
     "common_sign_up_with_email": MessageLookupByLibrary.simpleMessage(

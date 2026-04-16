@@ -47,5 +47,7 @@
   "common_time_weekday_saturday": "Saturday",
   "common_time_weekday_sunday": "Sunday",
   "common_message_time_parsing_error": "Time parsing error",
-  "common_contact": "Contacts"
+  "common_contact": "Contacts",
+  "common_add_contact": "Add contact",
+  "common_search": "Search"
 }

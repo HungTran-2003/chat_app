@@ -56,4 +56,39 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
     log(data.toString());
     return UserEntity.fromJson(data);
   }
+
+  @override
+  Future<UserEntity> getUserInfo() async {
+    final user = _auth.currentUser;
+    final data = await _client
+        .from('profiles')
+        .select()
+        .eq('id', user!.uid)
+        .single();
+    log(data.toString());
+    return UserEntity.fromJson(data);
+  }
+
+  @override
+  Future<List<UserEntity>> searchUser({
+    required String keyword,
+    int? limit = 10,
+    int? page = 1,
+  }) async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('User not logged in');
+
+    final List<dynamic> response = await _client.rpc(
+      'search_users_without_relationship',
+      params: {
+        'p_current_user_id': user.uid,
+        'p_search': keyword,
+        'p_limit': limit ?? 10,
+        'p_page': page ?? 1,
+      },
+    );
+    log(response.toString());
+
+    return response.map((e) => UserEntity.fromJson(e)).toList();
+  }
 }

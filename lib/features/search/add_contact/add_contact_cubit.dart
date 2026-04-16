@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:chat_app/data/repositories/contact_repository.dart';
 import 'package:chat_app/domain/models/entities/contact_entity.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:chat_app/domain/models/enum/status_type.dart';
@@ -11,16 +14,16 @@ part 'add_contact_state.dart';
 
 class AddContactCubit extends Cubit<AddContactState> {
   final AddContactNavigator navigator;
-  final AuthRepository authRepository;
+  final ContactRepository contactRepo;
 
   ///Controller
   final searchController = TextEditingController();
+  Timer? _debounce;
 
-  ///FocusNode
-  final searchFocusNode = FocusNode();
-
-  AddContactCubit({required this.navigator, required this.authRepository})
-    : super(const AddContactState());
+  AddContactCubit({
+    required this.navigator,
+    required this.contactRepo,
+  }) : super(const AddContactState());
 
   void initFetchData() {
     final mockData = ContactEntity.mockData();
@@ -34,44 +37,35 @@ class AddContactCubit extends Cubit<AddContactState> {
   }
 
   void search(String keyword) async {
-    final result = _searchContact(state.contacts, keyword);
-    if (result.isNotEmpty) {
-      emit(state.copyWith(searchContacts: result));
-    } else {
-      _searchUser(keyword);
-    }
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+    _debounce = Timer(const Duration(milliseconds: 400), () async {
+      if (keyword.isEmpty) {
+        return;
+      }
+      final contact = state.contacts.where((element) {
+        return element.user!.userName!.contains(keyword);
+      }).toList();
+
+      emit(state.copyWith(loadDataStatus: LoadStatus.loading));
+      final result = await contactRepo.searchUser(keyword);
+      result.fold(
+        (failure) => emit(state.copyWith(loadDataStatus: LoadStatus.failure)),
+        (users) => emit(
+          state.copyWith(
+            loadDataStatus: LoadStatus.success,
+            users: users,
+            searchContacts: contact,
+          ),
+        ),
+      );
+    });
   }
 
-  List<ContactEntity> _searchContact(List<ContactEntity> data, String keyword) {
-    final k = keyword.toLowerCase();
-    return data
-        .where(
-          (e) =>
-              e.user?.userName?.toLowerCase().contains(k) == true ||
-              e.user?.email?.toLowerCase().contains(k) == true,
-        )
-        .toList();
-  }
-
-  void _searchUser(String keyword) async {
-    if (keyword.trim().isEmpty || state.loadDataStatus?.isLoading == true) {
-      return;
-    }
-    emit(state.copyWith(loadDataStatus: LoadStatus.loading, keyWord: keyword));
-    // final result = await authRepository.searchUser(keyword: keyword);
-    //
-    // result.fold(
-    //   (failure) {
-    //     emit(state.copyWith(loadDataStatus: LoadStatus.success));
-    //     navigator.flushbarNavigator.showError(message: failure.message);
-    //   },
-    //   (success) {
-    //     if (keyword == searchController.text.trim()) {
-    //       emit(
-    //         state.copyWith(loadDataStatus: LoadStatus.success, users: success),
-    //       );
-    //     }
-    //   },
-    // );
+  @override
+  Future<void> close() {
+    _debounce?.cancel();
+    searchController.dispose();
+    return super.close();
   }
 }

@@ -47,5 +47,7 @@
   "common_time_weekday_saturday": "Thứ Bảy",
   "common_time_weekday_sunday": "Chủ Nhật",
   "common_message_time_parsing_error": "Lỗi phân tích thời gian",
-  "common_contact": "Liên hệ"
+  "common_contact": "Liên hệ",
+  "common_add_contact": "Thêm liên hệ",
+  "common_search": "Tìm kiếm"
 }

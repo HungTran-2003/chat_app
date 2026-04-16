@@ -18,20 +18,20 @@ class UserEntity {
 });
 
   factory UserEntity.fromJson(Map<String, dynamic> json) => UserEntity(
-    uid: json["uid"],
-    userName: json["user_name"],
+    uid: json["id"],
+    userName: json["username"],
     slogan: json["slogan"],
-    avatarPath: json["avatar_path"],
+    avatarPath: json["avatar_url"],
     email: json["email"],
     role: json["role"],
     backgroundColor: json["background_color"],
   );
 
   Map<String, dynamic> toJson() => {
-    "uid": uid,
-    "user_name": userName,
+    "id": uid,
+    "username": userName,
     "slogan": slogan,
-    "avatar_path": avatarPath,
+    "avatar_url": avatarPath,
     "email": email,
     "background_color": backgroundColor,
   };

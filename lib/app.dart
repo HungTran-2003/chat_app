@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/global/app_cubit/app_setting_cubit.dart';
+import 'data/repositories/contact_repository.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -34,6 +35,11 @@ class _MyAppState extends State<MyApp> {
             return AuthRepositoryImpl(client: SupabaseService.client);
           },
         ),
+        RepositoryProvider<ContactRepository>(
+          create: (context) {
+            return ContactRepositoryImpl(client: SupabaseService.client);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -44,7 +50,9 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<UserCubit>(
             create: (context) {
-              return UserCubit();
+              return UserCubit(
+                authRepository: context.read(),
+              );
             },
           ),
         ],

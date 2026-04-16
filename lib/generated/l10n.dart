@@ -483,6 +483,21 @@ class S {
   String get common_contact {
     return Intl.message('Contacts', name: 'common_contact', desc: '', args: []);
   }
+
+  /// `Add contact`
+  String get common_add_contact {
+    return Intl.message(
+      'Add contact',
+      name: 'common_add_contact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get common_search {
+    return Intl.message('Search', name: 'common_search', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

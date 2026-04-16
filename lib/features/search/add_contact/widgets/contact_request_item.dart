@@ -4,6 +4,7 @@ import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/utlis/tap_guard.dart';
+import 'package:chat_app/core/widgets/button/app_button_wrapper.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
 import 'package:chat_app/domain/models/entities/contact_entity.dart';
@@ -29,71 +30,15 @@ class ContactRequestItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => safeAction(() {
-        onTap?.call();
-      }),
-      child: Ink(
-        width: width,
-        height: height,
-        padding: UiConstants.horizontalPaddingLarge,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            AppAvatarImage(
-              path: contact.user?.avatarPath,
-            ),
-            12.width,
-            Expanded(
-              child: _buildTitleUser(),
-            ),
-            6.width,
-            _buildButtons()
-          ],
-        ),
+    return AppButtonWrapper(
+      onPressed: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+
+        )
       ),
     );
   }
 
-  Widget _buildTitleUser() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            contact.user?.userName ?? "",
-            style: AppTextStyle.black.s20.w600,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-
-          Text(
-            contact.user?.slogan ?? "",
-            style: AppTextStyle.grey.s12.w400,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ]
-    );
-  }
-
-  Widget _buildButtons(){
-    return Row(
-      spacing: 6,
-      children: [
-        AppIconButton(
-          path: AssetConstants.iconUserAccept,
-          onPress: onAccept,
-          backgroundColor: AppColors.green,
-          iconColor: AppColors.whiteF3F6F6,
-        ),
-        AppIconButton(
-          path: AssetConstants.iconUserDecline,
-          onPress: onDecline,
-          backgroundColor: AppColors.backgroundRed,
-          iconColor: AppColors.whiteF3F6F6,
-        ),
-      ],
-    );
-  }
 }

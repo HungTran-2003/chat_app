@@ -1,6 +1,5 @@
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AppSupabaseClient {
   Future<UserEntity> registerAccount ({
@@ -10,5 +9,13 @@ abstract class AppSupabaseClient {
   });
 
   Future<UserEntity> loginWithGoogle(OAuthCredential credential);
+
+  Future<UserEntity> getUserInfo();
+
+  Future<List<UserEntity>> searchUser({
+    required String keyword,
+    int? limit = 20,
+    int? page = 1,
+  });
 
 }

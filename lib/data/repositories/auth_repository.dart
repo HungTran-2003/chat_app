@@ -21,7 +21,7 @@ abstract class AuthRepository {
   //   required String password,
   // });
   //
-  // Future<Either<Failure, UserEntity>> getUserInfo({required String uid});
+  Future<Either<Failure, UserEntity>> getUserInfo();
   //
   // Future<Either<Failure, List<UserEntity>>> searchUser({
   //   required String keyword,
@@ -84,16 +84,16 @@ class AuthRepositoryImpl implements AuthRepository {
   //   }
   // }
   //
-  // @override
-  // Future<Either<Failure, UserEntity>> getUserInfo({required String uid}) async {
-  //   try {
-  //     final user = await apiClient.getUserInfo(uid: uid);
-  //     return Right(user);
-  //   } catch (e) {
-  //     log('Error get user info: $e');
-  //     return Left(FirebaseFailureMapper.map(e));
-  //   }
-  // }
+  @override
+  Future<Either<Failure, UserEntity>> getUserInfo() async {
+    try {
+      final user = await client.getUserInfo();
+      return Right(user);
+    } catch (e) {
+      log('Error get user info: $e');
+      return Left(FailureMapper.map(e));
+    }
+  }
   //
   // @override
   // Future<Either<Failure, List<UserEntity>>> searchUser({

@@ -166,4 +166,35 @@ class BaseNavigator {
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+  void showErrorSnackBar({
+    required String message,
+    Duration? duration = const Duration(seconds: 2),
+  }) {
+    final snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      duration: duration!,
+      content: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Container(
+          height: 52,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColors.backgroundRed.withValues(alpha: 0.5),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 12,
+            children: [Text(message, style: AppTextStyle.black.s14.w500)],
+          ),
+        ),
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }

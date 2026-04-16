@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_confirm_password": MessageLookupByLibrary.simpleMessage(
       "Xác nhận mật khẩu",
     ),
+    "common_contact": MessageLookupByLibrary.simpleMessage("Liên hệ"),
     "common_create_account": MessageLookupByLibrary.simpleMessage(
       "Tạo tài khoản",
     ),

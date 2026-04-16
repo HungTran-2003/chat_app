@@ -1,7 +1,6 @@
 import 'package:chat_app/core/utlis/tap_guard.dart';
 import 'package:chat_app/core/widgets/image/app_svg_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class AppIconButton extends StatelessWidget {
   final String path;

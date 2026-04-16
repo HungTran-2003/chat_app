@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm password",
     ),
+    "common_contact": MessageLookupByLibrary.simpleMessage("Contacts"),
     "common_create_account": MessageLookupByLibrary.simpleMessage(
       "Create an account",
     ),

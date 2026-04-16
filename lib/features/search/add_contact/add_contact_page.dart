@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/widgets/loading/app_loading_widget.dart';
-import 'package:chat_app/data/enum/status_type.dart';
-import 'package:chat_app/features/contact/widgets/contact_list_item.dart';
+import 'package:chat_app/domain/models/enum/status_type.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_cubit.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_navigator.dart';
 import 'package:chat_app/features/search/add_contact/widgets/contact_request_item.dart';

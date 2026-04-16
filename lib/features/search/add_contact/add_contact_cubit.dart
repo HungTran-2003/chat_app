@@ -1,6 +1,6 @@
-import 'package:chat_app/data/entities/contact_entity.dart';
-import 'package:chat_app/data/entities/user_entity.dart';
-import 'package:chat_app/data/enum/status_type.dart';
+import 'package:chat_app/domain/models/entities/contact_entity.dart';
+import 'package:chat_app/domain/models/entities/user_entity.dart';
+import 'package:chat_app/domain/models/enum/status_type.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_navigator.dart';
 import 'package:equatable/equatable.dart';
@@ -58,20 +58,20 @@ class AddContactCubit extends Cubit<AddContactState> {
       return;
     }
     emit(state.copyWith(loadDataStatus: LoadStatus.loading, keyWord: keyword));
-    final result = await authRepository.searchUser(keyword: keyword);
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(loadDataStatus: LoadStatus.success));
-        navigator.flushbarNavigator.showError(message: failure.message);
-      },
-      (success) {
-        if (keyword == searchController.text.trim()) {
-          emit(
-            state.copyWith(loadDataStatus: LoadStatus.success, users: success),
-          );
-        }
-      },
-    );
+    // final result = await authRepository.searchUser(keyword: keyword);
+    //
+    // result.fold(
+    //   (failure) {
+    //     emit(state.copyWith(loadDataStatus: LoadStatus.success));
+    //     navigator.flushbarNavigator.showError(message: failure.message);
+    //   },
+    //   (success) {
+    //     if (keyword == searchController.text.trim()) {
+    //       emit(
+    //         state.copyWith(loadDataStatus: LoadStatus.success, users: success),
+    //       );
+    //     }
+    //   },
+    // );
   }
 }

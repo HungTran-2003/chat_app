@@ -1,5 +1,4 @@
 import 'package:chat_app/core/configs/app_configs.dart';
-import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/button/app_back_button.dart';

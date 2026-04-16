@@ -2,7 +2,6 @@ import 'package:chat_app/core/configs/app_configs.dart';
 import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
-import 'package:chat_app/core/widgets/text_field/app_text_field.dart';
 import 'package:flutter/material.dart';
 
 class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {

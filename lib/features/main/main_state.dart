@@ -1,12 +1,20 @@
 part of 'main_cubit.dart';
 
 class MainState extends Equatable {
-  const MainState();
+  final MainNavItem currentMainPage;
+
+  const MainState({
+    this.currentMainPage = MainNavItem.message,
+  });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [currentMainPage];
 
-  MainState copyWith() {
-    return const MainState();
+  MainState copyWith({
+    MainNavItem? currentMainPage,
+  }) {
+    return MainState(
+      currentMainPage: currentMainPage ?? this.currentMainPage,
+    );
   }
 }

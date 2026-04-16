@@ -6,7 +6,7 @@ import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/utlis/tap_guard.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
-import 'package:chat_app/data/entities/user_entity.dart';
+import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 

@@ -478,6 +478,11 @@ class S {
       args: [],
     );
   }
+
+  /// `Contacts`
+  String get common_contact {
+    return Intl.message('Contacts', name: 'common_contact', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

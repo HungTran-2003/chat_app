@@ -2,7 +2,6 @@ import 'package:chat_app/core/constants/asset_constants.dart';
 import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
-import 'package:chat_app/core/utlis/tap_guard.dart';
 import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/button/app_image_button.dart';

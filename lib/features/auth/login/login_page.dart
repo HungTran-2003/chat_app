@@ -3,13 +3,12 @@ import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
-import 'package:chat_app/core/widgets/button/app_back_button.dart';
 import 'package:chat_app/core/widgets/button/app_filled_button.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
-import 'package:chat_app/core/widgets/text/app_text_rich.dart';
+import 'package:chat_app/core/widgets/loading/app_loading_overlay.dart';
 import 'package:chat_app/core/widgets/text_field/app_text_field.dart';
 import 'package:chat_app/core/widgets/text_field/password_text_field.dart';
-import 'package:chat_app/data/enum/status_type.dart';
+import 'package:chat_app/domain/models/enum/status_type.dart';
 import 'package:chat_app/features/auth/login/login_cubit.dart';
 import 'package:chat_app/features/auth/login/login_navigator.dart';
 import 'package:chat_app/features/auth/widgets/auth_text/auth_text_high_light.dart';
@@ -25,10 +24,12 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<LoginCubit>(
       create: (context) {
-        return LoginCubit(navigator: LoginNavigator(context: context),
-        authRepository: context.read());
+        return LoginCubit(
+          navigator: LoginNavigator(context: context),
+          authRepository: context.read(),
+        );
       },
-      child: LoginChildPage(),
+      child: const LoginChildPage(),
     );
   }
 }
@@ -41,8 +42,6 @@ class LoginChildPage extends StatefulWidget {
 }
 
 class _LoginChildPageState extends State<LoginChildPage> {
-  final _formKey = GlobalKey<FormState>();
-
   late LoginCubit _cubit;
 
   @override
@@ -53,7 +52,22 @@ class _LoginChildPageState extends State<LoginChildPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: _buildBodyPage()));
+    return Scaffold(
+      body: SafeArea(
+        child: BlocListener<LoginCubit, LoginState>(
+          listenWhen: (previous, current) =>
+              previous.loadDataStatus != current.loadDataStatus,
+          listener: (context, state) {
+            if (state.loadDataStatus.isLoading) {
+              AppLoadingOverlay.show(context);
+            } else {
+              AppLoadingOverlay.hide();
+            }
+          },
+          child: _buildBodyPage(),
+        ),
+      ),
+    );
   }
 
   Widget _buildBodyPage() {
@@ -61,63 +75,68 @@ class _LoginChildPageState extends State<LoginChildPage> {
       padding: UiConstants.horizontalPaddingLarge,
       child: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
-        child: Form(
-          key: _formKey,
-          autovalidateMode: AutovalidateMode.onUnfocus,
-          onChanged: () {
-            _cubit.setStatusButtonLogin();
-          },
-          child: Column(
-            children: [
-              60.height,
-              AuthTextHighLight(rawText: S.of(context).auth_login_title),
-              26.height,
-              Text(
-                S.of(context).auth_login_description,
-                style: AppTextStyle.grey.s14.w500,
-                textAlign: TextAlign.center,
-              ),
-              30.height,
-              _buildIconButtonAuth(),
-              30.height,
-              AuthDividerWithText(style: AppTextStyle.grey.s14.w500),
-              30.height,
-              _buildAuthTextField(),
-              60.height,
-              BlocBuilder<LoginCubit, LoginState>(
-                buildWhen: (previous, current) =>
-                    previous.buttonLoginStatus != current.buttonLoginStatus,
-                builder: (context, state) {
-                  return AppFilledButton(
-                    label: S.of(context).common_sign_in,
-                    onPress: () {
-                      if (_formKey.currentState!.validate()) {
-                        _cubit.loginByEmail();
-                      }
-                    },
-                    enable: state.buttonLoginStatus?.isLoading,
-                  );
-                },
-              ),
-              16.height,
-              _buildForgotPasswordText(),
-              20.height,
-              AppFilledButton(
-                label: S.of(context).common_sign_up,
-                onPress: () {
-                  _formKey.currentState?.reset();
-                  _cubit.cleanController();
-                  _cubit.cleanFocusNode();
-                  _cubit.cleanNotifier();
-                  _cubit.navigator.openSignUpPage();
-                },
-              ),
-              10.height,
-            ],
-          ),
+        child: Column(
+          children: [
+            60.height,
+            AuthTextHighLight(rawText: S.of(context).auth_login_title),
+            26.height,
+            Text(
+              S.of(context).auth_login_description,
+              style: AppTextStyle.grey.s14.w500,
+              textAlign: TextAlign.center,
+            ),
+            30.height,
+            _buildIconButtonAuth(),
+            30.height,
+            AuthDividerWithText(style: AppTextStyle.grey.s14.w500),
+            30.height,
+            _buildAuthTextField(),
+            60.height,
+            BlocBuilder<LoginCubit, LoginState>(
+              buildWhen: (previous, current) =>
+                  previous.buttonLoginStatus != current.buttonLoginStatus,
+              builder: (context, state) {
+                return AppFilledButton(
+                  label: S.of(context).common_sign_in,
+                  onPress: () {
+                    _validateAllFields();
+                    if (state.emailError == null &&
+                        state.passwordError == null) {
+                      _cubit.loginByEmail();
+                    }
+                  },
+                  enable: state.buttonLoginStatus.isLoading,
+                );
+              },
+            ),
+            16.height,
+            _buildForgotPasswordText(),
+            20.height,
+            AppFilledButton(
+              label: S.of(context).common_sign_up,
+              onPress: () {
+                _cubit.cleanController();
+                _cubit.cleanFocusNode();
+                _cubit.navigator.openSignUpPage();
+              },
+            ),
+            10.height,
+          ],
         ),
       ),
     );
+  }
+
+  void _validateAllFields() {
+    final email = _cubit.emailController.text;
+    final password = _cubit.passwordController.text;
+
+    if (email.isEmpty) {
+      _cubit.setEmailError("Please enter your email");
+    }
+    if (password.isEmpty) {
+      _cubit.setPasswordError("Please enter your password");
+    }
   }
 
   Widget _buildIconButtonAuth() {
@@ -130,12 +149,11 @@ class _LoginChildPageState extends State<LoginChildPage> {
           path: AssetConstants.iconFacebook,
           borderColor: AppColors.borderBlack,
         ),
-
         AppIconButton(
           path: AssetConstants.iconGoogle,
           borderColor: AppColors.borderBlack,
+          onPress: _cubit.loginWithGoogle,
         ),
-
         AppIconButton(
           path: AssetConstants.iconApple,
           borderColor: AppColors.borderBlack,
@@ -146,47 +164,61 @@ class _LoginChildPageState extends State<LoginChildPage> {
   }
 
   Widget _buildAuthTextField() {
-    return Column(
-      children: [
-        AppTextField(
-          label: S.of(context).common_your_email,
-          controller: _cubit.emailController,
-          focusNode: _cubit.emailFocusNode,
-          textFieldNotifier: _cubit.emailNotifier,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              _cubit.emailNotifier.setTextError("Please enter your email");
-              return "";
-            }
-            _cubit.emailNotifier.setTextError(null);
-            return null;
-          },
-        ),
-        20.height,
-        PasswordTextField(
-          label: S.of(context).common_password,
-          passwordNotifier: _cubit.passwordNotifier,
-          controller: _cubit.passwordController,
-          focusNode: _cubit.passwordFocusNode,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              _cubit.passwordNotifier.setTextError(
-                "Please enter your password",
-              );
-              return "";
-            }
-            _cubit.passwordNotifier.setTextError(null);
-            return null;
-          },
-        ),
-      ],
+    return BlocBuilder<LoginCubit, LoginState>(
+      buildWhen: (previous, current) =>
+          previous.emailError != current.emailError ||
+          previous.passwordError != current.passwordError ||
+          previous.isPasswordVisible != current.isPasswordVisible,
+      builder: (context, state) {
+        return Column(
+          children: [
+            AppTextField(
+              label: S.of(context).common_your_email,
+              controller: _cubit.emailController,
+              focusNode: _cubit.emailFocusNode,
+              errorText: state.emailError,
+              onFocusChange: (hasFocus) {
+                if (!hasFocus) {
+                  final email = _cubit.emailController.text;
+                  if (email.isEmpty) {
+                    _cubit.setEmailError("Please enter your email");
+                  } else {
+                    _cubit.setEmailError(null);
+                  }
+                }
+              },
+            ),
+            20.height,
+            PasswordTextField(
+              label: S.of(context).common_password,
+              controller: _cubit.passwordController,
+              focusNode: _cubit.passwordFocusNode,
+              isObscure: !state.isPasswordVisible,
+              errorText: state.passwordError,
+              onToggleVisibility: () {
+                _cubit.togglePasswordVisibility();
+              },
+              onFocusChange: (hasFocus) {
+                if (!hasFocus) {
+                  final password = _cubit.passwordController.text;
+                  if (password.isEmpty) {
+                    _cubit.setPasswordError("Please enter your password");
+                  } else {
+                    _cubit.setPasswordError(null);
+                  }
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
   Widget _buildForgotPasswordText() {
     return GestureDetector(
       onTap: () {
-        print("Forgot Password");
+        debugPrint("Forgot Password");
       },
       child: Text(
         S.of(context).common_forgot_password,

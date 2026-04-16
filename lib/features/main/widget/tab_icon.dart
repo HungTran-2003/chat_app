@@ -1,9 +1,8 @@
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/image/app_svg_image.dart';
-import 'package:chat_app/data/enum/main_nav_item.dart';
+import 'package:chat_app/domain/models/enum/main_nav_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class TabIcons extends StatelessWidget {
   final MainNavItem navItem;

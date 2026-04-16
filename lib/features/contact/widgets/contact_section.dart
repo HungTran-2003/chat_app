@@ -1,6 +1,6 @@
 import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
-import 'package:chat_app/data/entities/user_entity.dart';
+import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:chat_app/features/contact/widgets/contact_list_item.dart';
 import 'package:flutter/material.dart';
 

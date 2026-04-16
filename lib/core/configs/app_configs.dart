@@ -1,4 +1,4 @@
-import 'package:chat_app/data/enum/language_type.dart';
+import 'package:chat_app/domain/models/enum/language_type.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppConfigs {
@@ -39,4 +39,8 @@ class AppConfigs {
 
   ///App bar
   static const appBarHeight = 44.0;
+
+  ///Supabase
+  static const supabaseUrl = 'https://jglendrapvzzksnilhjt.supabase.co';
+  static const supabaseAnonKey = 'sb_publishable_CeMZyM0Oqw8jy5sVymURjg_MtTZKusv';
 }

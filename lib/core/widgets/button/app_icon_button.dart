@@ -26,31 +26,34 @@ class AppIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPress == null
-          ? null
-          : () => safeAction(() {
-              onPress?.call();
-            }),
-      customBorder: const CircleBorder(),
-      child: Ink(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          shape: BoxShape.circle,
-          border: Border.all(color: borderColor!, width: borderWidth!),
-        ),
-        child: SizedBox(
-          width: sizeButton,
-          height: sizeButton,
-          child: Center(
-            child: AppSvgImage(
-              path,
-              width: sizeIcon!.width,
-              height: sizeIcon!.height,
-              colorFilter: iconColor != null
-                  ? ColorFilter.mode(iconColor!, BlendMode.srcIn)
-                  : null,
-              fit: BoxFit.fitWidth,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onPress == null
+            ? null
+            : () => safeAction(() {
+                onPress?.call();
+              }),
+        customBorder: const CircleBorder(),
+        child: Ink(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            shape: BoxShape.circle,
+            border: Border.all(color: borderColor!, width: borderWidth!),
+          ),
+          child: SizedBox(
+            width: sizeButton,
+            height: sizeButton,
+            child: Center(
+              child: AppSvgImage(
+                path,
+                width: sizeIcon!.width,
+                height: sizeIcon!.height,
+                colorFilter: iconColor != null
+                    ? ColorFilter.mode(iconColor!, BlendMode.srcIn)
+                    : null,
+                fit: BoxFit.fitWidth,
+              ),
             ),
           ),
         ),

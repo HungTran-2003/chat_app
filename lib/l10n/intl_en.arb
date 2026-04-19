@@ -49,5 +49,17 @@
   "common_message_time_parsing_error": "Time parsing error",
   "common_contact": "Contacts",
   "common_add_contact": "Add contact",
-  "common_search": "Search"
+  "common_search": "Search",
+  "common_accept": "Accept Request",
+  "common_ignore": "Ignore",
+  "common_sent_just_now": "SENT JUST NOW",
+  "common_sent_time_ago": "SENT {count} {unit} AGO",
+  "common_day": "DAY",
+  "common_days": "DAYS",
+  "common_hour": "HOUR",
+  "common_hours": "HOURS",
+  "common_minute": "MINUTE",
+  "common_minutes": "MINUTES",
+  "message_user_have_not_slogan": "This guy is incredibly lazy."
+
 }

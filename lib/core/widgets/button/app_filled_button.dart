@@ -31,22 +31,25 @@ class AppFilledButton extends StatelessWidget {
         ? AppTextStyle.white.s18.w600
         : AppTextStyle.white.s18.w600.copyWith(color: AppColors.tertiary);
 
-    return InkWell(
-      enableFeedback: true,
-      onTap: enable == true
-          ? () => safeAction(() {
-              onPress.call();
-            })
-          : null,
-      borderRadius: BorderRadius.circular(borderRadius!),
-      child: Ink(
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-          color: enable == true ? backgroundColor : AppColors.whiteF3F6F6,
-          borderRadius: BorderRadius.circular(borderRadius!),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        enableFeedback: true,
+        onTap: enable == true
+            ? () => safeAction(() {
+                onPress.call();
+              })
+            : null,
+        borderRadius: BorderRadius.circular(borderRadius!),
+        child: Ink(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            color: enable == true ? backgroundColor : AppColors.whiteF3F6F6,
+            borderRadius: BorderRadius.circular(borderRadius!),
+          ),
+          child: Center(child: Text(label, style: labelStyle ?? styleDefault)),
         ),
-        child: Center(child: Text(label, style: labelStyle ?? styleDefault)),
       ),
     );
   }

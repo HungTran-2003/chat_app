@@ -3,6 +3,7 @@ import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
+import 'package:chat_app/core/utlis/validator.dart';
 import 'package:chat_app/core/widgets/button/app_filled_button.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/loading/app_loading_overlay.dart';
@@ -99,11 +100,7 @@ class _LoginChildPageState extends State<LoginChildPage> {
                 return AppFilledButton(
                   label: S.of(context).common_sign_in,
                   onPress: () {
-                    _validateAllFields();
-                    if (state.emailError == null &&
-                        state.passwordError == null) {
-                      _cubit.loginByEmail();
-                    }
+                    _cubit.loginByEmail();
                   },
                   enable: state.buttonLoginStatus.isLoading,
                 );
@@ -125,18 +122,6 @@ class _LoginChildPageState extends State<LoginChildPage> {
         ),
       ),
     );
-  }
-
-  void _validateAllFields() {
-    final email = _cubit.emailController.text;
-    final password = _cubit.passwordController.text;
-
-    if (email.isEmpty) {
-      _cubit.setEmailError("Please enter your email");
-    }
-    if (password.isEmpty) {
-      _cubit.setPasswordError("Please enter your password");
-    }
   }
 
   Widget _buildIconButtonAuth() {
@@ -170,6 +155,7 @@ class _LoginChildPageState extends State<LoginChildPage> {
           previous.passwordError != current.passwordError ||
           previous.isPasswordVisible != current.isPasswordVisible,
       builder: (context, state) {
+        _cubit.setStatusButtonLogin();
         return Column(
           children: [
             AppTextField(
@@ -180,11 +166,7 @@ class _LoginChildPageState extends State<LoginChildPage> {
               onFocusChange: (hasFocus) {
                 if (!hasFocus) {
                   final email = _cubit.emailController.text;
-                  if (email.isEmpty) {
-                    _cubit.setEmailError("Please enter your email");
-                  } else {
-                    _cubit.setEmailError(null);
-                  }
+                  _cubit.setEmailError(AppValidator.validateEmail(email) ?? "");
                 }
               },
             ),
@@ -201,11 +183,9 @@ class _LoginChildPageState extends State<LoginChildPage> {
               onFocusChange: (hasFocus) {
                 if (!hasFocus) {
                   final password = _cubit.passwordController.text;
-                  if (password.isEmpty) {
-                    _cubit.setPasswordError("Please enter your password");
-                  } else {
-                    _cubit.setPasswordError(null);
-                  }
+                  _cubit.setPasswordError(
+                    AppValidator.validatePassword(password) ?? "",
+                  );
                 }
               },
             ),

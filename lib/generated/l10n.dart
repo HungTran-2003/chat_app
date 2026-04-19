@@ -498,6 +498,81 @@ class S {
   String get common_search {
     return Intl.message('Search', name: 'common_search', desc: '', args: []);
   }
+
+  /// `Accept Request`
+  String get common_accept {
+    return Intl.message(
+      'Accept Request',
+      name: 'common_accept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ignore`
+  String get common_ignore {
+    return Intl.message('Ignore', name: 'common_ignore', desc: '', args: []);
+  }
+
+  /// `SENT JUST NOW`
+  String get common_sent_just_now {
+    return Intl.message(
+      'SENT JUST NOW',
+      name: 'common_sent_just_now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SENT {count} {unit} AGO`
+  String common_sent_time_ago(Object count, Object unit) {
+    return Intl.message(
+      'SENT $count $unit AGO',
+      name: 'common_sent_time_ago',
+      desc: '',
+      args: [count, unit],
+    );
+  }
+
+  /// `DAY`
+  String get common_day {
+    return Intl.message('DAY', name: 'common_day', desc: '', args: []);
+  }
+
+  /// `DAYS`
+  String get common_days {
+    return Intl.message('DAYS', name: 'common_days', desc: '', args: []);
+  }
+
+  /// `HOUR`
+  String get common_hour {
+    return Intl.message('HOUR', name: 'common_hour', desc: '', args: []);
+  }
+
+  /// `HOURS`
+  String get common_hours {
+    return Intl.message('HOURS', name: 'common_hours', desc: '', args: []);
+  }
+
+  /// `MINUTE`
+  String get common_minute {
+    return Intl.message('MINUTE', name: 'common_minute', desc: '', args: []);
+  }
+
+  /// `MINUTES`
+  String get common_minutes {
+    return Intl.message('MINUTES', name: 'common_minutes', desc: '', args: []);
+  }
+
+  /// `This guy is incredibly lazy.`
+  String get message_user_have_not_slogan {
+    return Intl.message(
+      'This guy is incredibly lazy.',
+      name: 'message_user_have_not_slogan',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

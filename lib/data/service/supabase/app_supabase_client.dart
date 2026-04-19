@@ -1,14 +1,20 @@
+import 'package:chat_app/data/response/request_response.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AppSupabaseClient {
-  Future<UserEntity> registerAccount ({
+  Future<UserEntity> registerAccount({
     required String userName,
     required String email,
     required String password,
   });
 
   Future<UserEntity> loginWithGoogle(OAuthCredential credential);
+
+  Future<UserEntity> loginWithEmail({
+    required String email,
+    required String password,
+  });
 
   Future<UserEntity> getUserInfo();
 
@@ -18,4 +24,8 @@ abstract class AppSupabaseClient {
     int? page = 1,
   });
 
+  Future<List<RequestResponse>> getRequest({
+    int? limit = 20,
+    int? page = 1,
+  });
 }

@@ -94,11 +94,6 @@ class _MessageChildPageState extends State<MessageChildPage> {
               spacing: 13.0,
               children: [
                 HomeButtonStatus(),
-                ...List.generate(state.contacts!.length, (index) {
-                  final user = state.contacts![index].user;
-                  if (user == null) return Container();
-                  return ContactIconWidget(user: user);
-                }),
               ],
             ),
           );

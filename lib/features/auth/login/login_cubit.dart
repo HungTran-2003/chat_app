@@ -63,20 +63,24 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(loadDataStatus: LoadStatus.loading));
     final email = emailController.text;
     final password = passwordController.text;
-    // final result = await authRepository.loginByEmail(
-    //   email: email,
-    //   password: password,
-    // );
-    //
-    // result.fold((failure) {
-    //   emit(state.copyWith(loadDataStatus: LoadStatus.success));
-    //   navigator.flushbarNavigator.showError(message: failure.message);
-    // }, (success) {
-    //   emit(state.copyWith(loadDataStatus: LoadStatus.success));
-    //   cleanController();
-    //   cleanFocusNode();
-    //   navigator.goToHomePage();
-    // });
+    final result = await authRepository.loginByEmail(
+      email: email,
+      password: password,
+    );
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(loadDataStatus: LoadStatus.failure));
+        navigator.showErrorSnackBar(message: failure.message);
+      },
+      (success) {
+        emit(state.copyWith(loadDataStatus: LoadStatus.success));
+        navigator.showSuccessSnackBar(message: "Login Success");
+        cleanController();
+        cleanFocusNode();
+        navigator.goToHomePage();
+      },
+    );
   }
 
   void loginWithGoogle() async {

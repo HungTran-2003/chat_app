@@ -7,7 +7,7 @@ import 'package:chat_app/domain/models/enum/status_type.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_cubit.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_navigator.dart';
 import 'package:chat_app/features/search/add_contact/widgets/contact_request_item.dart';
-import 'package:chat_app/features/search/widgets/user_search_item.dart';
+import 'package:chat_app/features/search/add_contact/widgets/search_contact_item.dart';
 import 'package:chat_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,19 +87,19 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
         if (state.users.isEmpty && state.contacts.isEmpty) {
           return Center(child: Text("No data"));
         }
-        if (state.users.isEmpty) {
+        if(state.users.isEmpty) {
           return ListView.builder(
-            itemCount: state.searchContacts.length,
+            itemCount: state.contacts.length,
             itemBuilder: (context, index) {
               return ContactRequestItem(
-                contact: state.searchContacts[index],
+                contact: state.contacts[index],
                 onTap: () {
                   print("onTap");
                 },
                 onAccept: () {
                   print("onAccept");
                 },
-                onDecline: () {
+                onIgnore: () {
                   print("onDecline");
                 },
               );
@@ -109,7 +109,15 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
         return ListView.builder(
           itemCount: state.users.length,
           itemBuilder: (context, index) {
-            return UserSearchItem(user: state.users[index]);
+            return SearchContactItem(
+              user: state.users[index],
+              onTap: () {
+                print("onTap");
+              },
+              onAdd: () {
+                print("onAdd");
+              },
+            );
           },
         );
       },

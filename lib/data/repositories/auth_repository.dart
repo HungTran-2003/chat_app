@@ -16,11 +16,11 @@ abstract class AuthRepository {
 
   Future<Either<Failure, UserEntity>> loginWithGoogle(OAuthCredential credential);
 
-  // Future<Either<Failure, dynamic>> loginByEmail({
-  //   required String email,
-  //   required String password,
-  // });
-  //
+  Future<Either<Failure, dynamic>> loginByEmail({
+    required String email,
+    required String password,
+  });
+
   Future<Either<Failure, UserEntity>> getUserInfo();
   //
   // Future<Either<Failure, List<UserEntity>>> searchUser({
@@ -67,23 +67,23 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // @override
-  // Future<Either<Failure, dynamic>> loginByEmail({
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   try {
-  //     final user = await apiClient.loginByEmail(
-  //       email: email,
-  //       password: password,
-  //     );
-  //     return Right(user);
-  //   } catch (e) {
-  //     log('Error login by email: $e');
-  //     return Left(FirebaseFailureMapper.map(e));
-  //   }
-  // }
-  //
+  @override
+  Future<Either<Failure, dynamic>> loginByEmail({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final user = await client.loginWithEmail(
+        email: email,
+        password: password,
+      );
+      return Right(user);
+    } catch (e) {
+      log('Error login by email: $e');
+      return Left(FailureMapper.map(e));
+    }
+  }
+
   @override
   Future<Either<Failure, UserEntity>> getUserInfo() async {
     try {

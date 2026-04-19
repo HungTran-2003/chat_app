@@ -20,7 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
-  static String m0(count) => "${count} phút";
+  static String m0(count, unit) => "GỬI ${count} ${unit} TRƯỚC";
+
+  static String m1(count) => "${count} phút";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -36,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_register_title": MessageLookupByLibrary.simpleMessage(
       "Đăng ký với <Email>",
     ),
+    "common_accept": MessageLookupByLibrary.simpleMessage("Chấp nhận yêu cầu"),
     "common_add_contact": MessageLookupByLibrary.simpleMessage("Thêm liên hệ"),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
     "common_confirm_password": MessageLookupByLibrary.simpleMessage(
@@ -45,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_create_account": MessageLookupByLibrary.simpleMessage(
       "Tạo tài khoản",
     ),
+    "common_day": MessageLookupByLibrary.simpleMessage("NGÀY"),
+    "common_days": MessageLookupByLibrary.simpleMessage("NGÀY"),
     "common_forgot_password": MessageLookupByLibrary.simpleMessage(
       "Quên mật khẩu?",
     ),
@@ -52,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Có tài khoản? <Đăng nhập>",
     ),
     "common_home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
+    "common_hour": MessageLookupByLibrary.simpleMessage("GIỜ"),
+    "common_hours": MessageLookupByLibrary.simpleMessage("GIỜ"),
+    "common_ignore": MessageLookupByLibrary.simpleMessage("Bỏ qua"),
     "common_label_name": MessageLookupByLibrary.simpleMessage("Tên của bạn"),
     "common_message_data_already_exists": MessageLookupByLibrary.simpleMessage(
       "Dữ liệu đã tồn tại.",
@@ -95,16 +103,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_message_wrong_password": MessageLookupByLibrary.simpleMessage(
       "Mật khẩu không chính xác.",
     ),
+    "common_minute": MessageLookupByLibrary.simpleMessage("PHÚT"),
+    "common_minutes": MessageLookupByLibrary.simpleMessage("PHÚT"),
     "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
+    "common_sent_just_now": MessageLookupByLibrary.simpleMessage(
+      "VỪA GỬI XONG",
+    ),
+    "common_sent_time_ago": m0,
     "common_sign_in": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),
     "common_sign_up_with_email": MessageLookupByLibrary.simpleMessage(
       "Đăng ký với email",
     ),
     "common_time_just_now": MessageLookupByLibrary.simpleMessage("Vừa xong"),
-    "common_time_minutes_ago": m0,
+    "common_time_minutes_ago": m1,
     "common_time_weekday_friday": MessageLookupByLibrary.simpleMessage(
       "Thứ Sáu",
     ),
@@ -127,6 +141,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Thứ Tư",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Email"),
+    "message_user_have_not_slogan": MessageLookupByLibrary.simpleMessage(
+      "Thằng này nó lười vcl",
+    ),
     "nav_call": MessageLookupByLibrary.simpleMessage("Cuộc gọi"),
     "nav_contact": MessageLookupByLibrary.simpleMessage("Danh bạ"),
     "nav_message": MessageLookupByLibrary.simpleMessage("Đoạn chat"),

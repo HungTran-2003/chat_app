@@ -49,5 +49,16 @@
   "common_message_time_parsing_error": "Lỗi phân tích thời gian",
   "common_contact": "Liên hệ",
   "common_add_contact": "Thêm liên hệ",
-  "common_search": "Tìm kiếm"
+  "common_search": "Tìm kiếm",
+  "common_accept": "Chấp nhận yêu cầu",
+  "common_ignore": "Bỏ qua",
+  "common_sent_just_now": "VỪA GỬI XONG",
+  "common_sent_time_ago": "GỬI {count} {unit} TRƯỚC",
+  "common_day": "NGÀY",
+  "common_days": "NGÀY",
+  "common_hour": "GIỜ",
+  "common_hours": "GIỜ",
+  "common_minute": "PHÚT",
+  "common_minutes": "PHÚT",
+  "message_user_have_not_slogan": "Thằng này nó lười vcl"
 }

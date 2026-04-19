@@ -20,7 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(count) => "${count}m ago";
+  static String m0(count, unit) => "SENT ${count} ${unit} AGO";
+
+  static String m1(count) => "${count}m ago";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -36,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_register_title": MessageLookupByLibrary.simpleMessage(
       "Sign up with <Email>",
     ),
+    "common_accept": MessageLookupByLibrary.simpleMessage("Accept Request"),
     "common_add_contact": MessageLookupByLibrary.simpleMessage("Add contact"),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
     "common_confirm_password": MessageLookupByLibrary.simpleMessage(
@@ -45,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_create_account": MessageLookupByLibrary.simpleMessage(
       "Create an account",
     ),
+    "common_day": MessageLookupByLibrary.simpleMessage("DAY"),
+    "common_days": MessageLookupByLibrary.simpleMessage("DAYS"),
     "common_forgot_password": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
     ),
@@ -52,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Existing account? <Log in>",
     ),
     "common_home": MessageLookupByLibrary.simpleMessage("Home"),
+    "common_hour": MessageLookupByLibrary.simpleMessage("HOUR"),
+    "common_hours": MessageLookupByLibrary.simpleMessage("HOURS"),
+    "common_ignore": MessageLookupByLibrary.simpleMessage("Ignore"),
     "common_label_name": MessageLookupByLibrary.simpleMessage("Your name"),
     "common_message_data_already_exists": MessageLookupByLibrary.simpleMessage(
       "The data already exists.",
@@ -95,16 +103,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_message_wrong_password": MessageLookupByLibrary.simpleMessage(
       "Incorrect password.",
     ),
+    "common_minute": MessageLookupByLibrary.simpleMessage("MINUTE"),
+    "common_minutes": MessageLookupByLibrary.simpleMessage("MINUTES"),
     "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_search": MessageLookupByLibrary.simpleMessage("Search"),
+    "common_sent_just_now": MessageLookupByLibrary.simpleMessage(
+      "SENT JUST NOW",
+    ),
+    "common_sent_time_ago": m0,
     "common_sign_in": MessageLookupByLibrary.simpleMessage("Login"),
     "common_sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
     "common_sign_up_with_email": MessageLookupByLibrary.simpleMessage(
       "Sign up with email",
     ),
     "common_time_just_now": MessageLookupByLibrary.simpleMessage("Just now"),
-    "common_time_minutes_ago": m0,
+    "common_time_minutes_ago": m1,
     "common_time_weekday_friday": MessageLookupByLibrary.simpleMessage(
       "Friday",
     ),
@@ -127,6 +141,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Wednesday",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Your email"),
+    "message_user_have_not_slogan": MessageLookupByLibrary.simpleMessage(
+      "This guy is incredibly lazy.",
+    ),
     "nav_call": MessageLookupByLibrary.simpleMessage("Call"),
     "nav_contact": MessageLookupByLibrary.simpleMessage("Contact"),
     "nav_message": MessageLookupByLibrary.simpleMessage("Message"),

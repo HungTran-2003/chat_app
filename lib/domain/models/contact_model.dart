@@ -51,15 +51,5 @@ class ContactModel{
     'greeting_message': greetingMessage ?? 'Hello con chó'
   };
 
-  ContactEntity toEntity(String currentUid, {String? uid}){
-    return ContactEntity(
-      uid: uid ?? this.uid,
-      status: status,
-      createdAt: createdAt,
-      updateAt: updateAt,
-      requestId: requestId,
-      user: user?.firstWhere((element) => element.uid != currentUid),
-      greetingMessage: greetingMessage,
-    );
-  }
+
 }

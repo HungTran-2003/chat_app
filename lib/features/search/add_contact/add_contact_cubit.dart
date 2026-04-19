@@ -20,19 +20,24 @@ class AddContactCubit extends Cubit<AddContactState> {
   final searchController = TextEditingController();
   Timer? _debounce;
 
-  AddContactCubit({
-    required this.navigator,
-    required this.contactRepo,
-  }) : super(const AddContactState());
+  AddContactCubit({required this.navigator, required this.contactRepo})
+    : super(const AddContactState());
 
-  void initFetchData() {
-    final mockData = ContactEntity.mockData();
-    emit(
-      state.copyWith(
-        loadDataStatus: LoadStatus.success,
-        contacts: mockData,
-        searchContacts: mockData,
-      ),
+  Future<void> initFetchData() async {
+    emit(state.copyWith(loadDataStatus: LoadStatus.loading));
+    final result = await contactRepo.getRecentContacts();
+    result.fold(
+      (error) {
+        emit(state.copyWith(loadDataStatus: LoadStatus.failure));
+      },
+      (contacts) {
+        emit(
+          state.copyWith(
+            loadDataStatus: LoadStatus.success,
+            contacts: contacts,
+          ),
+        );
+      },
     );
   }
 
@@ -44,7 +49,7 @@ class AddContactCubit extends Cubit<AddContactState> {
         return;
       }
       final contact = state.contacts.where((element) {
-        return element.user!.userName!.contains(keyword);
+        return element.username!.contains(keyword);
       }).toList();
 
       emit(state.copyWith(loadDataStatus: LoadStatus.loading));

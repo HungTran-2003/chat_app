@@ -5,11 +5,11 @@ enum ContactStatus {
 
   static ContactStatus fromString(String value) {
     switch (value) {
-      case "Pending":
+      case "pending":
         return ContactStatus.pending;
-      case "Accepted":
+      case "accepted":
         return ContactStatus.accepted;
-      case "Blocked":
+      case "blocked":
         return ContactStatus.blocked;
       default:
         throw Exception("Invalid ContactStatus value: $value");
@@ -21,11 +21,11 @@ extension ContactStatusExt on ContactStatus {
   String get title {
     switch (this) {
       case ContactStatus.pending:
-        return "Pending";
+        return "pending";
       case ContactStatus.accepted:
-        return "Accepted";
+        return "accepted";
       case ContactStatus.blocked:
-        return "Blocked";
+        return "blocked";
     }
   }
 }

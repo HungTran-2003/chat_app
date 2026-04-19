@@ -53,16 +53,7 @@ class _ContactChildPageState extends State<ContactChildPage> {
     final Map<String, List<UserEntity>> result = {};
 
     for (final contacts in contacts) {
-      if (contacts.user?.userName?.trim().isEmpty ?? true) continue;
 
-      final String key = contacts.user!.userName!
-          .trim()
-          .characters
-          .first
-          .toUpperCase();
-
-      result.putIfAbsent(key, () => []);
-      result[key]!.add(contacts.user!);
     }
     return result;
   }

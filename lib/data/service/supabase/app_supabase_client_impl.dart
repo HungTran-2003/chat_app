@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chat_app/data/response/request_response.dart';
 import 'package:chat_app/data/service/supabase/app_supabase_client.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -90,5 +91,30 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
     log(response.toString());
 
     return response.map((e) => UserEntity.fromJson(e)).toList();
+  }
+
+  @override
+  Future<UserEntity> loginWithEmail({
+    required String email,
+    required String password,
+  }) async {
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
+    return getUserInfo();
+  }
+
+  @override
+  Future<List<RequestResponse>> getRequest({
+    int? limit = 20,
+    int? page = 1,
+  }) async {
+    final List<dynamic> response = await _client.rpc(
+      'get_incoming_friend_requests',
+      params: {
+        'p_user_id': _auth.currentUser!.uid,
+        'p_limit': limit ?? 10,
+        'p_page': page ?? 1,
+      },
+    );
+    return response.map((e) => RequestResponse.fromJson(e)).toList();
   }
 }

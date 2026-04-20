@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chat_app/data/response/object_response.dart';
 import 'package:chat_app/data/response/request_response.dart';
 import 'package:chat_app/data/service/supabase/app_supabase_client.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
@@ -116,5 +117,34 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
       },
     );
     return response.map((e) => RequestResponse.fromJson(e)).toList();
+  }
+
+  @override
+  Future<ObjectResponse> sentContactRequest({
+    required String receiverId,
+    required String greetingMessage,
+  }) async {
+    final response = await _client.rpc(
+      'send_contact_request',
+      params: {
+        'p_sender_id': _auth.currentUser!.uid,
+        'p_receiver_id': receiverId,
+        'p_greeting': greetingMessage,
+      }
+    );
+    log(response.toString());
+    
+    final data = _processResponse(response);
+    return ObjectResponse.fromJson(data);
+  }
+
+  dynamic _processResponse(dynamic response) {
+    if (response is Map && response.containsKey('success')) {
+      if (response['success'] == false) {
+        throw Exception(response['message'] ?? 'Unknown error from server');
+      }
+      return response;
+    }
+    return response;
   }
 }

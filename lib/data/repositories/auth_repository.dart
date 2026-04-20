@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:chat_app/core/error/failures.dart';
-import 'package:chat_app/data/service/network/api_client.dart';
 import 'package:chat_app/data/service/supabase/app_supabase_client.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';

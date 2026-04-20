@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(count) => "${count}m ago";
 
+  static String m2(userName) => "add ${userName} to your contact list";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "auth_login_description": MessageLookupByLibrary.simpleMessage(
@@ -41,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_accept": MessageLookupByLibrary.simpleMessage("Accept Request"),
     "common_add_contact": MessageLookupByLibrary.simpleMessage("Add contact"),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
+    "common_cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "common_confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm password",
     ),
@@ -108,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_search": MessageLookupByLibrary.simpleMessage("Search"),
+    "common_send": MessageLookupByLibrary.simpleMessage("Send"),
     "common_sent_just_now": MessageLookupByLibrary.simpleMessage(
       "SENT JUST NOW",
     ),
@@ -141,6 +145,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Wednesday",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Your email"),
+    "common_your_message": MessageLookupByLibrary.simpleMessage("Your message"),
+    "content_message_add_request": m2,
+    "message_hint_your_message": MessageLookupByLibrary.simpleMessage(
+      "Enter your message",
+    ),
     "message_user_have_not_slogan": MessageLookupByLibrary.simpleMessage(
       "This guy is incredibly lazy.",
     ),
@@ -153,6 +162,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "onboard_description": MessageLookupByLibrary.simpleMessage(
       "Our chat app is the perfect way to stay connected with friends and family.",
+    ),
+    "title_message_add_request": MessageLookupByLibrary.simpleMessage(
+      "Send friend request",
     ),
   };
 }

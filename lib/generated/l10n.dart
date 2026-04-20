@@ -573,6 +573,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Send friend request`
+  String get title_message_add_request {
+    return Intl.message(
+      'Send friend request',
+      name: 'title_message_add_request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `add {userName} to your contact list`
+  String content_message_add_request(Object userName) {
+    return Intl.message(
+      'add $userName to your contact list',
+      name: 'content_message_add_request',
+      desc: '',
+      args: [userName],
+    );
+  }
+
+  /// `Your message`
+  String get common_your_message {
+    return Intl.message(
+      'Your message',
+      name: 'common_your_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your message`
+  String get message_hint_your_message {
+    return Intl.message(
+      'Enter your message',
+      name: 'message_hint_your_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get common_send {
+    return Intl.message('Send', name: 'common_send', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get common_cancel {
+    return Intl.message('Cancel', name: 'common_cancel', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

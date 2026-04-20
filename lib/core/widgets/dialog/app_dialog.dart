@@ -1,6 +1,7 @@
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/button/app_filled_button.dart';
+import 'package:chat_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 enum DialogType {
@@ -95,6 +96,78 @@ class AppDialog {
                     flex: 1,
                     child: AppFilledButton(
                       label: declineButtonText,
+                      borderRadius: buttonRadius,
+                      backgroundColor: AppColors.whiteF3F6F6,
+                      labelStyle: AppTextStyle.grey.s16.w700,
+                      onPress: () {
+                        Navigator.of(context).pop(DialogAction.declined);
+                      },
+                    ),
+                  ),
+                Expanded(
+                  flex: 1,
+                  child: AppFilledButton(
+                    label: confirmButtonText,
+                    borderRadius: buttonRadius,
+                    labelStyle: AppTextStyle.white.s16.w700.copyWith(
+                      color: dialogType == DialogType.errorConfirmation
+                          ? AppColors.whiteF3F6F6
+                          : AppColors.backgroundDark,
+                    ),
+                    onPress: () {
+                      Navigator.of(context).pop(DialogAction.confirmed);
+                    },
+                    backgroundColor: dialogType.getConfirmButtonColor(context),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+
+    if (result is DialogAction) {
+      return result;
+    }
+    return DialogAction.dismissed;
+  }
+
+  static Future<DialogAction> showCustom({
+    required BuildContext context,
+    required DialogType dialogType,
+    required Widget content,
+    required String confirmButtonText,
+    String? declineButtonText,
+    double? buttonRadius,
+  }) async {
+    final result = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: AppColors.backgroundDark, // Light mode
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(24),
+          ),
+          backgroundColor: AppColors.backgroundLight,
+          scrollable: true,
+          content: SizedBox(
+              width: 328,
+              child: content
+          ),
+          actionsAlignment: MainAxisAlignment.spaceEvenly,
+          actions: [
+            Row(
+              spacing: 12,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                if (dialogType.isDeclinedButtonVisible)
+                  Expanded(
+                    flex: 1,
+                    child: AppFilledButton(
+                      label: declineButtonText ?? S.of(context).common_cancel,
                       borderRadius: buttonRadius,
                       backgroundColor: AppColors.whiteF3F6F6,
                       labelStyle: AppTextStyle.grey.s16.w700,

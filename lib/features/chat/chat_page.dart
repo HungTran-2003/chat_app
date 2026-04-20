@@ -7,7 +7,6 @@ import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/button/app_image_button.dart';
 import 'package:chat_app/features/chat/chat_cubit.dart';
 import 'package:chat_app/features/chat/widget/chat_list_item.dart';
-import 'package:chat_app/features/chat/widget/contact_icon_widget.dart';
 import 'package:chat_app/features/chat/widget/home_button_status.dart';
 import 'package:chat_app/generated/l10n.dart';
 import 'package:flutter/material.dart';

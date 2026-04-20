@@ -1,4 +1,3 @@
-import 'package:chat_app/domain/models/entities/contact_entity.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:chat_app/domain/models/enum/contact_status.dart';
 

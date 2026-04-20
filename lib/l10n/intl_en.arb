@@ -60,6 +60,12 @@
   "common_hours": "HOURS",
   "common_minute": "MINUTE",
   "common_minutes": "MINUTES",
-  "message_user_have_not_slogan": "This guy is incredibly lazy."
+  "message_user_have_not_slogan": "This guy is incredibly lazy.",
+  "title_message_add_request": "Send friend request",
+  "content_message_add_request": "add {userName} to your contact list",
+  "common_your_message": "Your message",
+  "message_hint_your_message": "Enter your message",
+  "common_send": "Send",
+  "common_cancel": "Cancel"
 
 }

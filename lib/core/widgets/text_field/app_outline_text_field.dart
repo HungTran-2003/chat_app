@@ -1,6 +1,7 @@
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppOutlineTextField extends StatelessWidget {
   final String? label;
@@ -11,6 +12,7 @@ class AppOutlineTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final int? maxLines;
   final TextStyle? labelStyle;
+  final TextStyle? hintStyle;
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? contentPadding;
   final TextStyle? style;
@@ -23,6 +25,7 @@ class AppOutlineTextField extends StatelessWidget {
   final Color? fillColor;
   final bool filled;
   final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AppOutlineTextField({
     super.key,
@@ -34,6 +37,7 @@ class AppOutlineTextField extends StatelessWidget {
     this.prefixIcon,
     this.maxLines = 1,
     this.labelStyle,
+    this.hintStyle,
     this.focusNode,
     this.contentPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     this.style,
@@ -46,6 +50,7 @@ class AppOutlineTextField extends StatelessWidget {
     this.fillColor = const Color(0xFFF3F5F9),
     this.filled = true,
     this.keyboardType,
+    this.inputFormatters,
   });
 
   @override
@@ -87,7 +92,7 @@ class AppOutlineTextField extends StatelessWidget {
             onChanged: onChanged,
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: AppTextStyle.grey.s16.w400,
+              hintStyle: hintStyle ?? AppTextStyle.grey.s16.w400,
               fillColor: fillColor,
               filled: filled,
               prefixIcon: prefixIcon,
@@ -106,6 +111,10 @@ class AppOutlineTextField extends StatelessWidget {
             cursorColor: AppColors.primary,
             textInputAction: textInputAction,
             onFieldSubmitted: onFieldSubmitted,
+            inputFormatters: [
+              ...(inputFormatters ??
+                  [LengthLimitingTextInputFormatter(255)]),
+            ],
           ),
         ),
         if (hasError)

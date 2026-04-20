@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(count) => "${count} phút";
 
+  static String m2(userName) => "thêm ${userName} vào danh sách bạn bè";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "auth_login_description": MessageLookupByLibrary.simpleMessage(
@@ -41,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_accept": MessageLookupByLibrary.simpleMessage("Chấp nhận yêu cầu"),
     "common_add_contact": MessageLookupByLibrary.simpleMessage("Thêm liên hệ"),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),
+    "common_cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
     "common_confirm_password": MessageLookupByLibrary.simpleMessage(
       "Xác nhận mật khẩu",
     ),
@@ -108,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
     "common_search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
+    "common_send": MessageLookupByLibrary.simpleMessage("Gửi"),
     "common_sent_just_now": MessageLookupByLibrary.simpleMessage(
       "VỪA GỬI XONG",
     ),
@@ -141,6 +145,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Thứ Tư",
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Email"),
+    "common_your_message": MessageLookupByLibrary.simpleMessage("Lời chào"),
+    "content_message_add_request": m2,
+    "message_hint_your_message": MessageLookupByLibrary.simpleMessage(
+      "Nhập lời chào của bạn",
+    ),
     "message_user_have_not_slogan": MessageLookupByLibrary.simpleMessage(
       "Thằng này nó lười vcl",
     ),
@@ -153,6 +162,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "onboard_description": MessageLookupByLibrary.simpleMessage(
       "Ứng dụng chat của chúng tôi là cách hoàn hảo để giữ liên lạc với bạn bè và gia đình..",
+    ),
+    "title_message_add_request": MessageLookupByLibrary.simpleMessage(
+      "Kết bạn",
     ),
   };
 }

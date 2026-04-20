@@ -1,8 +1,12 @@
+import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
+import 'package:chat_app/core/widgets/dialog/app_dialog.dart';
+import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
 import 'package:chat_app/core/widgets/loading/app_loading_widget.dart';
 import 'package:chat_app/core/widgets/text_field/app_outline_text_field.dart';
+import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:chat_app/domain/models/enum/status_type.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_cubit.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_navigator.dart';
@@ -37,6 +41,7 @@ class AddContactChildPage extends StatefulWidget {
 }
 
 class _AddContactChildPageState extends State<AddContactChildPage> {
+  late S _l10n;
   late AddContactCubit _cubit;
 
   @override
@@ -53,6 +58,7 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
 
   @override
   Widget build(BuildContext context) {
+    _l10n = S.of(context);
     return Scaffold(
       appBar: BaseAppBar(
         title: S.of(context).common_add_contact,
@@ -63,12 +69,12 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
     );
   }
 
-  Widget _buildBodyPage(){
+  Widget _buildBodyPage() {
     return Column(
       spacing: 20,
       children: [
         _buildSearchInput(),
-        Expanded(child: _buildListContact())
+        Expanded(child: _buildListContact()),
       ],
     );
   }
@@ -87,7 +93,7 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
         if (state.users.isEmpty && state.contacts.isEmpty) {
           return Center(child: Text("No data"));
         }
-        if(state.users.isEmpty) {
+        if (state.users.isEmpty) {
           return ListView.builder(
             itemCount: state.contacts.length,
             itemBuilder: (context, index) {
@@ -115,7 +121,9 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
                 print("onTap");
               },
               onAdd: () {
-                print("onAdd");
+                showDialog(
+                  state.users[index]
+                );
               },
             );
           },
@@ -138,7 +146,11 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
             onChanged: (value) => _cubit.search(value),
             suffixIcon: _cubit.searchController.text.isNotEmpty
                 ? IconButton(
-                    icon: const Icon(Icons.cancel, color: AppColors.tertiary, size: 20),
+                    icon: const Icon(
+                      Icons.cancel,
+                      color: AppColors.tertiary,
+                      size: 20,
+                    ),
                     onPressed: () {
                       _cubit.searchController.clear();
                       _cubit.search("");
@@ -151,4 +163,50 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
     );
   }
 
+  Future<void> showDialog(UserEntity user) async {
+    final resultAction = await _cubit.navigator.showCustomDialog(
+      confirmButtonText: _l10n.common_send,
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppAvatarImage(path: user.avatarPath),
+            6.height,
+            Text(user.userName ?? "", style: AppTextStyle.black.s18.w700),
+            12.height,
+            Text(
+              _l10n.title_message_add_request,
+              style: AppTextStyle.black.s20.w700,
+            ),
+            6.height,
+            Text(
+              _l10n.content_message_add_request(user.userName ?? ""),
+              style: AppTextStyle.black.s20.w500,
+              textAlign: TextAlign.center,
+            ),
+            16.height,
+            AppOutlineTextField(
+              controller: _cubit.greetingController,
+              label: _l10n.common_your_message,
+              labelStyle: AppTextStyle.grey.s20.w700,
+              hint: _l10n.message_hint_your_message,
+              borderRadius: 12,
+              fillColor: AppColors.whiteF3F6F6,
+              filled: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+              maxLines: 4,
+              keyboardType: TextInputType.multiline,
+              style: AppTextStyle.black.s18.w500,
+            ),
+          ],
+        ),
+      ),
+    );
+    if(resultAction == DialogAction.confirmed) {
+      _cubit.sentContactRequest(receiverId: user.uid!);
+    }
+  }
 }

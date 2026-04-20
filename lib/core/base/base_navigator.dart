@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/dialog/app_dialog.dart';
-import 'package:chat_app/generated/l10n.dart';
 import 'package:chat_app/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -117,6 +114,19 @@ class BaseNavigator {
       declineButtonText: "Cancel",
     );
     closeAction?.call();
+  }
+
+  Future<DialogAction> showCustomDialog({
+    required Widget content,
+    required String confirmButtonText,
+    String? declineButtonText,
+  }) async {
+    return AppDialog.showCustom(
+      dialogType: DialogType.infoConfirmation,
+      context: context,
+      content: content,
+      confirmButtonText: confirmButtonText,
+    );
   }
 
   Future<T?> showAppBottomSheet<T>({

@@ -4,7 +4,6 @@ import 'package:chat_app/data/repositories/contact_repository.dart';
 import 'package:chat_app/domain/models/entities/contact_entity.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:chat_app/domain/models/enum/status_type.dart';
-import 'package:chat_app/data/repositories/auth_repository.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_navigator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +17,8 @@ class AddContactCubit extends Cubit<AddContactState> {
 
   ///Controller
   final searchController = TextEditingController();
+  final greetingController = TextEditingController();
+
   Timer? _debounce;
 
   AddContactCubit({required this.navigator, required this.contactRepo})
@@ -67,10 +68,38 @@ class AddContactCubit extends Cubit<AddContactState> {
     });
   }
 
+  void sentContactRequest({required String receiverId}) async {
+    emit(state.copyWith(loadRequestStatus: LoadStatus.loading));
+    final result = await contactRepo.sentContactRequest(
+      receiverId: receiverId,
+      greetingMessage: greetingController.text,
+    );
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(loadRequestStatus: LoadStatus.failure));
+        navigator.showErrorDialog(message: failure.message);
+      },
+      (response) {
+        final newSearchUser= state.users.where((element) {
+          return element.uid != receiverId;
+        }).toList();
+        emit(
+          state.copyWith(
+            loadRequestStatus: LoadStatus.success,
+            users: newSearchUser,
+          ),
+        );
+        navigator.showSuccessSnackBar(message: "Sent Success");
+      },
+    );
+  }
+
   @override
   Future<void> close() {
     _debounce?.cancel();
     searchController.dispose();
+    greetingController.dispose();
     return super.close();
   }
 }

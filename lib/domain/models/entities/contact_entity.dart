@@ -1,5 +1,4 @@
 import 'package:chat_app/domain/models/enum/contact_status.dart';
-import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class ContactEntity extends Equatable {

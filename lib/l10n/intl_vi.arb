@@ -60,5 +60,11 @@
   "common_hours": "GIỜ",
   "common_minute": "PHÚT",
   "common_minutes": "PHÚT",
-  "message_user_have_not_slogan": "Thằng này nó lười vcl"
+  "message_user_have_not_slogan": "Thằng này nó lười vcl",
+  "title_message_add_request": "Kết bạn",
+  "content_message_add_request": "thêm {userName} vào danh sách bạn bè",
+  "common_your_message": "Lời chào",
+  "message_hint_your_message": "Nhập lời chào của bạn",
+  "common_send": "Gửi",
+  "common_cancel": "Huỷ"
 }

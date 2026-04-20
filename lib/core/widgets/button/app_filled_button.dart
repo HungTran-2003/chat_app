@@ -40,13 +40,13 @@ class AppFilledButton extends StatelessWidget {
                 onPress.call();
               })
             : null,
-        borderRadius: BorderRadius.circular(borderRadius!),
+        borderRadius: BorderRadius.circular(borderRadius ?? 16),
         child: Ink(
           height: height,
           width: width,
           decoration: BoxDecoration(
             color: enable == true ? backgroundColor : AppColors.whiteF3F6F6,
-            borderRadius: BorderRadius.circular(borderRadius!),
+            borderRadius: BorderRadius.circular(borderRadius ?? 16),
           ),
           child: Center(child: Text(label, style: labelStyle ?? styleDefault)),
         ),

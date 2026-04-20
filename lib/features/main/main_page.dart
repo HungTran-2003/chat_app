@@ -1,4 +1,3 @@
-import 'package:chat_app/core/global/app_cubit/app_setting_cubit.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/utlis/tap_guard.dart';
 import 'package:chat_app/domain/models/enum/main_nav_item.dart';

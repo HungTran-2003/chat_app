@@ -39,6 +39,7 @@ class _SplashChildPageState extends State<SplashChildPage> {
     super.initState();
     _cubit = BlocProvider.of(context);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _cubit.initNotification(context);
       await Future.delayed(const Duration(milliseconds: 500));
       _cubit.checkOnboard();
     });

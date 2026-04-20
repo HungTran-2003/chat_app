@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:chat_app/data/service/supabase/app_supabase_client.dart';
 import 'package:chat_app/data/service/supabase/app_supabase_client_impl.dart';

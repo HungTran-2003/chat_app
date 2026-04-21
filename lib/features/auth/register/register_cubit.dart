@@ -100,6 +100,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       (success) {
         emit(state.copyWith(loadDataStatus: LoadStatus.success));
         navigator.showSuccessSnackBar(message: '"Register Success"');
+        authRepository.updateFcmToken();
         cleanController();
         cleanFocusNode();
         navigator.goHome();

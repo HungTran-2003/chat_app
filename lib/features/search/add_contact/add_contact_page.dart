@@ -4,6 +4,7 @@ import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
 import 'package:chat_app/core/widgets/dialog/app_dialog.dart';
 import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
+import 'package:chat_app/core/widgets/loading/app_loading_overlay.dart';
 import 'package:chat_app/core/widgets/loading/app_loading_widget.dart';
 import 'package:chat_app/core/widgets/text_field/app_outline_text_field.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
@@ -70,12 +71,23 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
   }
 
   Widget _buildBodyPage() {
-    return Column(
-      spacing: 20,
-      children: [
-        _buildSearchInput(),
-        Expanded(child: _buildListContact()),
-      ],
+    return BlocListener<AddContactCubit, AddContactState>(
+      listenWhen: (pre, cur) =>
+          pre.loadStatus != cur.loadStatus,
+      listener: (context, state) {
+        if(state.loadStatus.isLoading){
+          AppLoadingOverlay.show(context);
+        } else {
+          AppLoadingOverlay.hide();
+        }
+      },
+      child: Column(
+        spacing: 20,
+        children: [
+          _buildSearchInput(),
+          Expanded(child: _buildListContact()),
+        ],
+      ),
     );
   }
 
@@ -86,8 +98,8 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
           pre.loadDataStatus != cur.loadDataStatus ||
           pre.searchContacts != cur.searchContacts,
       builder: (context, state) {
-        if (state.loadDataStatus?.isLoading == true ||
-            state.loadRequestStatus?.isLoading == true) {
+        if (state.loadDataStatus.isLoading == true ||
+            state.loadRequestStatus.isLoading == true) {
           return const Center(child: AppLoadingWidget());
         }
         if (state.users.isEmpty && state.contacts.isEmpty) {
@@ -97,13 +109,14 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
           return ListView.builder(
             itemCount: state.contacts.length,
             itemBuilder: (context, index) {
+              final contact = state.contacts[index];
               return ContactRequestItem(
-                contact: state.contacts[index],
+                contact: contact,
                 onTap: () {
                   print("onTap");
                 },
                 onAccept: () {
-                  print("onAccept");
+                  _cubit.acceptRequest(requestId: contact.uid??"");
                 },
                 onIgnore: () {
                   print("onDecline");

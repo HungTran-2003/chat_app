@@ -34,4 +34,12 @@ abstract class AppSupabaseClient {
     required String receiverId,
     required String greetingMessage,
   });
+
+  Future<ObjectResponse> acceptRequest({required String requestId});
+
+  Future<ObjectResponse> addFcmToken({
+    required String deviceId,
+    required String fcmToken,
+    required String platform,
+  });
 }

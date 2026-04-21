@@ -8,7 +8,7 @@ class LoginNavigator extends BaseNavigator{
     pushNamed(AppRouter.registerRouteName);
   }
 
-  void goToHomePage(){
+  Future<void> goToHomePage()async {
     goNamed(AppRouter.chatRouterName);
   }
 }

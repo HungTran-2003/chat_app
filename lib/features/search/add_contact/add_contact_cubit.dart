@@ -95,6 +95,30 @@ class AddContactCubit extends Cubit<AddContactState> {
     );
   }
 
+  void acceptRequest({required String requestId}) async {
+    emit(state.copyWith(loadStatus: LoadStatus.loading));
+    final result = await contactRepo.acceptRequest(requestId: requestId);
+
+    result.fold(
+          (failure) {
+        emit(state.copyWith(loadStatus: LoadStatus.failure));
+        navigator.showErrorDialog(message: failure.message);
+      },
+          (response) {
+        final newContact = state.contacts.where((element) {
+          return element.uid != requestId;
+        }).toList();
+        emit(
+          state.copyWith(
+            loadStatus: LoadStatus.success,
+            contacts: newContact,
+          ),
+        );
+        navigator.showSuccessSnackBar(message: "Add Success");
+      },
+    );
+  }
+
   @override
   Future<void> close() {
     _debounce?.cancel();

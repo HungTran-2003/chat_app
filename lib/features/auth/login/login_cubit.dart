@@ -67,18 +67,18 @@ class LoginCubit extends Cubit<LoginState> {
       email: email,
       password: password,
     );
-
     result.fold(
       (failure) {
         emit(state.copyWith(loadDataStatus: LoadStatus.failure));
         navigator.showErrorSnackBar(message: failure.message);
       },
-      (success) {
+      (success) async {
+        await authRepository.updateFcmToken();
         emit(state.copyWith(loadDataStatus: LoadStatus.success));
         navigator.showSuccessSnackBar(message: "Login Success");
         cleanController();
         cleanFocusNode();
-        navigator.goToHomePage();
+        await navigator.goToHomePage();
       },
     );
   }
@@ -101,6 +101,7 @@ class LoginCubit extends Cubit<LoginState> {
           navigator.showSuccessSnackBar(message: "Login Cancel");
         },
         (success) {
+          authRepository.updateFcmToken();
           emit(state.copyWith(loadDataStatus: LoadStatus.success));
           navigator.showSuccessSnackBar(message: "Login Success");
           cleanController();

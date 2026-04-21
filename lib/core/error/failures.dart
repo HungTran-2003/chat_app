@@ -11,11 +11,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 /// ===============================
 abstract class Failure extends Equatable {
   final String message;
+  final int? code;
 
-  const Failure({required this.message});
+
+  const Failure({required this.message, this.code});
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, code];
 }
 
 /// ===============================
@@ -48,7 +50,7 @@ class FirebasePermissionFailure extends FirebaseFailure {
 /// Supabase Failures
 /// ===============================
 class SupabaseFailure extends Failure {
-  const SupabaseFailure({required super.message});
+  const SupabaseFailure({required super.message, super.code});
 }
 
 /// ===============================

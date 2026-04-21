@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chat_app/core/error/failures.dart';
 import 'package:chat_app/data/response/object_response.dart';
 import 'package:chat_app/data/response/request_response.dart';
 import 'package:chat_app/data/service/supabase/app_supabase_client.dart';
@@ -130,10 +131,10 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
         'p_sender_id': _auth.currentUser!.uid,
         'p_receiver_id': receiverId,
         'p_greeting': greetingMessage,
-      }
+      },
     );
     log(response.toString());
-    
+
     final data = _processResponse(response);
     return ObjectResponse.fromJson(data);
   }
@@ -141,10 +142,42 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
   dynamic _processResponse(dynamic response) {
     if (response is Map && response.containsKey('success')) {
       if (response['success'] == false) {
-        throw Exception(response['message'] ?? 'Unknown error from server');
+        throw SupabaseFailure(
+          message: response['message'],
+          code: response['code'],
+        );
       }
       return response;
     }
     return response;
+  }
+
+  @override
+  Future<ObjectResponse> acceptRequest({required String requestId}) async {
+    final response = await _client.rpc(
+      'accept_contact_request',
+      params: {'p_request_id': requestId, 'p_user_id': _auth.currentUser!.uid},
+    );
+    final data = _processResponse(response);
+    return ObjectResponse.fromJson(data);
+  }
+
+  @override
+  Future<ObjectResponse> addFcmToken({
+    required String deviceId,
+    required String fcmToken,
+    required String platform,
+  }) async {
+    final response = await _client.rpc(
+      'add_fcm_token',
+      params: {
+        'p_user_id': _auth.currentUser!.uid,
+        'p_device_id': deviceId,
+        'p_fcm_token': fcmToken,
+        'p_platform': platform,
+      },
+    );
+    final data = _processResponse(response);
+    return ObjectResponse.fromJson(data);
   }
 }

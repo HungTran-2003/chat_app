@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:chat_app/core/error/failures.dart';
+import 'package:chat_app/data/service/notification/notification_service.dart';
 import 'package:chat_app/data/service/supabase/app_supabase_client.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepository {
@@ -21,16 +24,45 @@ abstract class AuthRepository {
   });
 
   Future<Either<Failure, UserEntity>> getUserInfo();
-  //
-  // Future<Either<Failure, List<UserEntity>>> searchUser({
-  //   required String keyword,
-  //   int? limit = 20,
-  // });
+
+  Future<void> updateFcmToken();
 }
 
 class AuthRepositoryImpl implements AuthRepository {
   final AppSupabaseClient client;
   AuthRepositoryImpl({required this.client});
+
+  @override
+  Future<void> updateFcmToken() async {
+    try {
+      final fcmToken = NotificationService.instance.fcmToken;
+      if (fcmToken == null) {
+        log('Update FCM Token: Token is null');
+        return;
+      }
+
+      String deviceId = '';
+      String platform = Platform.isAndroid ? 'android' : 'ios';
+
+      final deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        deviceId = androidInfo.id;
+      } else if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        deviceId = iosInfo.identifierForVendor ?? '';
+      }
+
+      await client.addFcmToken(
+        deviceId: deviceId,
+        fcmToken: fcmToken,
+        platform: platform,
+      );
+      log('Update FCM Token Success: $fcmToken');
+    } catch (e) {
+      log('Error update FCM token: $e');
+    }
+  }
 
   @override
   Future<Either<Failure, dynamic>> registerAccount({

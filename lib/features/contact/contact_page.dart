@@ -22,7 +22,10 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return ContactCubit(navigator: ContactNavigator(context: context));
+        return ContactCubit(
+          navigator: ContactNavigator(context: context),
+          userRepo: context.read(),
+        );
       },
       child: const ContactChildPage(),
     );
@@ -37,7 +40,6 @@ class ContactChildPage extends StatefulWidget {
 }
 
 class _ContactChildPageState extends State<ContactChildPage> {
-
   late ContactCubit _contactCubit;
 
   @override
@@ -48,12 +50,23 @@ class _ContactChildPageState extends State<ContactChildPage> {
   }
 
   Map<String, List<UserEntity>> groupUsersByFirstChar(
-    List<ContactEntity> contacts,
+    List<UserEntity> contacts,
   ) {
     final Map<String, List<UserEntity>> result = {};
 
-    for (final contacts in contacts) {
+    final sortedContacts = List<UserEntity>.from(contacts)
+      ..sort((a, b) => (a.userName ?? "").compareTo(b.userName ?? ""));
 
+    for (final user in sortedContacts) {
+      final name = user.userName ?? "";
+      if (name.isEmpty) continue;
+
+      final firstChar = name[0].toUpperCase();
+      if (result.containsKey(firstChar)) {
+        result[firstChar]!.add(user);
+      } else {
+        result[firstChar] = [user];
+      }
     }
     return result;
   }
@@ -77,7 +90,7 @@ class _ContactChildPageState extends State<ContactChildPage> {
       action: AppIconButton(
         path: AssetConstants.iconUserPlus,
         borderColor: AppColors.tertiary,
-        onPress: (){
+        onPress: () {
           _contactCubit.navigator.openAddContactPage();
         },
       ),
@@ -87,9 +100,9 @@ class _ContactChildPageState extends State<ContactChildPage> {
   Widget _buildBodyPage() {
     return BlocListener<ContactCubit, ContactState>(
       listenWhen: (previous, current) =>
-      previous.loadDataStatus != current.loadDataStatus,
+          previous.loadDataStatus != current.loadDataStatus,
       listener: (context, state) {
-        if(state.loadDataStatus!.isLoading){
+        if (state.loadDataStatus.isLoading) {
           AppLoadingOverlay.show(context);
         } else {
           AppLoadingOverlay.hide();
@@ -130,12 +143,12 @@ class _ContactChildPageState extends State<ContactChildPage> {
         Expanded(
           child: BlocBuilder<ContactCubit, ContactState>(
             builder: (context, state) {
-              if (state.contacts!.isEmpty) {
+              if (state.contacts.isEmpty) {
                 return Center(
                   child: Text("No data", style: AppTextStyle.black.titleLarge),
                 );
               }
-              final groupedContacts = groupUsersByFirstChar(state.contacts!);
+              final groupedContacts = groupUsersByFirstChar(state.contacts);
               return CustomScrollView(
                 slivers: [
                   for (final entry in groupedContacts.entries)

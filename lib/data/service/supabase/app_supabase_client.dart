@@ -41,6 +41,11 @@ abstract class AppSupabaseClient {
 
   Future<ObjectResponse> ignoreRequest({required String requestId});
 
+  Future<List<UserEntity>> getFriends({
+    int? limit = 20,
+    int? page = 1,
+  });
+
   Future<ObjectResponse> addFcmToken({
     required String deviceId,
     required String fcmToken,

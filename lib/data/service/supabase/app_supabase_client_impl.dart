@@ -184,6 +184,23 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
   }
 
   @override
+  Future<List<UserEntity>> getFriends({
+    int? limit = 20,
+    int? page = 1,
+  }) async {
+    final response = await _client.rpc(
+      'get_friends',
+      params: {
+        'p_user_id': _auth.currentUser!.uid,
+        'p_limit': limit,
+        'p_page': page,
+      },
+    );
+    final List<dynamic> data = response;
+    return data.map((e) => UserEntity.fromJson(e)).toList();
+  }
+
+  @override
   Future<ObjectResponse> addFcmToken({
     required String deviceId,
     required String fcmToken,

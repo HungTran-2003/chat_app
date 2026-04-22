@@ -7,6 +7,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, UserEntity>> getOtherUserInfo({required String userId});
+  Future<Either<Failure, List<UserEntity>>> getFriends({int? limit, int? page});
 }
 
 class UserRepositoryImpl implements UserRepository {
@@ -21,6 +22,17 @@ class UserRepositoryImpl implements UserRepository {
       return Right(user);
     } catch (e) {
       log('Error get other user info: $e');
+      return Left(FailureMapper.map(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UserEntity>>> getFriends({int? limit, int? page}) async {
+    try {
+      final friends = await client.getFriends(limit: limit, page: page);
+      return Right(friends);
+    } catch (e) {
+      log('Error get friends: $e');
       return Left(FailureMapper.map(e));
     }
   }

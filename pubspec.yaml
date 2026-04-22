@@ -49,10 +49,9 @@ dependencies:
 
 
   #Firebase
-  firebase_core: ^4.3.0
-  firebase_auth: ^6.1.3
-  cloud_firestore: ^6.1.0
-  firebase_messaging: ^16.0.4
+  firebase_core: ^4.7.0
+  firebase_auth: ^6.4.0
+  firebase_messaging: ^16.2.0
 
   #Network
 
@@ -80,6 +79,9 @@ dependencies:
   super_sliver_list: ^0.4.1
   logger: ^2.5.0
   dartz: ^0.10.1
+  supabase_flutter: ^2.12.2
+  google_sign_in: ^7.2.0
+  device_info_plus: ^12.4.0
 
 flutter_launcher_icons:
   android: true

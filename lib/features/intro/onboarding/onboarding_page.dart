@@ -1,6 +1,3 @@
-import 'dart:math' as math;
-import 'dart:ui';
-
 import 'package:chat_app/core/constants/asset_constants.dart';
 import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
@@ -8,7 +5,6 @@ import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/button/app_filled_button.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
-import 'package:chat_app/core/widgets/divider/app_divider.dart';
 import 'package:chat_app/core/widgets/image/app_assest_image.dart';
 import 'package:chat_app/core/widgets/image/app_svg_image.dart';
 import 'package:chat_app/core/widgets/text/app_text_rich.dart';

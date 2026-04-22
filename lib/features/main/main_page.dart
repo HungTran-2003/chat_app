@@ -1,7 +1,6 @@
-import 'package:chat_app/core/global/app_cubit/app_cubit.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/utlis/tap_guard.dart';
-import 'package:chat_app/data/enum/main_nav_item.dart';
+import 'package:chat_app/domain/models/enum/main_nav_item.dart';
 import 'package:chat_app/features/call/call_page.dart';
 import 'package:chat_app/features/contact/contact_page.dart';
 import 'package:chat_app/features/main/main_cubit.dart';
@@ -34,15 +33,15 @@ class _MainChildPage extends StatefulWidget {
 }
 
 class _MainChildPageState extends State<_MainChildPage> {
-  late AppCubit _appCubit;
+  late MainCubit _mainCubit;
   late PageController _pageController;
 
   List<MainNavItem> get _navItems => [
-    MainNavItem.message,
-    MainNavItem.call,
-    MainNavItem.contact,
-    MainNavItem.setting,
-  ];
+        MainNavItem.message,
+        MainNavItem.call,
+        MainNavItem.contact,
+        MainNavItem.setting,
+      ];
 
   final List<Widget> _pages = [
     const MessagePage(),
@@ -54,18 +53,18 @@ class _MainChildPageState extends State<_MainChildPage> {
   @override
   void initState() {
     super.initState();
-    _appCubit = BlocProvider.of(context);
+    _mainCubit = BlocProvider.of(context);
     _pageController = PageController(initialPage: 0);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<AppCubit, AppState>(
+      body: BlocListener<MainCubit, MainState>(
         listenWhen: (previous, current) =>
             previous.currentMainPage != current.currentMainPage,
         listener: (context, state) {
-          _pageController.jumpToPage(_navItems.indexOf(state.currentMainPage!));
+          _pageController.jumpToPage(_navItems.indexOf(state.currentMainPage));
         },
         child: PageView(
           controller: _pageController,
@@ -79,7 +78,7 @@ class _MainChildPageState extends State<_MainChildPage> {
 
   Widget _buildBottomNavigationBar() {
     final bottomNavHeight = MediaQuery.of(context).padding.bottom + 90;
-    return BlocBuilder<AppCubit, AppState>(
+    return BlocBuilder<MainCubit, MainState>(
       buildWhen: (previous, current) =>
           previous.currentMainPage != current.currentMainPage,
       builder: (context, state) {
@@ -93,18 +92,18 @@ class _MainChildPageState extends State<_MainChildPage> {
           child: Row(
             spacing: 8,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(MainNavItem.values.length, (index) {
+            children: List.generate(_navItems.length, (index) {
+              final item = _navItems[index];
               return InkWell(
                 onTap: () => safeAction(() {
-                  _appCubit.changeMainPage(page: MainNavItem.values[index]);
+                  _mainCubit.changeMainPage(page: item);
                 }),
                 borderRadius: BorderRadius.circular(22),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TabIcons(
-                    navItem: MainNavItem.values[index],
-                    isSelected:
-                        state.currentMainPage == MainNavItem.values[index],
+                    navItem: item,
+                    isSelected: state.currentMainPage == item,
                   ),
                 ),
               );

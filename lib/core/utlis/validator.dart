@@ -10,7 +10,7 @@ class AppValidator {
     RegExp regex = RegExp(r'^[a-zA-Z0-9]{8,12}$');
     bool isValid = regex.hasMatch(input);
     if (!isValid) {
-      return "8-12 characters.\nIncluding letters, numbers";
+      return "8-12 characters. Including letters, numbers";
     }
     return null;
   }

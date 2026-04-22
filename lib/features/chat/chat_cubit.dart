@@ -1,8 +1,7 @@
-import 'package:chat_app/data/enum/status_type.dart';
-import 'package:chat_app/data/models/chat_entity.dart';
-import 'package:chat_app/data/models/contact_entity.dart';
+import 'package:chat_app/domain/models/enum/status_type.dart';
+import 'package:chat_app/domain/models/entities/chat_entity.dart';
+import 'package:chat_app/domain/models/entities/contact_entity.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'chat_state.dart';
@@ -17,7 +16,6 @@ class ChatCubit extends Cubit<ChatState> {
     emit(
       state.copyWith(
         loadContactStatus: LoadStatus.success,
-        contacts: ContactEntity.mockData(),
         chats: ChatEntity.mockData(),
       ),
     );

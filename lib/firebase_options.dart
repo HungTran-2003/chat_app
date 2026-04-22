@@ -51,19 +51,20 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDJnpaXChvUujZrG0luhBsQW__EDGFfRlA',
-    appId: '1:274027659104:android:2ae5a3dadb15086727a805',
+    appId: '1:274027659104:android:7e15b3f73416721927a805',
     messagingSenderId: '274027659104',
     projectId: 'chat-app-project-1-9e296',
+    databaseURL: 'https://chat-app-project-1-9e296-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'chat-app-project-1-9e296.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyASTC7xifzJut_qX9b3Suz6IJbh-ViD7A8',
-    appId: '1:274027659104:ios:942fb08bd2e1a05d27a805',
+    appId: '1:274027659104:ios:800ece7b870206d027a805',
     messagingSenderId: '274027659104',
     projectId: 'chat-app-project-1-9e296',
+    databaseURL: 'https://chat-app-project-1-9e296-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'chat-app-project-1-9e296.firebasestorage.app',
     iosBundleId: 'com.example.chatApp',
   );
-
 }

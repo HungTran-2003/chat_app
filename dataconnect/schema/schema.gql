@@ -1,0 +1,45 @@
+type User @table {
+  username: String!
+  email: String!
+  passwordHash: String!
+  createdAt: Timestamp!
+  status: String!
+  displayName: String
+  photoUrl: String
+  lastOnlineAt: Timestamp
+}
+
+type Contact @table(key: ["initiator", "recipient"]) {
+  initiator: User!
+  recipient: User!
+  status: String!
+  createdAt: Timestamp!
+}
+
+type Chat @table {
+  chatType: String!
+  createdAt: Timestamp!
+  name: String
+}
+
+type ChatMember @table(key: ["chat", "user"]) {
+  chat: Chat!
+  user: User!
+  joinedAt: Timestamp!
+  isAdmin: Boolean
+}
+
+type Message @table {
+  chat: Chat!
+  sender: User!
+  messageType: String!
+  content: String!
+  createdAt: Timestamp!
+  imageUrl: String
+}
+
+type MessageReadReceipt @table(key: ["message", "user"]) {
+  message: Message!
+  user: User!
+  readAt: Timestamp!
+}

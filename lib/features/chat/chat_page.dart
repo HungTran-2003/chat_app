@@ -2,13 +2,11 @@ import 'package:chat_app/core/constants/asset_constants.dart';
 import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
-import 'package:chat_app/core/utlis/tap_guard.dart';
 import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/button/app_image_button.dart';
 import 'package:chat_app/features/chat/chat_cubit.dart';
 import 'package:chat_app/features/chat/widget/chat_list_item.dart';
-import 'package:chat_app/features/chat/widget/contact_icon_widget.dart';
 import 'package:chat_app/features/chat/widget/home_button_status.dart';
 import 'package:chat_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -95,11 +93,6 @@ class _MessageChildPageState extends State<MessageChildPage> {
               spacing: 13.0,
               children: [
                 HomeButtonStatus(),
-                ...List.generate(state.contacts!.length, (index) {
-                  final user = state.contacts![index].user;
-                  if (user == null) return Container();
-                  return ContactIconWidget(user: user);
-                }),
               ],
             ),
           );

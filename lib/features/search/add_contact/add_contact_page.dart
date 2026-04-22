@@ -1,0 +1,260 @@
+import 'package:chat_app/core/extensions/num_extension.dart';
+import 'package:chat_app/core/theme/app_colors.dart';
+import 'package:chat_app/core/theme/app_text_styles.dart';
+import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
+import 'package:chat_app/core/widgets/dialog/app_dialog.dart';
+import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
+import 'package:chat_app/core/widgets/loading/app_loading_overlay.dart';
+import 'package:chat_app/core/widgets/loading/app_loading_widget.dart';
+import 'package:chat_app/core/widgets/text_field/app_outline_text_field.dart';
+import 'package:chat_app/domain/models/entities/user_entity.dart';
+import 'package:chat_app/domain/models/enum/status_type.dart';
+import 'package:chat_app/features/search/add_contact/add_contact_cubit.dart';
+import 'package:chat_app/features/search/add_contact/add_contact_navigator.dart';
+import 'package:chat_app/features/search/add_contact/widgets/contact_request_item.dart';
+import 'package:chat_app/features/search/add_contact/widgets/search_contact_item.dart';
+import 'package:chat_app/generated/l10n.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class AddContactPage extends StatelessWidget {
+  const AddContactPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) {
+        return AddContactCubit(
+          navigator: AddContactNavigator(context: context),
+          contactRepo: context.read(),
+        );
+      },
+      child: const AddContactChildPage(),
+    );
+  }
+}
+
+class AddContactChildPage extends StatefulWidget {
+  const AddContactChildPage({super.key});
+
+  @override
+  State<AddContactChildPage> createState() => _AddContactChildPageState();
+}
+
+class _AddContactChildPageState extends State<AddContactChildPage> {
+  late S _l10n;
+  late AddContactCubit _cubit;
+
+  @override
+  void initState() {
+    _cubit = BlocProvider.of(context);
+    _cubit.initFetchData();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _l10n = S.of(context);
+    return Scaffold(
+      appBar: BaseAppBar(
+        title: S.of(context).common_add_contact,
+        titleStyle: AppTextStyle.black.titleLarge,
+      ),
+      body: _buildBodyPage(),
+      backgroundColor: AppColors.backgroundLight,
+    );
+  }
+
+  Widget _buildBodyPage() {
+    return BlocListener<AddContactCubit, AddContactState>(
+      listenWhen: (pre, cur) => pre.loadStatus != cur.loadStatus,
+      listener: (context, state) {
+        if (state.loadStatus.isLoading) {
+          AppLoadingOverlay.show(context);
+        } else {
+          AppLoadingOverlay.hide();
+        }
+      },
+      child: BlocBuilder<AddContactCubit, AddContactState>(
+        buildWhen: (pre, cur) => pre.loadDataStatus != cur.loadDataStatus,
+        builder: (context, state) {
+          if (state.loadDataStatus.isLoading) {
+            return const Center(child: AppLoadingWidget());
+          }
+          return RefreshIndicator(
+            onRefresh: _cubit.refresh,
+            color: AppColors.primary,
+            child: CustomScrollView(
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  sliver: SliverToBoxAdapter(child: _buildSearchInput()),
+                ),
+                _buildListContactSliver(),
+                _buildListUserSliver(),
+                const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildListContactSliver() {
+    return BlocBuilder<AddContactCubit, AddContactState>(
+      buildWhen: (pre, cur) => pre.searchContacts != cur.searchContacts,
+      builder: (context, state) {
+        if (state.searchContacts.isEmpty) {
+          return const SliverToBoxAdapter(child: SizedBox.shrink());
+        }
+        return SliverPadding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          sliver: SliverMainAxisGroup(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 0),
+                  child: Text(
+                    _l10n.title_contact_request,
+                    style: AppTextStyle.black.s20.w700,
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final contact = state.searchContacts[index];
+                  return ContactRequestItem(
+                    contact: contact,
+                    onTap: () =>
+                        _cubit.navigatorRequestDetail(contact),
+                    onAccept: () =>
+                        _cubit.acceptRequest(requestId: contact.uid ?? ""),
+                    onIgnore: () =>
+                        _cubit.ignoreRequest(requestId: contact.uid ?? ""),
+                  );
+                }, childCount: state.searchContacts.length),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildListUserSliver() {
+    return BlocBuilder<AddContactCubit, AddContactState>(
+      buildWhen: (pre, cur) => pre.users != cur.users,
+      builder: (context, state) {
+        if (state.users.isEmpty) {
+          return const SliverToBoxAdapter(child: SizedBox.shrink());
+        }
+        return SliverPadding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          sliver: SliverMainAxisGroup(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 0),
+                  child: Text(
+                    _l10n.common_result,
+                    style: AppTextStyle.black.s20.w700,
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final user = state.users[index];
+                  return SearchContactItem(
+                    user: user,
+                    onAdd: () => showDialog(user),
+                  );
+                }, childCount: state.users.length),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSearchInput() {
+    return AnimatedBuilder(
+      animation: _cubit.searchController,
+      builder: (context, _) {
+        return AppOutlineTextField(
+          controller: _cubit.searchController,
+          hint: S.of(context).common_search,
+          prefixIcon: const Icon(Icons.search, color: AppColors.tertiary),
+          borderRadius: 30,
+          onChanged: (value) => _cubit.search(value),
+          suffixIcon: _cubit.searchController.text.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(
+                    Icons.cancel,
+                    color: AppColors.tertiary,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    _cubit.searchController.clear();
+                    _cubit.search("");
+                  },
+                )
+              : null,
+        );
+      },
+    );
+  }
+
+  Future<void> showDialog(UserEntity user) async {
+    final resultAction = await _cubit.navigator.showCustomDialog(
+      confirmButtonText: _l10n.common_send,
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppAvatarImage(path: user.avatarPath),
+            6.height,
+            Text(user.userName ?? "", style: AppTextStyle.black.s18.w700),
+            12.height,
+            Text(
+              _l10n.title_message_add_request,
+              style: AppTextStyle.black.s20.w700,
+            ),
+            6.height,
+            Text(
+              _l10n.content_message_add_request(user.userName ?? ""),
+              style: AppTextStyle.black.s20.w500,
+              textAlign: TextAlign.center,
+            ),
+            16.height,
+            AppOutlineTextField(
+              controller: _cubit.greetingController,
+              label: _l10n.common_your_message,
+              labelStyle: AppTextStyle.grey.s20.w700,
+              hint: _l10n.message_hint_your_message,
+              borderRadius: 12,
+              fillColor: AppColors.whiteF3F6F6,
+              filled: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+              maxLines: 4,
+              keyboardType: TextInputType.multiline,
+              style: AppTextStyle.black.s18.w500,
+            ),
+          ],
+        ),
+      ),
+    );
+    if (resultAction == DialogAction.confirmed) {
+      _cubit.sentContactRequest(receiverId: user.uid!);
+    }
+  }
+}

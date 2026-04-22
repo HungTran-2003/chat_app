@@ -1,127 +1,126 @@
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class PasswordNotifier extends ChangeNotifier {
-  bool _isObscure = true;
-  String? _textError;
-
-  bool get isObscure => _isObscure;
-  String? get textError => _textError;
-
-  void toggleVisibility() {
-    _isObscure = !_isObscure;
-    notifyListeners();
-  }
-
-  void setTextError(String? textError) {
-    _textError = textError;
-    notifyListeners();
-  }
-
-  void clear() {
-    _textError = null;
-    _isObscure = true;
-    notifyListeners();
-  }
-}
-
-class PasswordTextField extends StatelessWidget {
+class PasswordTextField extends StatefulWidget {
   final String? label;
   final TextEditingController? controller;
-  final String? Function(String?)? validator;
   final int? maxLines;
   final TextStyle? labelStyle;
   final FocusNode? focusNode;
   final EdgeInsets? padding;
   final TextStyle? style;
-  final PasswordNotifier passwordNotifier;
+  final bool isObscure;
+  final String? errorText;
+  final VoidCallback? onToggleVisibility;
+  final ValueChanged<bool>? onFocusChange;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onFieldSubmitted;
 
   const PasswordTextField({
     super.key,
     this.label = "TextField",
     this.controller,
-    this.validator,
-    this.maxLines,
+    this.maxLines = 1,
     this.labelStyle,
     this.focusNode,
     this.padding,
     this.style,
-    required this.passwordNotifier,
+    this.isObscure = true,
+    this.errorText,
+    this.onToggleVisibility,
+    this.onFocusChange,
+    this.textInputAction,
+    this.onFieldSubmitted,
   });
 
   @override
+  State<PasswordTextField> createState() => _PasswordTextFieldState();
+}
+
+class _PasswordTextFieldState extends State<PasswordTextField> {
+  late FocusNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = widget.focusNode ?? FocusNode();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  void _handleFocusChange() {
+    widget.onFocusChange?.call(_focusNode.hasFocus);
+  }
+
+  @override
+  void dispose() {
+    if (widget.focusNode == null) {
+      _focusNode.dispose();
+    } else {
+      _focusNode.removeListener(_handleFocusChange);
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final hasError = widget.errorText != null && widget.errorText!.isNotEmpty;
+
     final defaultDecoration = InputDecoration(
-      label: Transform.translate(
-        offset: const Offset(0, -16),
-        child: Text(label!),
-      ),
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-      contentPadding: const EdgeInsets.only(bottom: 8),
-      floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
-        if (states.contains(WidgetState.error)) {
-          return labelStyle ?? AppTextStyle.red.s18.w600;
-        }
-        if (states.contains(WidgetState.focused)) {
-          return labelStyle ?? AppTextStyle.primary.s18.w600;
-        }
-        return AppTextStyle.primary.s18.w600;
-      }),
       enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.divider, width: 1),
+        borderSide: BorderSide(
+          color: hasError ? AppColors.backgroundRed : AppColors.divider,
+          width: 1,
+        ),
       ),
       focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.divider, width: 1),
+        borderSide: BorderSide(
+          color: hasError ? AppColors.backgroundRed : AppColors.divider,
+          width: 1,
+        ),
       ),
-      errorBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.backgroundRed, width: 1),
+      suffixIcon: IconButton(
+        icon: Icon(
+          widget.isObscure ? Icons.visibility_off : Icons.visibility,
+        ),
+        onPressed: widget.onToggleVisibility,
       ),
-      focusedErrorBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.backgroundRed, width: 1),
-      ),
-      helperText: " "
     );
-    return ListenableBuilder(
-      listenable: passwordNotifier,
-      builder: (context, child) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: controller,
-              obscureText: passwordNotifier.isObscure,
-              validator: validator,
-              maxLines: maxLines ?? 1,
-              focusNode: focusNode,
-              decoration: defaultDecoration.copyWith(
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    passwordNotifier.isObscure
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                  ),
-                  onPressed: () {
-                    passwordNotifier.toggleVisibility();
-                  },
-                ),
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.label ?? "TextField",
+          style:
+          widget.labelStyle?.copyWith(
+            color: hasError
+                ? AppColors.backgroundRed
+                : widget.labelStyle?.color,
+          ) ??
+              AppTextStyle.primary.s14.w600.copyWith(
+                color: hasError ? AppColors.backgroundRed : AppColors.primary,
               ),
-              style: style ?? AppTextStyle.black.s18.w500,
-            ),
-            Transform.translate(
-              offset: const Offset(0, -20),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  passwordNotifier.textError ?? "",
-                  style: AppTextStyle.red.s14.w500,
-                ),
-              ),
-            )
-          ],
-        );
-      },
+        ),
+        TextFormField(
+          controller: widget.controller,
+          obscureText: widget.isObscure,
+          maxLines: widget.maxLines,
+          focusNode: _focusNode,
+          decoration: defaultDecoration,
+          style: widget.style ?? AppTextStyle.black.s18.w500,
+          cursorColor: AppColors.primary,
+          textInputAction: widget.textInputAction,
+          onFieldSubmitted: widget.onFieldSubmitted,
+        ),
+        SizedBox(
+          height: 20,
+          child: Text(
+            hasError ? widget.errorText! : "",
+            style: AppTextStyle.red.s14.w500,
+          ),
+        ),
+      ],
     );
   }
 }

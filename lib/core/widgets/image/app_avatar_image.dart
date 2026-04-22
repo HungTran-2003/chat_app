@@ -32,7 +32,7 @@ class AppAvatarImage extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(borderWidth == 0 ? 0 : 2),
         child: ClipOval(
-          child: AppNetworkImage(imageUrl: path!, fit: fit!),
+          child: AppNetworkImage(imageUrl: path?? "", fit: fit!),
         )
       ),
     );

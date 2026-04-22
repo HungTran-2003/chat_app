@@ -1,204 +1,210 @@
-import 'package:another_flushbar/flushbar.dart';
-import 'package:chat_app/core/constants/ui_constants.dart';
-import 'package:chat_app/core/extensions/num_extension.dart';
-import 'package:chat_app/core/global/global_data.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
+import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/dialog/app_dialog.dart';
 import 'package:chat_app/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Base class for feature-specific navigators, providing common navigation
-/// actions using GoRouter.
-///
-/// Feature navigators (e.g., SplashNavigator, MovieListNavigator) should
-/// extend this class and add methods specific to their feature's navigation needs.
 class BaseNavigator {
-  final BuildContext context;
-  late FlushbarNavigator flushbarNavigator;
-  late AppDialog appDialog;
+  BuildContext context;
 
-  /// Creates a BaseNavigator. Requires the [context] from which navigation
-  /// will be initiated.
-  BaseNavigator({required this.context}) {
-    flushbarNavigator = FlushbarNavigator(context);
-    appDialog = AppDialog(context);
+  BaseNavigator({required this.context});
+
+  /// Navigates to the specified route using GoRouter.
+  void pop<T extends Object?>([T? result]) {
+    GoRouter.of(context).pop(result);
   }
 
-  String? _currentLocation;
-
-  /// Pops the current route off the GoRouter stack.
-  ///
-  /// Equivalent to `Navigator.of(context).pop()`, but integrated with GoRouter.
-  /// Optionally returns a [result] to the previous route.
-  void pop<T extends Object?>([T? result]) {
-    // Use the GoRouter extension method on context
-    if (context.canPop()) {
-      context.pop(result);
+  /// Pops if possible, otherwise navigates to home.
+  void popOrGoHome() {
+    final router = GoRouter.of(context);
+    if (router.canPop()) {
+      router.pop();
     } else {
-      // Optional: Add logging or specific handling if pop is called when it shouldn't be
-      // (e.g., on the very first screen in the stack)
-      debugPrint("Attempted to pop when cannot pop.");
+      router.go(AppRouter.chatRouterName);
     }
   }
 
-  /// Navigates to a named route, replacing the current route stack if it's
-  /// a top-level route, or pushing within a nested stack.
-  ///
-  /// Use this for general navigation where you don't necessarily want to
-  /// keep the current screen in the back stack (e.g., navigating from splash
-  /// to home, or switching main tabs).
-  ///
-  /// - [routeName]: The name of the target route (defined in AppRouter).
-  /// - [pathParameters]: Parameters to be embedded in the route path (e.g., `/users/:id`).
-  /// - [queryParameters]: Parameters to be appended to the route path (e.g., `?search=query`).
-  /// - [extra]: An optional object to pass along to the route, accessible via `GoRouterState.extra`.
-  void goNamed(
-      String routeName, {
-        Map<String, String> pathParameters = const <String, String>{},
-        Map<String, dynamic> queryParameters = const <String, dynamic>{},
-        Object? extra,
-      }) {
-    if (_currentLocation == routeName) return;
-    _currentLocation = routeName;
-    _clearCurrentLocation();
-    context.goNamed(
-      routeName,
-      pathParameters: pathParameters,
-      queryParameters: queryParameters,
-      extra: extra,
-    );
-  }
-
-  void _clearCurrentLocation() async {
-    await Future.delayed(100.milliseconds);
-    _currentLocation = null;
-  }
-
-  /// Pushes a named route onto the GoRouter stack.
-  ///
-  /// Use this when you want to navigate to a new screen and allow the user
-  /// to navigate back to the current screen (e.g., navigating from a list
-  /// to a detail screen).
-  ///
-  /// Returns a `Future<T?>` which completes when the pushed route is popped,
-  /// potentially returning a result of type `T`.
-  ///
-  /// Parameters are the same as [goNamed].
-  Future<T?> pushNamed<T extends Object?>(
-      String routeName, {
-        Map<String, String> pathParameters = const <String, String>{},
-        Map<String, dynamic> queryParameters = const <String, dynamic>{},
-        Object? extra,
-      }) async {
-    if (_currentLocation == routeName) return null;
-    _currentLocation = routeName;
-    _clearCurrentLocation();
-    return context.pushNamed<T>(
-      routeName,
-      pathParameters: pathParameters,
-      queryParameters: queryParameters,
-      extra: extra,
-    );
-  }
-
-  /// Navigates to a specific location (path), replacing the current stack
-  /// similar to [goNamed]. Less type-safe than named routes.
-  void go(String location, {Object? extra}) {
-    if (_currentLocation == location) return;
-    _currentLocation = location;
-    _clearCurrentLocation();
-    context.go(location, extra: extra);
-  }
-
-  /// Pushes a specific location (path) onto the stack, similar to [pushNamed].
-  /// Less type-safe than named routes.
-  Future<T?> push<T extends Object?>(String location, {Object? extra}) async {
-    if (_currentLocation == location) return null;
-    _currentLocation = location;
-    _clearCurrentLocation();
-    return context.push<T>(location, extra: extra);
-  }
-
-  void replaceNamed(String routeName, {Object? extra}) {
-    if (_currentLocation == routeName) return;
-    _currentLocation = routeName;
-    _clearCurrentLocation();
-    context.replaceNamed(routeName, extra: extra);
-  }
-
+  /// Pops the current route until the specified route is reached.
   void popUntilNamed(String name) {
     Navigator.popUntil(context, ModalRoute.withName(name));
   }
 
-  void openLoginPage() {
-    goNamed(AppRouter.loginRouteName);
+  Future<dynamic> goNamed(String name, {Object? extra}) async {
+    return GoRouter.of(context).goNamed(name, extra: extra);
   }
 
-  void openHome() {
-    goNamed(AppRouter.chatRouterName);
-  }
-
-  void navigateBack() {
-    Navigator.of(context).pop();
-  }
-
-  void safePop() {
-    if (context.canPop()) {
-      context.pop();
-    } else {
-      context.goNamed(AppRouter.chatRouterName);
-    }
-  }
-}
-
-class FlushbarNavigator {
-  final BuildContext _context;
-  FlushbarNavigator(context) : _context = context;
-
-  /// Show error flushbar
-  Future<void> showError({
-    String? message,
+  /// Pushes a new route onto the navigator stack.
+  Future<dynamic> pushNamed(
+    String name, {
+    Map<String, String> pathParameters = const <String, String>{},
+    Map<String, dynamic> queryParameters = const <String, dynamic>{},
+    Object? extra,
   }) async {
-    if (!GlobalData.instance.isShowFlushBar) return;
-    await Flushbar(
-      message: (message?.isNotEmpty ?? false)
-          ? message
-          : "Something went wrong.",
-      messageSize: 15,
-      margin: UiConstants.horizontalPaddingMedium
-          .copyWith(bottom: UiConstants.paddingMedium),
-      flushbarStyle: FlushbarStyle.FLOATING,
-      flushbarPosition: FlushbarPosition.BOTTOM,
-      borderRadius: BorderRadius.circular(8),
-      icon: const Icon(
-        Icons.error,
-        color: AppColors.textRed,
-        size: 24,
-      ),
-      titleColor: AppColors.textBlack,
-      duration: const Duration(seconds: 3),
-      backgroundColor: AppColors.tertiary,
-    ).show(_context);
+    return GoRouter.of(context).pushNamed(
+      name,
+      pathParameters: pathParameters,
+      queryParameters: queryParameters,
+      extra: extra,
+    );
   }
 
-  Future showSuccess({required String message}) async {
-    return await Flushbar(
-      message: message,
-      messageSize: 15,
-      margin: UiConstants.horizontalPaddingMedium
-          .copyWith(bottom: UiConstants.paddingMedium),
-      borderRadius: BorderRadius.circular(8),
-      flushbarStyle: FlushbarStyle.FLOATING,
-      flushbarPosition: FlushbarPosition.TOP,
-      icon: const Icon(
-        Icons.done,
-        color: Colors.greenAccent,
-        size: 24,
+  /// Replaces the current route with a new one.
+  Future<dynamic> pushReplacementNamed(
+    String name, {
+    Map<String, String> pathParameters = const <String, String>{},
+    Map<String, dynamic> queryParameters = const <String, dynamic>{},
+    Object? extra,
+  }) async {
+    return GoRouter.of(context).pushReplacementNamed(
+      name,
+      pathParameters: pathParameters,
+      queryParameters: queryParameters,
+      extra: extra,
+    );
+  }
+
+  /// Pushes a new page onto the navigator stack using a MaterialPageRoute.
+  Future<dynamic> pushPage(Widget page) async {
+    final context = AppRouter.navigationKey.currentContext;
+    if (context == null) {
+      return Future.error('Context is null');
+    }
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return page;
+        },
       ),
-      titleColor: AppColors.textBlack,
-      duration: const Duration(seconds: 3),
-      backgroundColor: AppColors.tertiary,
-    ).show(_context);
+    );
+  }
+
+  Future<void> openLoginPage() {
+    return goNamed(AppRouter.loginRouteName);
+  }
+
+  Future<DialogAction> showAppDialog({
+    required DialogType dialogType,
+    required String titleText,
+    required String messageText,
+    String? confirmButtonText,
+    String? declineButtonText,
+  }) async {
+    return AppDialog.show(
+      context: context,
+      titleText: titleText,
+      messageText: messageText,
+      confirmButtonText: confirmButtonText ?? "Ok",
+      declineButtonText: declineButtonText ?? "Cancel",
+      dialogType: dialogType,
+    );
+  }
+
+  Future<void> showErrorDialog({
+    String? title,
+    required String message,
+    VoidCallback? closeAction,
+  }) async {
+    await AppDialog.show(
+      dialogType: DialogType.errorAlert,
+      context: context,
+      titleText: title ?? "Error",
+      messageText: message,
+      confirmButtonText: "Close",
+      declineButtonText: "Cancel",
+    );
+    closeAction?.call();
+  }
+
+  Future<DialogAction> showCustomDialog({
+    required Widget content,
+    required String confirmButtonText,
+    String? declineButtonText,
+  }) async {
+    return AppDialog.showCustom(
+      dialogType: DialogType.infoConfirmation,
+      context: context,
+      content: content,
+      confirmButtonText: confirmButtonText,
+    );
+  }
+
+  Future<T?> showAppBottomSheet<T>({
+    required Widget child,
+    Color? backgroundColor,
+  }) async {
+    final result = await showModalBottomSheet<T>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      backgroundColor: backgroundColor ?? AppColors.backgroundLight,
+      builder: (context) {
+        return child;
+      },
+    );
+    return result;
+  }
+
+  void showSuccessSnackBar({
+    required String message,
+    Duration? duration = const Duration(seconds: 2),
+  }) {
+    final snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      duration: duration!,
+      content: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Container(
+          height: 52,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColors.green.withValues(alpha: 0.5),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 12,
+            children: [Text(message, style: AppTextStyle.black.s14.w500)],
+          ),
+        ),
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showErrorSnackBar({
+    required String message,
+    Duration? duration = const Duration(seconds: 2),
+  }) {
+    final snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      duration: duration!,
+      content: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Container(
+          height: 52,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColors.backgroundRed.withValues(alpha: 0.5),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 12,
+            children: [Text(message, style: AppTextStyle.black.s14.w500)],
+          ),
+        ),
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

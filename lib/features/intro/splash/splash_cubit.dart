@@ -1,10 +1,11 @@
-import 'package:chat_app/core/global/app_cubit/app_cubit.dart';
-import 'package:chat_app/data/database/secure_storage_helper.dart';
-import 'package:chat_app/data/models/user_entity.dart';
+import 'package:chat_app/core/global/user/user_cubit.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
+import 'package:chat_app/data/service/database/secure_storage_helper.dart';
+import 'package:chat_app/data/service/notification/notification_service.dart';
 import 'package:chat_app/features/intro/splash/spash_navigation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'splash_state.dart';
@@ -12,12 +13,12 @@ part 'splash_state.dart';
 class SplashCubit extends Cubit<SplashState> {
   final SplashNavigator navigator;
   final AuthRepository authRepository;
-  final AppCubit appCubit;
+  final UserCubit userCubit;
 
   SplashCubit({
     required this.navigator,
     required this.authRepository,
-    required this.appCubit,
+    required this.userCubit,
   }) : super(const SplashState());
 
   void checkOnboard() async {
@@ -26,46 +27,27 @@ class SplashCubit extends Cubit<SplashState> {
       navigator.goToOnboarding();
       return;
     }
-    // _checkLogin();
-    appCubit.setCurrentUser(
-      user: UserEntity(
-        uid: "1",
-        userName: "User 1",
-        avatarPath: "https://i.pravatar.cc/150?u=alice",
-      ),
-    );
-    navigator.goToHomePage();
+    _checkLogin();
   }
 
-  void _checkLogin() {
+  Future<void> _checkLogin() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       navigator.openLoginPage();
     } else {
-      _fetchData(user.uid);
+      final result = await userCubit.fetchUserInfo();
+      if(result) {
+        navigator.goToHomePage();
+      } else {
+        navigator.showErrorSnackBar(message: "User not found");
+        navigator.openLoginPage();
+      }
     }
   }
 
-  void _fetchData(String uid) async {
-    final result = await authRepository.getUserInfo(uid: uid);
-
-    await result.fold(
-      (failure) {
-        navigator.appDialog.show(
-          message: failure.message,
-          textConfirm: "Đăng nhập lại",
-          onConfirm: () async {
-            navigator.appDialog.hide();
-            navigator.openLoginPage();
-          },
-        );
-      },
-      (success) {
-        appCubit.setCurrentUser(
-          user: UserEntity(uid: "1", userName: "User 1"),
-        );
-        navigator.goToHomePage();
-      },
-    );
+  Future<void> initNotification(BuildContext context) async {
+    final notificationService = NotificationService.instance;
+    notificationService.init(context);
   }
+
 }

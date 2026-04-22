@@ -1,11 +1,9 @@
 import 'package:chat_app/core/constants/asset_constants.dart';
 import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
-import 'package:chat_app/core/global/app_cubit/app_cubit.dart';
 import 'package:chat_app/core/widgets/image/app_svg_image.dart';
 import 'package:chat_app/navigation/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AppBackButton extends StatelessWidget {

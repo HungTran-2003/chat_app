@@ -478,6 +478,201 @@ class S {
       args: [],
     );
   }
+
+  /// `Contacts`
+  String get common_contact {
+    return Intl.message('Contacts', name: 'common_contact', desc: '', args: []);
+  }
+
+  /// `Add contact`
+  String get common_add_contact {
+    return Intl.message(
+      'Add contact',
+      name: 'common_add_contact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get common_search {
+    return Intl.message('Search', name: 'common_search', desc: '', args: []);
+  }
+
+  /// `Accept Request`
+  String get common_accept {
+    return Intl.message(
+      'Accept Request',
+      name: 'common_accept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ignore`
+  String get common_ignore {
+    return Intl.message('Ignore', name: 'common_ignore', desc: '', args: []);
+  }
+
+  /// `SENT JUST NOW`
+  String get common_sent_just_now {
+    return Intl.message(
+      'SENT JUST NOW',
+      name: 'common_sent_just_now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SENT {count} {unit} AGO`
+  String common_sent_time_ago(Object count, Object unit) {
+    return Intl.message(
+      'SENT $count $unit AGO',
+      name: 'common_sent_time_ago',
+      desc: '',
+      args: [count, unit],
+    );
+  }
+
+  /// `DAY`
+  String get common_day {
+    return Intl.message('DAY', name: 'common_day', desc: '', args: []);
+  }
+
+  /// `DAYS`
+  String get common_days {
+    return Intl.message('DAYS', name: 'common_days', desc: '', args: []);
+  }
+
+  /// `HOUR`
+  String get common_hour {
+    return Intl.message('HOUR', name: 'common_hour', desc: '', args: []);
+  }
+
+  /// `HOURS`
+  String get common_hours {
+    return Intl.message('HOURS', name: 'common_hours', desc: '', args: []);
+  }
+
+  /// `MINUTE`
+  String get common_minute {
+    return Intl.message('MINUTE', name: 'common_minute', desc: '', args: []);
+  }
+
+  /// `MINUTES`
+  String get common_minutes {
+    return Intl.message('MINUTES', name: 'common_minutes', desc: '', args: []);
+  }
+
+  /// `This guy is incredibly lazy.`
+  String get message_user_have_not_slogan {
+    return Intl.message(
+      'This guy is incredibly lazy.',
+      name: 'message_user_have_not_slogan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send friend request`
+  String get title_message_add_request {
+    return Intl.message(
+      'Send friend request',
+      name: 'title_message_add_request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `add {userName} to your contact list`
+  String content_message_add_request(Object userName) {
+    return Intl.message(
+      'add $userName to your contact list',
+      name: 'content_message_add_request',
+      desc: '',
+      args: [userName],
+    );
+  }
+
+  /// `Your message`
+  String get common_your_message {
+    return Intl.message(
+      'Your message',
+      name: 'common_your_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your message`
+  String get message_hint_your_message {
+    return Intl.message(
+      'Enter your message',
+      name: 'message_hint_your_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get common_send {
+    return Intl.message('Send', name: 'common_send', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get common_cancel {
+    return Intl.message('Cancel', name: 'common_cancel', desc: '', args: []);
+  }
+
+  /// `Contact Pending`
+  String get title_contact_request {
+    return Intl.message(
+      'Contact Pending',
+      name: 'title_contact_request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Result`
+  String get common_result {
+    return Intl.message('Result', name: 'common_result', desc: '', args: []);
+  }
+
+  /// `Contact Request Detail`
+  String get title_contact_request_detail {
+    return Intl.message(
+      'Contact Request Detail',
+      name: 'title_contact_request_detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add {userName} now to start chatting with them`
+  String contact_request_description(Object userName) {
+    return Intl.message(
+      'Add $userName now to start chatting with them',
+      name: 'contact_request_description',
+      desc: '',
+      args: [userName],
+    );
+  }
+
+  /// `Introduction`
+  String get common_introduction {
+    return Intl.message(
+      'Introduction',
+      name: 'common_introduction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get common_retry {
+    return Intl.message('Retry', name: 'common_retry', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

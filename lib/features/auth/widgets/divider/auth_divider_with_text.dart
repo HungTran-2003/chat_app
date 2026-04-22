@@ -20,6 +20,5 @@ class AuthDividerWithText extends StatelessWidget {
         const Expanded(child: AppDivider()),
       ],
     );
-    ;
   }
 }

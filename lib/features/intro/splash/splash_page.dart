@@ -1,7 +1,6 @@
 import 'package:chat_app/core/constants/asset_constants.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/widgets/image/app_assest_image.dart';
-import 'package:chat_app/core/widgets/image/app_svg_image.dart';
 import 'package:chat_app/features/intro/splash/spash_navigation.dart';
 import 'package:chat_app/features/intro/splash/splash_cubit.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class SplashPage extends StatelessWidget {
         return SplashCubit(
           navigator: SplashNavigator(context: context),
           authRepository: context.read(),
-          appCubit: context.read(),
+          userCubit: context.read(),
         );
       },
       child: const SplashChildPage(),
@@ -40,6 +39,7 @@ class _SplashChildPageState extends State<SplashChildPage> {
     super.initState();
     _cubit = BlocProvider.of(context);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _cubit.initNotification(context);
       await Future.delayed(const Duration(milliseconds: 500));
       _cubit.checkOnboard();
     });

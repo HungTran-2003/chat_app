@@ -66,5 +66,11 @@
   "common_your_message": "Lời chào",
   "message_hint_your_message": "Nhập lời chào của bạn",
   "common_send": "Gửi",
-  "common_cancel": "Huỷ"
+  "common_cancel": "Huỷ",
+  "title_contact_request": "Liên hệ đang chờ",
+  "common_result": "Kết quả",
+  "title_contact_request_detail": "Contact Request Detail",
+  "contact_request_description": "Add {userName} now to start chatting with them",
+  "common_introduction": "Introduction",
+  "common_retry": "Retry"
 }

@@ -73,6 +73,17 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
   }
 
   @override
+  Future<UserEntity> getOtherUserInfo({required String userId}) async {
+    final data = await _client
+        .from('profiles')
+        .select()
+        .eq('id', userId)
+        .single();
+    log(data.toString());
+    return UserEntity.fromJson(data);
+  }
+
+  @override
   Future<List<UserEntity>> searchUser({
     required String keyword,
     int? limit = 10,
@@ -156,6 +167,16 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
   Future<ObjectResponse> acceptRequest({required String requestId}) async {
     final response = await _client.rpc(
       'accept_contact_request',
+      params: {'p_request_id': requestId, 'p_user_id': _auth.currentUser!.uid},
+    );
+    final data = _processResponse(response);
+    return ObjectResponse.fromJson(data);
+  }
+
+  @override
+  Future<ObjectResponse> ignoreRequest({required String requestId}) async {
+    final response = await _client.rpc(
+      'ignore_contact_request',
       params: {'p_request_id': requestId, 'p_user_id': _auth.currentUser!.uid},
     );
     final data = _processResponse(response);

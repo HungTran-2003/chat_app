@@ -25,7 +25,7 @@ class SearchContactItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppButtonWrapper(
       onPressed: onTap,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

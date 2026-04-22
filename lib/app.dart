@@ -2,6 +2,7 @@ import 'package:chat_app/core/configs/app_configs.dart';
 import 'package:chat_app/core/global/user/user_cubit.dart';
 import 'package:chat_app/core/theme/app_themes.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
+import 'package:chat_app/data/repositories/user_repository.dart';
 import 'package:chat_app/data/service/supabase/supabase_service.dart';
 import 'package:chat_app/generated/l10n.dart';
 import 'package:chat_app/navigation/app_router.dart';
@@ -20,7 +21,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -40,6 +40,11 @@ class _MyAppState extends State<MyApp> {
             return ContactRepositoryImpl(client: SupabaseService.client);
           },
         ),
+        RepositoryProvider<UserRepository>(
+          create: (context) {
+            return UserRepositoryImpl(client: SupabaseService.client);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -50,9 +55,7 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<UserCubit>(
             create: (context) {
-              return UserCubit(
-                authRepository: context.read(),
-              );
+              return UserCubit(authRepository: context.read());
             },
           ),
         ],

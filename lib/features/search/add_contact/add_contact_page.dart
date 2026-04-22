@@ -72,107 +72,142 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
 
   Widget _buildBodyPage() {
     return BlocListener<AddContactCubit, AddContactState>(
-      listenWhen: (pre, cur) =>
-          pre.loadStatus != cur.loadStatus,
+      listenWhen: (pre, cur) => pre.loadStatus != cur.loadStatus,
       listener: (context, state) {
-        if(state.loadStatus.isLoading){
+        if (state.loadStatus.isLoading) {
           AppLoadingOverlay.show(context);
         } else {
           AppLoadingOverlay.hide();
         }
       },
-      child: Column(
-        spacing: 20,
-        children: [
-          _buildSearchInput(),
-          Expanded(child: _buildListContact()),
-        ],
+      child: BlocBuilder<AddContactCubit, AddContactState>(
+        buildWhen: (pre, cur) => pre.loadDataStatus != cur.loadDataStatus,
+        builder: (context, state) {
+          if (state.loadDataStatus.isLoading) {
+            return const Center(child: AppLoadingWidget());
+          }
+          return RefreshIndicator(
+            onRefresh: _cubit.refresh,
+            color: AppColors.primary,
+            child: CustomScrollView(
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  sliver: SliverToBoxAdapter(child: _buildSearchInput()),
+                ),
+                _buildListContactSliver(),
+                _buildListUserSliver(),
+                const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildListContact() {
+  Widget _buildListContactSliver() {
     return BlocBuilder<AddContactCubit, AddContactState>(
-      buildWhen: (pre, cur) =>
-          pre.loadRequestStatus != cur.loadRequestStatus ||
-          pre.loadDataStatus != cur.loadDataStatus ||
-          pre.searchContacts != cur.searchContacts,
+      buildWhen: (pre, cur) => pre.searchContacts != cur.searchContacts,
       builder: (context, state) {
-        if (state.loadDataStatus.isLoading == true ||
-            state.loadRequestStatus.isLoading == true) {
-          return const Center(child: AppLoadingWidget());
+        if (state.searchContacts.isEmpty) {
+          return const SliverToBoxAdapter(child: SizedBox.shrink());
         }
-        if (state.users.isEmpty && state.contacts.isEmpty) {
-          return Center(child: Text("No data"));
-        }
+        return SliverPadding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          sliver: SliverMainAxisGroup(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 0),
+                  child: Text(
+                    _l10n.title_contact_request,
+                    style: AppTextStyle.black.s20.w700,
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final contact = state.searchContacts[index];
+                  return ContactRequestItem(
+                    contact: contact,
+                    onTap: () =>
+                        _cubit.navigatorRequestDetail(contact),
+                    onAccept: () =>
+                        _cubit.acceptRequest(requestId: contact.uid ?? ""),
+                    onIgnore: () =>
+                        _cubit.ignoreRequest(requestId: contact.uid ?? ""),
+                  );
+                }, childCount: state.searchContacts.length),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildListUserSliver() {
+    return BlocBuilder<AddContactCubit, AddContactState>(
+      buildWhen: (pre, cur) => pre.users != cur.users,
+      builder: (context, state) {
         if (state.users.isEmpty) {
-          return ListView.builder(
-            itemCount: state.contacts.length,
-            itemBuilder: (context, index) {
-              final contact = state.contacts[index];
-              return ContactRequestItem(
-                contact: contact,
-                onTap: () {
-                  print("onTap");
-                },
-                onAccept: () {
-                  _cubit.acceptRequest(requestId: contact.uid??"");
-                },
-                onIgnore: () {
-                  print("onDecline");
-                },
-              );
-            },
-          );
+          return const SliverToBoxAdapter(child: SizedBox.shrink());
         }
-        return ListView.builder(
-          itemCount: state.users.length,
-          itemBuilder: (context, index) {
-            return SearchContactItem(
-              user: state.users[index],
-              onTap: () {
-                print("onTap");
-              },
-              onAdd: () {
-                showDialog(
-                  state.users[index]
-                );
-              },
-            );
-          },
+        return SliverPadding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          sliver: SliverMainAxisGroup(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 0),
+                  child: Text(
+                    _l10n.common_result,
+                    style: AppTextStyle.black.s20.w700,
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final user = state.users[index];
+                  return SearchContactItem(
+                    user: user,
+                    onAdd: () => showDialog(user),
+                  );
+                }, childCount: state.users.length),
+              ),
+            ],
+          ),
         );
       },
     );
   }
 
   Widget _buildSearchInput() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: AnimatedBuilder(
-        animation: _cubit.searchController,
-        builder: (context, _) {
-          return AppOutlineTextField(
-            controller: _cubit.searchController,
-            hint: S.of(context).common_search,
-            prefixIcon: const Icon(Icons.search, color: AppColors.tertiary),
-            borderRadius: 30,
-            onChanged: (value) => _cubit.search(value),
-            suffixIcon: _cubit.searchController.text.isNotEmpty
-                ? IconButton(
-                    icon: const Icon(
-                      Icons.cancel,
-                      color: AppColors.tertiary,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      _cubit.searchController.clear();
-                      _cubit.search("");
-                    },
-                  )
-                : null,
-          );
-        },
-      ),
+    return AnimatedBuilder(
+      animation: _cubit.searchController,
+      builder: (context, _) {
+        return AppOutlineTextField(
+          controller: _cubit.searchController,
+          hint: S.of(context).common_search,
+          prefixIcon: const Icon(Icons.search, color: AppColors.tertiary),
+          borderRadius: 30,
+          onChanged: (value) => _cubit.search(value),
+          suffixIcon: _cubit.searchController.text.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(
+                    Icons.cancel,
+                    color: AppColors.tertiary,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    _cubit.searchController.clear();
+                    _cubit.search("");
+                  },
+                )
+              : null,
+        );
+      },
     );
   }
 
@@ -218,7 +253,7 @@ class _AddContactChildPageState extends State<AddContactChildPage> {
         ),
       ),
     );
-    if(resultAction == DialogAction.confirmed) {
+    if (resultAction == DialogAction.confirmed) {
       _cubit.sentContactRequest(receiverId: user.uid!);
     }
   }

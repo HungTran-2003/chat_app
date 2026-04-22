@@ -24,7 +24,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(count) => "${count}m ago";
 
-  static String m2(userName) => "add ${userName} to your contact list";
+  static String m2(userName) =>
+      "Add ${userName} now to start chatting with them";
+
+  static String m3(userName) => "add ${userName} to your contact list";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -63,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_hour": MessageLookupByLibrary.simpleMessage("HOUR"),
     "common_hours": MessageLookupByLibrary.simpleMessage("HOURS"),
     "common_ignore": MessageLookupByLibrary.simpleMessage("Ignore"),
+    "common_introduction": MessageLookupByLibrary.simpleMessage("Introduction"),
     "common_label_name": MessageLookupByLibrary.simpleMessage("Your name"),
     "common_message_data_already_exists": MessageLookupByLibrary.simpleMessage(
       "The data already exists.",
@@ -110,6 +114,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_minutes": MessageLookupByLibrary.simpleMessage("MINUTES"),
     "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
+    "common_result": MessageLookupByLibrary.simpleMessage("Result"),
+    "common_retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "common_search": MessageLookupByLibrary.simpleMessage("Search"),
     "common_send": MessageLookupByLibrary.simpleMessage("Send"),
     "common_sent_just_now": MessageLookupByLibrary.simpleMessage(
@@ -146,7 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Your email"),
     "common_your_message": MessageLookupByLibrary.simpleMessage("Your message"),
-    "content_message_add_request": m2,
+    "contact_request_description": m2,
+    "content_message_add_request": m3,
     "message_hint_your_message": MessageLookupByLibrary.simpleMessage(
       "Enter your message",
     ),
@@ -162,6 +169,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "onboard_description": MessageLookupByLibrary.simpleMessage(
       "Our chat app is the perfect way to stay connected with friends and family.",
+    ),
+    "title_contact_request": MessageLookupByLibrary.simpleMessage(
+      "Contact Pending",
+    ),
+    "title_contact_request_detail": MessageLookupByLibrary.simpleMessage(
+      "Contact Request Detail",
     ),
     "title_message_add_request": MessageLookupByLibrary.simpleMessage(
       "Send friend request",

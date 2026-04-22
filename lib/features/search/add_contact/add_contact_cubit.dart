@@ -36,10 +36,17 @@ class AddContactCubit extends Cubit<AddContactState> {
           state.copyWith(
             loadDataStatus: LoadStatus.success,
             contacts: contacts,
+            searchContacts: contacts,
+            users: [],
           ),
         );
       },
     );
+  }
+
+  Future<void> refresh() async {
+    searchController.clear();
+    await initFetchData();
   }
 
   void search(String keyword) async {
@@ -81,7 +88,7 @@ class AddContactCubit extends Cubit<AddContactState> {
         navigator.showErrorDialog(message: failure.message);
       },
       (response) {
-        final newSearchUser= state.users.where((element) {
+        final newSearchUser = state.users.where((element) {
           return element.uid != receiverId;
         }).toList();
         emit(
@@ -100,23 +107,62 @@ class AddContactCubit extends Cubit<AddContactState> {
     final result = await contactRepo.acceptRequest(requestId: requestId);
 
     result.fold(
-          (failure) {
+      (failure) {
         emit(state.copyWith(loadStatus: LoadStatus.failure));
         navigator.showErrorDialog(message: failure.message);
       },
-          (response) {
+      (response) {
         final newContact = state.contacts.where((element) {
+          return element.uid != requestId;
+        }).toList();
+        final newSearchContact = state.searchContacts.where((element) {
           return element.uid != requestId;
         }).toList();
         emit(
           state.copyWith(
             loadStatus: LoadStatus.success,
             contacts: newContact,
+            searchContacts: newSearchContact,
           ),
         );
         navigator.showSuccessSnackBar(message: "Add Success");
       },
     );
+  }
+
+  void ignoreRequest({required String requestId}) async {
+    emit(state.copyWith(loadStatus: LoadStatus.loading));
+    final result = await contactRepo.ignoreRequest(requestId: requestId);
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(loadStatus: LoadStatus.failure));
+        navigator.showErrorDialog(message: failure.message);
+      },
+      (response) {
+        final newContact = state.contacts.where((element) {
+          return element.uid != requestId;
+        }).toList();
+        final newSearchContact = state.searchContacts.where((element) {
+          return element.uid != requestId;
+        }).toList();
+        emit(
+          state.copyWith(
+            loadStatus: LoadStatus.success,
+            contacts: newContact,
+            searchContacts: newSearchContact,
+          ),
+        );
+        navigator.showSuccessSnackBar(message: "Ignore Success");
+      },
+    );
+  }
+
+  void navigatorRequestDetail(ContactEntity contact) async {
+    final result = await navigator.navigatorToRequestDetail(contact);
+    if (result == true) {
+      await refresh();
+    }
   }
 
   @override

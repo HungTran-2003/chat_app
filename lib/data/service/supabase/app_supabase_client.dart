@@ -19,6 +19,8 @@ abstract class AppSupabaseClient {
 
   Future<UserEntity> getUserInfo();
 
+  Future<UserEntity> getOtherUserInfo({required String userId});
+
   Future<List<UserEntity>> searchUser({
     required String keyword,
     int? limit = 20,
@@ -36,6 +38,8 @@ abstract class AppSupabaseClient {
   });
 
   Future<ObjectResponse> acceptRequest({required String requestId});
+
+  Future<ObjectResponse> ignoreRequest({required String requestId});
 
   Future<ObjectResponse> addFcmToken({
     required String deviceId,

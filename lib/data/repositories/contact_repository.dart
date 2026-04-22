@@ -27,6 +27,10 @@ abstract class ContactRepository {
   Future<Either<Failure, ObjectResponse>> acceptRequest({
     required String requestId,
   });
+
+  Future<Either<Failure, ObjectResponse>> ignoreRequest({
+    required String requestId,
+  });
 }
 
 class ContactRepositoryImpl implements ContactRepository {
@@ -91,6 +95,19 @@ class ContactRepositoryImpl implements ContactRepository {
   }) async {
     try {
       final result = await client.acceptRequest(requestId: requestId);
+      return Right(result);
+    } catch (e) {
+      log('Error search user: $e');
+      return Left(FailureMapper.map(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ObjectResponse>> ignoreRequest({
+    required String requestId,
+  }) async {
+    try {
+      final result = await client.ignoreRequest(requestId: requestId);
       return Right(result);
     } catch (e) {
       log('Error search user: $e');

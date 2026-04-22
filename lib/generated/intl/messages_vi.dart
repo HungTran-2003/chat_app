@@ -24,7 +24,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(count) => "${count} phút";
 
-  static String m2(userName) => "thêm ${userName} vào danh sách bạn bè";
+  static String m2(userName) =>
+      "Add ${userName} now to start chatting with them";
+
+  static String m3(userName) => "thêm ${userName} vào danh sách bạn bè";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -63,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_hour": MessageLookupByLibrary.simpleMessage("GIỜ"),
     "common_hours": MessageLookupByLibrary.simpleMessage("GIỜ"),
     "common_ignore": MessageLookupByLibrary.simpleMessage("Bỏ qua"),
+    "common_introduction": MessageLookupByLibrary.simpleMessage("Introduction"),
     "common_label_name": MessageLookupByLibrary.simpleMessage("Tên của bạn"),
     "common_message_data_already_exists": MessageLookupByLibrary.simpleMessage(
       "Dữ liệu đã tồn tại.",
@@ -110,6 +114,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_minutes": MessageLookupByLibrary.simpleMessage("PHÚT"),
     "common_my_status": MessageLookupByLibrary.simpleMessage("My status"),
     "common_password": MessageLookupByLibrary.simpleMessage("Password"),
+    "common_result": MessageLookupByLibrary.simpleMessage("Kết quả"),
+    "common_retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "common_search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
     "common_send": MessageLookupByLibrary.simpleMessage("Gửi"),
     "common_sent_just_now": MessageLookupByLibrary.simpleMessage(
@@ -146,7 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "common_your_email": MessageLookupByLibrary.simpleMessage("Email"),
     "common_your_message": MessageLookupByLibrary.simpleMessage("Lời chào"),
-    "content_message_add_request": m2,
+    "contact_request_description": m2,
+    "content_message_add_request": m3,
     "message_hint_your_message": MessageLookupByLibrary.simpleMessage(
       "Nhập lời chào của bạn",
     ),
@@ -162,6 +169,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "onboard_description": MessageLookupByLibrary.simpleMessage(
       "Ứng dụng chat của chúng tôi là cách hoàn hảo để giữ liên lạc với bạn bè và gia đình..",
+    ),
+    "title_contact_request": MessageLookupByLibrary.simpleMessage(
+      "Liên hệ đang chờ",
+    ),
+    "title_contact_request_detail": MessageLookupByLibrary.simpleMessage(
+      "Contact Request Detail",
     ),
     "title_message_add_request": MessageLookupByLibrary.simpleMessage(
       "Kết bạn",

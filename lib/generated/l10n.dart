@@ -623,6 +623,56 @@ class S {
   String get common_cancel {
     return Intl.message('Cancel', name: 'common_cancel', desc: '', args: []);
   }
+
+  /// `Contact Pending`
+  String get title_contact_request {
+    return Intl.message(
+      'Contact Pending',
+      name: 'title_contact_request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Result`
+  String get common_result {
+    return Intl.message('Result', name: 'common_result', desc: '', args: []);
+  }
+
+  /// `Contact Request Detail`
+  String get title_contact_request_detail {
+    return Intl.message(
+      'Contact Request Detail',
+      name: 'title_contact_request_detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add {userName} now to start chatting with them`
+  String contact_request_description(Object userName) {
+    return Intl.message(
+      'Add $userName now to start chatting with them',
+      name: 'contact_request_description',
+      desc: '',
+      args: [userName],
+    );
+  }
+
+  /// `Introduction`
+  String get common_introduction {
+    return Intl.message(
+      'Introduction',
+      name: 'common_introduction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get common_retry {
+    return Intl.message('Retry', name: 'common_retry', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

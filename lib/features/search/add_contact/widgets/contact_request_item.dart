@@ -27,7 +27,7 @@ class ContactRequestItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppButtonWrapper(
       onPressed: onTap,
-      padding: UiConstants.horizontalPaddingLarge,
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

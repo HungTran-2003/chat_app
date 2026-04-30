@@ -6,7 +6,6 @@ import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/loading/app_loading_overlay.dart';
 import 'package:chat_app/domain/models/enum/status_type.dart';
-import 'package:chat_app/domain/models/entities/contact_entity.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:chat_app/features/contact/contact_cubit.dart';
 import 'package:chat_app/features/contact/contact_navigator.dart';

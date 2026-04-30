@@ -110,7 +110,6 @@ class LoginCubit extends Cubit<LoginState> {
         },
       );
     } catch (e) {
-      print(e.toString());
       navigator.showSuccessSnackBar(message: "Login Cancel");
     }
   }

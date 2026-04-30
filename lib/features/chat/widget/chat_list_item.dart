@@ -10,13 +10,13 @@ import 'package:chat_app/core/widgets/badge/app_status_dot.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
 import 'package:chat_app/core/widgets/image/app_network_image.dart';
-import 'package:chat_app/domain/models/enum/chat_type.dart';
-import 'package:chat_app/domain/models/entities/chat_entity.dart';
+import 'package:chat_app/domain/models/entities/room_entity.dart';
+import 'package:chat_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ChatListItem extends StatelessWidget {
-  final ChatEntity chatRoom;
+  final RoomEntity chatRoom;
   final VoidCallback? onTap;
   final VoidCallback? onTapNotification;
   final VoidCallback? onTapDelete;
@@ -75,17 +75,14 @@ class ChatListItem extends StatelessWidget {
             builder: (context, child) {
               final double ratio = controller.animation.value.abs();
               final Color bgColor = Color.lerp(
-                  Colors.transparent,
-                  AppColors.whiteF1F6FA,
-                  ratio > 0 ? 1.0 : 0.0
+                Colors.transparent,
+                AppColors.whiteF1F6FA,
+                ratio > 0 ? 1.0 : 0.0,
               )!;
-              return Material(
-                color: bgColor,
-                child: child,
-              );
+              return Material(color: bgColor, child: child);
             },
             child: InkWell(
-              onTap: () => safeAction((){
+              onTap: () => safeAction(() {
                 onTap?.call();
               }),
               splashColor: AppColors.whiteF1F6FA,
@@ -98,7 +95,7 @@ class ChatListItem extends StatelessWidget {
                     children: [
                       _buildAvatarChat(),
                       12.width,
-                      Expanded(child: _buildLastMessage()),
+                      Expanded(child: _buildLastMessage(context)),
                       _buildUnreadMessage(),
                     ],
                   ),
@@ -112,20 +109,12 @@ class ChatListItem extends StatelessWidget {
   }
 
   Widget _buildAvatarChat() {
-
     Widget? avatar;
-    if(chatRoom.avatarGroup != null) {
-      avatar = AppAvatarImage(
-        path: chatRoom.avatarGroup!,
-        size: 52,);
-    } else if(chatRoom.type == ChatType.group) {
-      avatar = _buildAvatarGroup();
+    if (chatRoom.avatarGroup.length <= 1) {
+      avatar = AppAvatarImage(path: chatRoom.avatarGroup.first, size: 52);
     } else {
-      avatar = AppAvatarImage(
-        path: chatRoom.users?.first.avatarPath ?? "",
-        size: 52,);
+      avatar = _buildAvatarGroup();
     }
-
     return Stack(
       children: [
         avatar,
@@ -138,8 +127,8 @@ class ChatListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildAvatarGroup(){
-    final avatars = chatRoom.users?.map((u) => u.avatarPath).toList() ?? [];
+  Widget _buildAvatarGroup() {
+    final avatars = chatRoom.avatarGroup;
     final size = 52.0;
     return ClipOval(
       child: SizedBox(
@@ -150,7 +139,7 @@ class ChatListItem extends StatelessWidget {
             if (avatars.isNotEmpty)
               Positioned(
                 left: 0,
-                width: size/2,
+                width: size / 2,
                 height: size,
                 child: _avatar(avatars[0]!),
               ),
@@ -183,27 +172,24 @@ class ChatListItem extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white, width: 1),
       ),
-      child: AppNetworkImage(
-        imageUrl: url,
-        fit: BoxFit.cover,
-      )
+      child: AppNetworkImage(imageUrl: url, fit: BoxFit.cover),
     );
   }
 
-  Widget _buildLastMessage() {
+  Widget _buildLastMessage(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          chatRoom.chatName ?? "",
+          chatRoom.roomName ?? "",
           style: AppTextStyle.black.s20.w600,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
 
         Text(
-          chatRoom.lastMessage?.context ?? "",
+          chatRoom.lastMessage?.context ?? S.of(context).chat_empty_outside,
           style: AppTextStyle.grey.s12.w400,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

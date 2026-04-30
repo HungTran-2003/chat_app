@@ -72,5 +72,7 @@
   "title_contact_request_detail": "Contact Request Detail",
   "contact_request_description": "Add {userName} now to start chatting with them",
   "common_introduction": "Introduction",
-  "common_retry": "Retry"
+  "common_retry": "Retry",
+  "chat_empty_outside": "You haven't exchanged any messages yet. Start the conversation",
+  "chat_empty_inside": "You haven't exchanged any messages yet. Send a message to start the conversation 👋"
 }

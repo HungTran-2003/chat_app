@@ -43,6 +43,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_register_title": MessageLookupByLibrary.simpleMessage(
       "Sign up with <Email>",
     ),
+    "chat_empty_inside": MessageLookupByLibrary.simpleMessage(
+      "Hai bạn chưa có tin nhắn nào. Hãy gửi một lời chào để bắt đầu cuộc trò chuyện 👋",
+    ),
+    "chat_empty_outside": MessageLookupByLibrary.simpleMessage(
+      "Hai bạn chưa có tin nhắn nào. Hãy bắt đầu trò chuyện",
+    ),
     "common_accept": MessageLookupByLibrary.simpleMessage("Accept Request"),
     "common_add_contact": MessageLookupByLibrary.simpleMessage("Add contact"),
     "common_app_title": MessageLookupByLibrary.simpleMessage("Chatbox"),

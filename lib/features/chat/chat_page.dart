@@ -6,6 +6,7 @@ import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
 import 'package:chat_app/core/widgets/button/app_icon_button.dart';
 import 'package:chat_app/core/widgets/button/app_image_button.dart';
 import 'package:chat_app/features/chat/chat_cubit.dart';
+import 'package:chat_app/features/chat/chat_navigator.dart';
 import 'package:chat_app/features/chat/widget/chat_list_item.dart';
 import 'package:chat_app/features/chat/widget/home_button_status.dart';
 import 'package:chat_app/generated/l10n.dart';
@@ -20,7 +21,10 @@ class MessagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return ChatCubit();
+        return ChatCubit(
+          navigator: ChatNavigator(context: context),
+          roomRepo: context.read(),
+        );
       },
       child: MessageChildPage(),
     );
@@ -131,12 +135,12 @@ class _MessageChildPageState extends State<MessageChildPage> {
                 builder: (context, state) {
                   return SlidableAutoCloseBehavior(
                     child: ListView.separated(
-                      itemCount: state.chats?.length ?? 0,
+                      itemCount: state.rooms?.length ?? 0,
                       itemBuilder: (context, index) {
                         return ChatListItem(
-                          chatRoom: state.chats![index],
+                          chatRoom: state.rooms![index],
                           onTap: (){
-                            print("onTap");
+                            _cubit.navigator.openChatMessage();
                           },
                           onTapDelete: () {
                             print("onTapDelete");

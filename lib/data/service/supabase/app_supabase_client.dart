@@ -1,5 +1,6 @@
 import 'package:chat_app/data/response/object_response.dart';
 import 'package:chat_app/data/response/request_response.dart';
+import 'package:chat_app/data/response/room_response.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -51,4 +52,6 @@ abstract class AppSupabaseClient {
     required String fcmToken,
     required String platform,
   });
+
+  Future<List<RoomResponse>> getUserRooms();
 }

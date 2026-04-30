@@ -1,4 +1,3 @@
-import 'package:chat_app/core/constants/ui_constants.dart';
 import 'package:chat_app/core/extensions/num_extension.dart';
 import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';

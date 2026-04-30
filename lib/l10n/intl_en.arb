@@ -72,5 +72,7 @@
   "title_contact_request_detail": "Contact Request Detail",
   "contact_request_description": "Add {userName} now to start chatting with them",
   "common_introduction": "Introduction",
-  "common_retry": "Retry"
+  "common_retry": "Retry",
+  "chat_empty_outside": "Hai bạn chưa có tin nhắn nào. Hãy bắt đầu trò chuyện",
+  "chat_empty_inside": "Hai bạn chưa có tin nhắn nào. Hãy gửi một lời chào để bắt đầu cuộc trò chuyện 👋"
 }

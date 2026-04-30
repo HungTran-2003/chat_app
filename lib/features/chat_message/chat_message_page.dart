@@ -1,11 +1,8 @@
 import 'package:chat_app/core/extensions/num_extension.dart';
-import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
-import 'package:chat_app/core/widgets/app_bar/base_app_bar.dart';
 import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
 import 'package:chat_app/features/chat_message/chat_message_cubit.dart';
 import 'package:chat_app/features/chat_message/chat_message_navigator.dart';
-import 'package:chat_app/features/chat_message/chat_message_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,52 +32,12 @@ class _ChatMessageChildPageState extends State<ChatMessageChildPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: _buildAppBar(),
       body: Column(
         children: [
           Expanded(child: _buildListMessage()),
           _buildInputBar(),
         ],
       ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar() {
-    return BaseAppBar(
-      titleWidget: Row(
-        children: [
-          const AppAvatarImage(
-            path: null,
-            size: 40,
-          ),
-          12.width,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Jhon Abraham",
-                style: AppTextStyle.black.s16.bold,
-              ),
-              Text(
-                "Active now",
-                style: AppTextStyle.grey.s12,
-              ),
-            ],
-          ),
-        ],
-      ),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.call_outlined, color: Colors.black),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: const Icon(Icons.videocam_outlined, color: Colors.black),
-          onPressed: () {},
-        ),
-        8.width,
-      ],
     );
   }
 
@@ -92,7 +49,6 @@ class _ChatMessageChildPageState extends State<ChatMessageChildPage> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: AppColors.greyF3,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text("Today", style: AppTextStyle.black.s12.bold),

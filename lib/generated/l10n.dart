@@ -673,6 +673,26 @@ class S {
   String get common_retry {
     return Intl.message('Retry', name: 'common_retry', desc: '', args: []);
   }
+
+  /// `Hai bạn chưa có tin nhắn nào. Hãy bắt đầu trò chuyện`
+  String get chat_empty_outside {
+    return Intl.message(
+      'Hai bạn chưa có tin nhắn nào. Hãy bắt đầu trò chuyện',
+      name: 'chat_empty_outside',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hai bạn chưa có tin nhắn nào. Hãy gửi một lời chào để bắt đầu cuộc trò chuyện 👋`
+  String get chat_empty_inside {
+    return Intl.message(
+      'Hai bạn chưa có tin nhắn nào. Hãy gửi một lời chào để bắt đầu cuộc trò chuyện 👋',
+      name: 'chat_empty_inside',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

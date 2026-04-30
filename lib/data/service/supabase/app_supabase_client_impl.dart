@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:chat_app/core/error/failures.dart';
 import 'package:chat_app/data/response/object_response.dart';
 import 'package:chat_app/data/response/request_response.dart';
+import 'package:chat_app/data/response/room_response.dart';
 import 'package:chat_app/data/service/supabase/app_supabase_client.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -217,5 +218,18 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
     );
     final data = _processResponse(response);
     return ObjectResponse.fromJson(data);
+  }
+
+  @override
+  Future<List<RoomResponse>> getUserRooms() async {
+    final response = await _client.rpc(
+      'get_user_rooms',
+      params: {
+        'p_user_id': _auth.currentUser!.uid,
+      },
+    );
+    final List<dynamic> data = response;
+    log(data.toString());
+    return data.map((e) => RoomResponse.fromJson(e)).toList();
   }
 }

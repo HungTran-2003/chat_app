@@ -6,7 +6,7 @@ import 'package:chat_app/domain/models/entities/room_entity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class RoomRepository {
-  Future<Either<Failure, List<RoomEntity>>> getUserRooms();
+  Stream<Either<Failure, List<RoomEntity>>> getUserRooms();
 }
 
 class RoomRepositoryImpl implements RoomRepository {
@@ -15,14 +15,15 @@ class RoomRepositoryImpl implements RoomRepository {
   RoomRepositoryImpl({required this.client});
 
   @override
-  Future<Either<Failure, List<RoomEntity>>> getUserRooms() async {
-    try {
-      final roomsResponse = await client.getUserRooms();
-      final rooms = roomsResponse.map((e) => e.toEntity()).toList();
-      return Right(rooms);
-    } catch (e) {
+  Stream<Either<Failure, List<RoomEntity>>> getUserRooms() {
+    return client.getUserRoomsRealtime().map<Either<Failure, List<RoomEntity>>>(
+      (roomsResponse) {
+        final rooms = roomsResponse.map((e) => e.toEntity()).toList();
+        return Right(rooms);
+      },
+    ).handleError((e) {
       log('Error get user rooms: $e');
       return Left(FailureMapper.map(e));
-    }
+    });
   }
 }

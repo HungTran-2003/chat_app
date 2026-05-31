@@ -1,19 +1,31 @@
 import 'package:chat_app/core/extensions/num_extension.dart';
+import 'package:chat_app/core/theme/app_colors.dart';
 import 'package:chat_app/core/theme/app_text_styles.dart';
 import 'package:chat_app/core/widgets/image/app_avatar_image.dart';
+import 'package:chat_app/data/repositories/message_repository.dart';
+import 'package:chat_app/domain/models/entities/room_entity.dart';
+import 'package:chat_app/domain/models/entities/message_entity.dart';
+import 'package:chat_app/domain/models/enum/status_type.dart';
+import 'package:chat_app/core/global/user/user_cubit.dart';
 import 'package:chat_app/features/chat_message/chat_message_cubit.dart';
+import 'package:chat_app/features/chat_message/chat_message_state.dart';
 import 'package:chat_app/features/chat_message/chat_message_navigator.dart';
+import 'package:chat_app/core/utlis/time_utlis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatMessagePage extends StatelessWidget {
-  const ChatMessagePage({super.key});
+  final RoomEntity room;
+
+  const ChatMessagePage({super.key, required this.room});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ChatMessageCubit(
         navigator: ChatMessageNavigator(context: context),
+        messageRepo: RepositoryProvider.of<MessageRepository>(context),
+        room: room,
       ),
       child: const ChatMessageChildPage(),
     );
@@ -28,53 +40,173 @@ class ChatMessageChildPage extends StatefulWidget {
 }
 
 class _ChatMessageChildPageState extends State<ChatMessageChildPage> {
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  late final ChatMessageCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = context.read<ChatMessageCubit>();
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onSend() {
+    final text = _messageController.text.trim();
+    if (text.isNotEmpty) {
+      _cubit.sendMessage(text);
+      _messageController.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(child: _buildListMessage()),
-          _buildInputBar(),
-        ],
+      appBar: _buildAppBar(),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(child: _buildListMessage()),
+            _buildInputBar(),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildListMessage() {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-      children: [
-        Center(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+  PreferredSizeWidget _buildAppBar() {
+    final room = _cubit.room;
+    final String? avatarUrl = room.avatarGroup.isNotEmpty ? room.avatarGroup.first : null;
+    
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0.5,
+      leadingWidth: 40,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.textBlack, size: 20),
+        onPressed: () => _cubit.navigator.pop(),
+      ),
+      title: Row(
+        children: [
+          AppAvatarImage(path: avatarUrl, size: 40),
+          10.width,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  room.roomName ?? "Chat",
+                  style: AppTextStyle.black.s16.w600,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "Active now",
+                  style: AppTextStyle.grey.s10.copyWith(color: AppColors.primary),
+                ),
+              ],
             ),
-            child: Text("Today", style: AppTextStyle.black.s12.bold),
           ),
+        ],
+      ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.phone_outlined, color: AppColors.textBlack),
+          onPressed: () {},
         ),
-        24.height,
-        _buildMessageBubble(
-          message: "Hello! Jhon abraham",
-          isMe: true,
-          time: "09:25 AM",
+        IconButton(
+          icon: const Icon(Icons.videocam_outlined, color: AppColors.textBlack),
+          onPressed: () {},
         ),
-        24.height,
-        _buildMessageBubbleWithAvatar(
-          message: "Hello ! Nazrul How are you?",
-          isMe: false,
-          time: "09:25 AM",
-          senderName: "Jhon Abraham",
-        ),
-        24.height,
-        _buildMessageBubble(
-          message: "You did your job well!",
-          isMe: true,
-          time: "09:25 AM",
-        ),
-        // Thêm các bubble khác tương tự như hình mẫu...
+        8.width,
       ],
+    );
+  }
+
+  Widget _buildListMessage() {
+    final currentUserId = context.read<UserCubit>().state.user?.uid;
+
+    return BlocBuilder<ChatMessageCubit, ChatMessageState>(
+      builder: (context, state) {
+        if (state.loadMessagesStatus == LoadStatus.loading && state.messages == null) {
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.primary),
+          );
+        }
+
+        if (state.loadMessagesStatus == LoadStatus.failure && state.messages == null) {
+          return Center(
+            child: Text(
+              "Failed to load messages",
+              style: AppTextStyle.grey.s14,
+            ),
+          );
+        }
+
+        final messages = state.messages ?? [];
+
+        if (messages.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.chat_bubble_outline_rounded,
+                  size: 64,
+                  color: AppColors.greyCD,
+                ),
+                16.height,
+                Text(
+                  "No messages yet. Say hello! 👋",
+                  style: AppTextStyle.grey.s14.bold,
+                ),
+              ],
+            ),
+          );
+        }
+
+        // We use reverse: true so that the list is scrolled to the bottom by default.
+        // We reverse the list in memory because our stream outputs oldest first.
+        final reversedMessages = List<MessageEntity>.from(messages).reversed.toList();
+
+        return ListView.separated(
+          controller: _scrollController,
+          reverse: true,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          itemCount: reversedMessages.length,
+          separatorBuilder: (context, index) => 16.height,
+          itemBuilder: (context, index) {
+            final message = reversedMessages[index];
+            final isMe = message.senderId == currentUserId;
+            
+            if (isMe) {
+              return _buildMessageBubble(
+                message: message.context ?? "",
+                isMe: true,
+                time: TimeUtils.getTextTimeLastMessage(message.createdAt),
+              );
+            } else {
+              return _buildMessageBubbleWithAvatar(
+                message: message.context ?? "",
+                isMe: false,
+                time: TimeUtils.getTextTimeLastMessage(message.createdAt),
+                senderName: state.room?.roomName ?? "Other User",
+                avatarUrl: state.room?.avatarGroup.isNotEmpty == true 
+                    ? state.room!.avatarGroup.first 
+                    : null,
+              );
+            }
+          },
+        );
+      },
     );
   }
 
@@ -87,9 +219,12 @@ class _ChatMessageChildPageState extends State<ChatMessageChildPage> {
       crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Container(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.7,
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: isMe ? const Color(0xFF20A090) : const Color(0xFFF2F7FB),
+            color: isMe ? AppColors.primary : const Color(0xFFF2F7FB),
             borderRadius: BorderRadius.only(
               topLeft: const Radius.circular(16),
               topRight: const Radius.circular(16),
@@ -116,17 +251,18 @@ class _ChatMessageChildPageState extends State<ChatMessageChildPage> {
     required bool isMe,
     required String time,
     required String senderName,
+    required String? avatarUrl,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const AppAvatarImage(path: null, size: 40),
+        AppAvatarImage(path: avatarUrl, size: 40),
         12.width,
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(senderName, style: AppTextStyle.black.s14.bold),
+              Text(senderName, style: AppTextStyle.black.s12.bold),
               4.height,
               _buildMessageBubble(message: message, isMe: isMe, time: time),
             ],
@@ -154,8 +290,11 @@ class _ChatMessageChildPageState extends State<ChatMessageChildPage> {
                 color: const Color(0xFFF3F6F6),
                 borderRadius: BorderRadius.circular(24),
               ),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _messageController,
+                onSubmitted: (_) => _onSend(),
+                textInputAction: TextInputAction.send,
+                decoration: const InputDecoration(
                   hintText: "Write your message",
                   border: InputBorder.none,
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
@@ -164,11 +303,14 @@ class _ChatMessageChildPageState extends State<ChatMessageChildPage> {
             ),
           ),
           12.width,
-          const Icon(Icons.copy_rounded, color: Colors.black54),
-          12.width,
-          const Icon(Icons.camera_alt_outlined, color: Colors.black54),
-          12.width,
-          const Icon(Icons.mic_none_outlined, color: Colors.black54),
+          GestureDetector(
+            onTap: _onSend,
+            child: const CircleAvatar(
+              radius: 20,
+              backgroundColor: AppColors.primary,
+              child: Icon(Icons.send_rounded, color: Colors.white, size: 18),
+            ),
+          ),
         ],
       ),
     );

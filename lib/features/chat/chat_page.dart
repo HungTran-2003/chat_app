@@ -139,8 +139,8 @@ class _MessageChildPageState extends State<MessageChildPage> {
                       itemBuilder: (context, index) {
                         return ChatListItem(
                           chatRoom: state.rooms![index],
-                          onTap: (){
-                            _cubit.navigator.openChatMessage();
+                          onTap: () {
+                            _cubit.navigator.openChatMessage(room: state.rooms![index]);
                           },
                           onTapDelete: () {
                             print("onTapDelete");

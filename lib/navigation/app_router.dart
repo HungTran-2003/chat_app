@@ -14,6 +14,8 @@ import 'package:chat_app/features/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:chat_app/domain/models/entities/room_entity.dart';
+
 class AppRouter {
   AppRouter._();
 
@@ -128,8 +130,9 @@ class AppRouter {
     GoRoute(
       path: _chatMessagePath,
       name: chatMessageRouterName,
-      builder: (context, state){
-        return ChatMessagePage();
+      builder: (context, state) {
+        final room = state.extra as RoomEntity;
+        return ChatMessagePage(room: room);
       }
     )
   ];

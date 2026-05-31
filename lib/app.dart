@@ -2,6 +2,8 @@ import 'package:chat_app/core/configs/app_configs.dart';
 import 'package:chat_app/core/global/user/user_cubit.dart';
 import 'package:chat_app/core/theme/app_themes.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
+import 'package:chat_app/data/repositories/room_repository.dart';
+import 'package:chat_app/data/repositories/message_repository.dart';
 import 'package:chat_app/data/repositories/user_repository.dart';
 import 'package:chat_app/data/service/supabase/supabase_service.dart';
 import 'package:chat_app/generated/l10n.dart';
@@ -43,6 +45,16 @@ class _MyAppState extends State<MyApp> {
         RepositoryProvider<UserRepository>(
           create: (context) {
             return UserRepositoryImpl(client: SupabaseService.client);
+          },
+        ),
+        RepositoryProvider<RoomRepository>(
+          create: (context) {
+            return RoomRepositoryImpl(client: SupabaseService.client);
+          },
+        ),
+        RepositoryProvider<MessageRepository>(
+          create: (context) {
+            return MessageRepositoryImpl(client: SupabaseService.client);
           },
         ),
       ],

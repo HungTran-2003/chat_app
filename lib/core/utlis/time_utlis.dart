@@ -48,7 +48,6 @@ class TimeUtils {
         }
       }
     } catch (e) {
-      print('Lỗi phân tích thời gian: $e');
       return '';
     }
   }

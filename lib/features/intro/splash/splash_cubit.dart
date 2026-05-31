@@ -7,6 +7,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'splash_state.dart';
 
@@ -31,7 +32,7 @@ class SplashCubit extends Cubit<SplashState> {
   }
 
   Future<void> _checkLogin() async {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = Supabase.instance.client.auth.currentSession;
     if (user == null) {
       navigator.openLoginPage();
     } else {

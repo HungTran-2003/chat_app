@@ -18,10 +18,6 @@ class SupabaseService {
     await Supabase.initialize(
       url: url,
       anonKey: anonKey,
-      accessToken: () async {
-        final token = await FirebaseAuth.instance.currentUser?.getIdToken();
-        return token;
-      },
     );
   }
 }

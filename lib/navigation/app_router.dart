@@ -1,6 +1,7 @@
 import 'package:chat_app/features/auth/login/login_page.dart';
 import 'package:chat_app/features/auth/register/register_page.dart';
 import 'package:chat_app/features/call/call_page.dart';
+import 'package:chat_app/features/chat_message/chat_message_page.dart';
 import 'package:chat_app/features/contact/contact_detail/contact_detail_page.dart';
 import 'package:chat_app/features/contact/contact_page.dart';
 import 'package:chat_app/features/contact/contact_request_detail/contact_request_detail_page.dart';
@@ -12,6 +13,8 @@ import 'package:chat_app/features/search/add_contact/add_contact_page.dart';
 import 'package:chat_app/features/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import 'package:chat_app/domain/models/entities/room_entity.dart';
 
 class AppRouter {
   AppRouter._();
@@ -30,6 +33,7 @@ class AppRouter {
   static const String _searchAddContactPath = '/search-add-contact';
   static const String _contactDetailPath = '/contact-detail';
   static const String _contactRequestDetailPath = '/contact-request-detail';
+  static const String _chatMessagePath = '/chat-message';
 
   // --- Route Names ---
   static const String splashRouteName = 'splash';
@@ -43,6 +47,7 @@ class AppRouter {
   static const String searchAddContactRouterName = 'searchAddContact';
   static const String contactDetailRouterName = 'contactDetail';
   static const String contactRequestDetailRouterName = 'contactRequestDetail';
+  static const String chatMessageRouterName = 'chatMessage';
 
   // --- Router ---
 
@@ -122,5 +127,13 @@ class AppRouter {
         return ContactRequestDetailPage(argument: arg);
       },
     ),
+    GoRoute(
+      path: _chatMessagePath,
+      name: chatMessageRouterName,
+      builder: (context, state) {
+        final room = state.extra as RoomEntity;
+        return ChatMessagePage(room: room);
+      }
+    )
   ];
 }

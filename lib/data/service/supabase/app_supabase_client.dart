@@ -1,6 +1,8 @@
 import 'package:chat_app/data/response/object_response.dart';
 import 'package:chat_app/data/response/request_response.dart';
+import 'package:chat_app/data/response/room_response.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
+import 'package:chat_app/domain/models/entities/message_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AppSupabaseClient {
@@ -41,9 +43,22 @@ abstract class AppSupabaseClient {
 
   Future<ObjectResponse> ignoreRequest({required String requestId});
 
+  Future<List<UserEntity>> getFriends({
+    int? limit = 20,
+    int? page = 1,
+  });
+
   Future<ObjectResponse> addFcmToken({
     required String deviceId,
     required String fcmToken,
     required String platform,
   });
+
+  Future<List<RoomResponse>> getUserRooms();
+
+  Stream<List<RoomResponse>> getUserRoomsRealtime();
+
+  Stream<List<MessageEntity>> getRoomMessagesRealtime({required String roomId});
+
+  Future<void> sendMessage({required String roomId, required String content});
 }

@@ -16,7 +16,7 @@ class RoomEntity {
     this.type,
     this.lastMessage,
     this.unreadCount,
-    this.avatarGroup = const [],
+    this.avatarGroup = const <String?>[],
     this.isOnline,
   });
 }

@@ -26,7 +26,6 @@ class UserCubit extends Cubit<UserState> {
   }
 
   Future<void> logOut() async {
-    await FirebaseAuth.instance.signOut();
     await Supabase.instance.client.auth.signOut();
     emit(state.copyWith(user: null));
   }

@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:chat_app/data/repositories/message_repository.dart';
+import 'package:chat_app/data/service/network/cloudinary_repository.dart';
 import 'package:chat_app/domain/models/entities/room_entity.dart';
 import 'package:chat_app/domain/models/enum/status_type.dart';
 import 'package:chat_app/features/chat_message/chat_message_navigator.dart';
@@ -11,12 +13,16 @@ class ChatMessageCubit extends Cubit<ChatMessageState> {
   final ChatMessageNavigator navigator;
   final MessageRepository messageRepo;
   final RoomEntity room;
+  final CloudinaryRepository? cloudinaryRepo;
   StreamSubscription? _messagesSubscription;
+
+  CloudinaryRepository get _cloudinaryRepo => cloudinaryRepo ?? CloudinaryRepository();
 
   ChatMessageCubit({
     required this.navigator,
     required this.messageRepo,
     required this.room,
+    this.cloudinaryRepo,
   }) : super(ChatMessageState(room: room)) {
     _listenToMessages();
   }
@@ -65,6 +71,36 @@ class ChatMessageCubit extends Cubit<ChatMessageState> {
         emit(state.copyWith(sendMessageStatus: LoadStatus.success));
       },
     );
+  }
+
+  /// Uploads a file from [filePath] to Cloudinary and sends the URL as a chat message.
+  Future<void> uploadAndSendMedia(String filePath) async {
+    final roomId = room.id;
+    if (roomId == null) return;
+
+    emit(state.copyWith(sendMessageStatus: LoadStatus.loading));
+    try {
+      final result = await _cloudinaryRepo.uploadFileDirect(filePath: filePath);
+      
+      final sendResult = await messageRepo.sendMessage(
+        roomId: roomId,
+        content: result.secureUrl,
+      );
+      
+      sendResult.fold(
+        (failure) {
+          emit(state.copyWith(sendMessageStatus: LoadStatus.failure));
+          navigator.showErrorSnackBar(message: failure.message);
+        },
+        (_) {
+          emit(state.copyWith(sendMessageStatus: LoadStatus.success));
+        },
+      );
+    } catch (e, stackTrace) {
+      log('Error in uploadAndSendMedia: $e', error: e, stackTrace: stackTrace);
+      emit(state.copyWith(sendMessageStatus: LoadStatus.failure));
+      navigator.showErrorSnackBar(message: e.toString().replaceAll("Exception: ", ""));
+    }
   }
 
   @override

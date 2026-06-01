@@ -27,6 +27,7 @@ class LoginPage extends StatelessWidget {
       create: (context) {
         return LoginCubit(
           navigator: LoginNavigator(context: context),
+          userCubit: context.read(),
           authRepository: context.read(),
         );
       },

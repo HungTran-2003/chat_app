@@ -1,3 +1,4 @@
+import 'package:chat_app/core/global/user/user_cubit.dart';
 import 'package:chat_app/core/utlis/validator.dart';
 import 'package:chat_app/domain/models/enum/status_type.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
@@ -13,9 +14,13 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   final LoginNavigator navigator;
   final AuthRepository authRepository;
+  final UserCubit userCubit;
 
-  LoginCubit({required this.navigator, required this.authRepository})
-    : super(const LoginState());
+  LoginCubit({
+    required this.navigator,
+    required this.authRepository,
+    required this.userCubit,
+  }) : super(const LoginState());
 
   ///Text Controller
   final emailController = TextEditingController();
@@ -74,6 +79,7 @@ class LoginCubit extends Cubit<LoginState> {
       },
       (success) async {
         await authRepository.updateFcmToken();
+        userCubit.updateUserInfo(success);
         emit(state.copyWith(loadDataStatus: LoadStatus.success));
         navigator.showSuccessSnackBar(message: "Login Success");
         cleanController();

@@ -16,6 +16,7 @@ class AppTextField extends StatelessWidget {
   final ValueChanged<bool>? onFocusChange;
   final TextInputAction? textInputAction;
   final ValueChanged<String>? onFieldSubmitted;
+  final String? hintText;
 
   const AppTextField({
     super.key,
@@ -32,6 +33,7 @@ class AppTextField extends StatelessWidget {
     this.onFocusChange,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.hintText,
   });
 
   @override
@@ -61,7 +63,8 @@ class AppTextField extends StatelessWidget {
         if (label != null)
           Text(
             label!,
-            style: labelStyle?.copyWith(
+            style:
+                labelStyle?.copyWith(
                   color: hasError ? AppColors.backgroundRed : labelStyle?.color,
                 ) ??
                 AppTextStyle.primary.s14.w600.copyWith(

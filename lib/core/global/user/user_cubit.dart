@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:chat_app/core/error/failures.dart';
 import 'package:chat_app/data/repositories/auth_repository.dart';
 import 'package:chat_app/domain/models/entities/user_entity.dart';
@@ -34,5 +35,41 @@ class UserCubit extends Cubit<UserState> {
 
   void updateUserInfo(UserEntity user) {
     emit(state.copyWith(user: user));
+  }
+
+  /// Updates the user profile in Supabase database and notifies all listeners.
+  Future<bool> updateProfile({
+    required String userName,
+    required String slogan,
+    String? avatarPath,
+  }) async {
+    try {
+      final currentUser = Supabase.instance.client.auth.currentUser;
+      if (currentUser == null) return false;
+
+      // Update in Supabase profiles table
+      await Supabase.instance.client.from('profiles').update({
+        'username': userName,
+        'slogan': slogan,
+        if (avatarPath != null) 'avatar_url': avatarPath,
+      }).eq('id', currentUser.id);
+
+      // Construct the updated local UserEntity
+      final updatedUser = UserEntity(
+        uid: currentUser.id,
+        userName: userName,
+        slogan: slogan,
+        avatarPath: avatarPath ?? state.user?.avatarPath,
+        email: currentUser.email ?? state.user?.email,
+        role: state.user?.role,
+        backgroundColor: state.user?.backgroundColor,
+      );
+      
+      emit(state.copyWith(user: updatedUser));
+      return true;
+    } catch (e) {
+      log('Error updating profile in Supabase: $e');
+      return false;
+    }
   }
 }

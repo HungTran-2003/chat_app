@@ -11,6 +11,7 @@ import 'package:chat_app/features/main/main_page.dart';
 import 'package:chat_app/features/chat/chat_page.dart';
 import 'package:chat_app/features/search/add_contact/add_contact_page.dart';
 import 'package:chat_app/features/setting/setting_page.dart';
+import 'package:chat_app/features/setting/edit_profile/edit_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -34,6 +35,7 @@ class AppRouter {
   static const String _contactDetailPath = '/contact-detail';
   static const String _contactRequestDetailPath = '/contact-request-detail';
   static const String _chatMessagePath = '/chat-message';
+  static const String _editProfilePath = '/edit-profile';
 
   // --- Route Names ---
   static const String splashRouteName = 'splash';
@@ -48,6 +50,7 @@ class AppRouter {
   static const String contactDetailRouterName = 'contactDetail';
   static const String contactRequestDetailRouterName = 'contactRequestDetail';
   static const String chatMessageRouterName = 'chatMessage';
+  static const String editProfileRouterName = 'editProfile';
 
   // --- Router ---
 
@@ -134,6 +137,11 @@ class AppRouter {
         final room = state.extra as RoomEntity;
         return ChatMessagePage(room: room);
       }
+    ),
+    GoRoute(
+      path: _editProfilePath,
+      name: editProfileRouterName,
+      builder: (context, state) => const EditProfilePage(),
     )
   ];
 }

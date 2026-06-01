@@ -18,11 +18,11 @@ class RoomResponse {
     this.isGroup,
     this.createdAt,
     this.lastMessage,
-    this.groupAvatars = const [],
+    this.groupAvatars = const <String?>[],
     this.resolvedName,
     this.lastMessageId,
     this.resolvedAvatar,
-    this.groupMemberNames = const [],
+    this.groupMemberNames = const <String>[],
   });
 
   factory RoomResponse.fromJson(Map<String, dynamic> json) {
@@ -31,13 +31,15 @@ class RoomResponse {
       isGroup: json['is_group'],
       createdAt: json['created_at'],
       lastMessage: json['last_message'],
-      groupAvatars: json['group_avatars'] ?? [],
+      groupAvatars: json['group_avatars'] != null
+          ? List<String?>.from(json['group_avatars'])
+          : <String?>[],
       resolvedName: json['resolved_name'],
       lastMessageId: json['last_message_id'],
       resolvedAvatar: json['resolved_avatar'],
       groupMemberNames: json['group_member_names'] != null
           ? List<String>.from(json['group_member_names'])
-          : [],
+          : <String>[],
     );
   }
 
@@ -56,7 +58,7 @@ class RoomResponse {
           : null,
       avatarGroup: isGroup == true
       ? groupAvatars
-      : [resolvedAvatar],
+      : <String?>[resolvedAvatar],
       isOnline: false, // Default value or update logic later
     );
   }

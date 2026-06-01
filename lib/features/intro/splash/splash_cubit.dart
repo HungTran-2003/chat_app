@@ -4,7 +4,6 @@ import 'package:chat_app/data/service/database/secure_storage_helper.dart';
 import 'package:chat_app/data/service/notification/notification_service.dart';
 import 'package:chat_app/features/intro/splash/spash_navigation.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

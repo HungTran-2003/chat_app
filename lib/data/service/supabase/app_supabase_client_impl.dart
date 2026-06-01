@@ -26,19 +26,15 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
     required String email,
     required String password,
   }) async {
-    // Đăng ký trực tiếp trên Supabase Auth thay vì Firebase Auth
+    // Đăng ký trực tiếp trên Supabase Auth và truyền kèm metadata username
     final authResponse = await _client.auth.signUp(
       email: email,
       password: password,
+      data: {'username': userName},
     );
     final user = authResponse.user;
     if (user != null) {
-      final data = await _client
-          .from('profiles')
-          .insert({'id': user.id, 'username': userName, 'email': email})
-          .select()
-          .single();
-      return UserEntity.fromJson(data);
+      return getUserInfo();
     } else {
       throw Exception('Supabase user is null after signup');
     }
@@ -129,7 +125,6 @@ class AppSupabaseClientImpl implements AppSupabaseClient {
     required String email,
     required String password,
   }) async {
-    // Đăng nhập trực tiếp trên Supabase Auth thay vì Firebase Auth
     await _client.auth.signInWithPassword(email: email, password: password);
     return getUserInfo();
   }
